@@ -7,21 +7,6 @@
 #include <memory>
 #include <graphics/model.h>
 
-class engine_init_ex: public std::exception
-{
-	private:
-		std::string what_message;
-
-	public:
-		engine_init_ex(const std::string message) : what_message(message)
-		{}
-
-	const char* what() const throw()
-	{
-		return what_message.c_str();
-	}
-};
-
 class GlobalEngine final
 {
 	private:

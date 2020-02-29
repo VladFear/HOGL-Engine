@@ -32,7 +32,7 @@ void ShaderProgram::validate() const
 		char info_log[1024];
 		glGetProgramInfoLog(shader_program, sizeof(info_log), nullptr, info_log);
 
-		throw shaders::ShaderCompilationEx(std::string(info_log));
+		throw std::runtime_error(std::string(info_log));
 	}
 }
 

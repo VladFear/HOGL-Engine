@@ -13,14 +13,14 @@ GlobalEngine::~GlobalEngine()
 void GlobalEngine::initialize()
 {
 	if (!glfwInit())
-		throw engine_init_ex(std::string("Failed to initialize GLFW library.\n"));
+		throw std::runtime_error(std::string("Failed to initialize GLFW library.\n"));
 
 	_window = glfwCreateWindow(_width, _height, "HOGL", nullptr, nullptr);
 
 	if (!_window)
 	{
 		glfwTerminate();
-		throw engine_init_ex(std::string("Failed to create window context.\n"));
+		throw std::runtime_error(std::string("Failed to create window context.\n"));
 	}
 
 	/* Make the window's context current */
@@ -28,7 +28,7 @@ void GlobalEngine::initialize()
 
 	if (glewInit() != GLEW_OK)
 	{
-		throw engine_init_ex(std::string("Failed to initialize GLEW library. glewInit() != GLEW_OK\n"));
+		throw std::runtime_error(std::string("Failed to initialize GLEW library. glewInit() != GLEW_OK\n"));
 	}
 }
 
