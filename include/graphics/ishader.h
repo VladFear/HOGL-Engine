@@ -17,21 +17,3 @@ class IShader
 		void virtual compile() = 0;
 		unsigned int virtual value() const = 0;
 };
-
-namespace shaders
-{
-	class ShaderCompilationEx: public std::exception
-	{
-		private:
-			std::string what_message;
-
-		public:
-			ShaderCompilationEx(const std::string message) : what_message(message)
-			{}
-
-		const char* what() const throw()
-		{
-			return what_message.c_str();
-		}
-	};
-}
