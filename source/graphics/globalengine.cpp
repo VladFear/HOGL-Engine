@@ -1,8 +1,23 @@
 #include <graphics/globalengine.h>
 
-GlobalEngine::GlobalEngine()
+GlobalEngine::GlobalEngine(EngineAPI api,
+                           std::string title,
+                           unsigned int width,
+                           unsigned int height)
 {
-
+	switch (api)
+	{
+		case EngineAPI::OpenGL_API:
+			initGLFW();
+			m_window.reset(new OpenGLWindow(title, width, height));
+			initGLEW();
+			break;
+		case EngineAPI::Vulkan_API:
+			break;
+		default:
+			std::cerr << "Unsupported API\n";
+			break;
+	}
 }
 
 GlobalEngine::~GlobalEngine()
@@ -10,26 +25,16 @@ GlobalEngine::~GlobalEngine()
 	glfwTerminate();
 }
 
-void GlobalEngine::initialize()
+void GlobalEngine::initGLFW() const
 {
 	if (!glfwInit())
 		throw std::runtime_error(std::string("Failed to initialize GLFW library.\n"));
+}
 
-	_window = glfwCreateWindow(_width, _height, "HOGL", nullptr, nullptr);
-
-	if (!_window)
-	{
-		glfwTerminate();
-		throw std::runtime_error(std::string("Failed to create window context.\n"));
-	}
-
-	/* Make the window's context current */
-	glfwMakeContextCurrent(_window);
-
+void GlobalEngine::initGLEW() const
+{
 	if (glewInit() != GLEW_OK)
-	{
 		throw std::runtime_error(std::string("Failed to initialize GLEW library. glewInit() != GLEW_OK\n"));
-	}
 }
 
 void GlobalEngine::pollEvents() const
@@ -37,9 +42,19 @@ void GlobalEngine::pollEvents() const
 	glfwPollEvents();
 }
 
-void GlobalEngine::swapBuffers() const
+void GlobalEngine::gameLoop() const
 {
-	glfwSwapBuffers(_window);
+	while (true)
+	{
+		/* Poll for and process events */
+		pollEvents();
+		m_window->clear();
+
+		/* Render here */
+
+		/* Swap front and back buffers */
+		m_window->swapBuffers();
+	}
 }
 
 void GlobalEngine::render(const Model& model) const
@@ -49,10 +64,4 @@ void GlobalEngine::render(const Model& model) const
 	glDrawElements(GL_TRIANGLES, model.indexesCount(), GL_UNSIGNED_INT, 0);
 	glDisableVertexAttribArray(0);
 	glBindVertexArray(0);
-}
-
-void GlobalEngine::clear() const
-{
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
 }
