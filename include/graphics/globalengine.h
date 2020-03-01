@@ -2,27 +2,37 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+
 #include <exception>
 #include <string>
 #include <memory>
+#include <iostream>
+
 #include <graphics/model.h>
+#include <graphics/openglwindow.h>
+
+enum class EngineAPI: int8_t
+{
+	OpenGL_API = 0,
+	Vulkan_API = 1,
+};
 
 class GlobalEngine final
 {
 	private:
-		GLFWwindow* _window = nullptr;
-		unsigned int _width = 640;
-		unsigned int _height = 480;
+		std::unique_ptr<IWindow> m_window;
+
+	private:
+		void initGLFW() const;
+		void initGLEW() const;
 
 	public:
-		GlobalEngine();
+		explicit GlobalEngine(EngineAPI api,
+		                      std::string title,
+		                      unsigned int width,
+		                      unsigned int height);
 		~GlobalEngine();
-		void initialize();
-		unsigned int windowWidth() const { return _width; }
-		unsigned int windowHeight() const { return _height; }
-		GLFWwindow* window() { return _window; }
 		void pollEvents() const;
-		void swapBuffers() const;
 		void render(const Model& model) const;
-		void clear() const;
+		void gameLoop() const;
 };
