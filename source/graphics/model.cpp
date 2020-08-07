@@ -65,3 +65,12 @@ void Model::dataToInd(unsigned int data[])
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbos[1]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexes_count * sizeof(unsigned int), data, GL_STATIC_DRAW);
 }
+
+void Model::draw() const
+{
+	glBindVertexArray(vao_id);
+	glEnableVertexAttribArray(0);
+	glDrawElements(GL_TRIANGLES, indexes_count, GL_UNSIGNED_INT, 0);
+	glDisableVertexAttribArray(0);
+	glBindVertexArray(0);
+}

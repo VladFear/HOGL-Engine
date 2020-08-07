@@ -63,11 +63,7 @@ void GlobalEngine::gameLoop() const
 
 void GlobalEngine::render(const Model& model) const
 {
-	glBindVertexArray(model.vao());
-	glEnableVertexAttribArray(0);
-	glDrawElements(GL_TRIANGLES, model.indexesCount(), GL_UNSIGNED_INT, 0);
-	glDisableVertexAttribArray(0);
-	glBindVertexArray(0);
+
 }
 
 void GlobalEngine::setGameScene(GameScene * gameScene)
