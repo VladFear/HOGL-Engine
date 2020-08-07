@@ -51,6 +51,10 @@ void GlobalEngine::gameLoop() const
 		m_window->clear();
 
 		/* Render here */
+		for (auto it : m_game_scene->getGameScene())
+		{
+			render(*(it.get()));
+		}
 
 		/* Swap front and back buffers */
 		m_window->swapBuffers();
@@ -64,4 +68,14 @@ void GlobalEngine::render(const Model& model) const
 	glDrawElements(GL_TRIANGLES, model.indexesCount(), GL_UNSIGNED_INT, 0);
 	glDisableVertexAttribArray(0);
 	glBindVertexArray(0);
+}
+
+void GlobalEngine::setGameScene(GameScene * gameScene)
+{
+	m_game_scene.reset(gameScene);
+}
+
+void GlobalEngine::addGameObject(Model * gameObject)
+{
+	m_game_scene->addGameObject(gameObject);
 }
