@@ -3,7 +3,6 @@
 ShaderProgram::ShaderProgram()
 {
 	createShaderProgram();
-	shaders.resize(3);
 }
 
 ShaderProgram::~ShaderProgram()
@@ -50,5 +49,5 @@ void ShaderProgram::attachShader(const IShader & shader)
 {
 	unsigned int shader_value = shader.value();
 	glAttachShader(shader_program, shader_value);
-	shaders.emplace_back(shader_value);
+	shaders.push_front(shader_value);
 }
