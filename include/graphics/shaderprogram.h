@@ -1,13 +1,14 @@
 #pragma once
 
-#include <vector>
+#include <forward_list>
+
 #include <graphics/ishader.h>
 
 class ShaderProgram : IShader
 {
 	private:
 		unsigned int shader_program;
-		std::vector<unsigned int> shaders;
+		std::forward_list<unsigned int> shaders;
 
 	private:
 		void createShaderProgram();
