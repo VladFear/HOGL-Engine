@@ -51,19 +51,15 @@ void GlobalEngine::gameLoop() const
 		m_window->clear();
 
 		/* Render here */
-		for (auto it : m_game_scene->getGameScene())
-		{
-			render(*(it.get()));
-		}
-
+		render();
 		/* Swap front and back buffers */
 		m_window->swapBuffers();
 	}
 }
 
-void GlobalEngine::render(const Model& model) const
+void GlobalEngine::render() const
 {
-
+	m_game_scene->renderScene();
 }
 
 void GlobalEngine::setGameScene(GameScene * gameScene)

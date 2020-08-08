@@ -15,7 +15,8 @@ void GameScene::addGameObject(Model * object)
 	m_game_objects.push_front(std::shared_ptr<Model>(object));
 }
 
-const std::forward_list<std::shared_ptr<Model>> & GameScene::getGameScene() const
+void GameScene::renderScene() const
 {
-	return m_game_objects;
+	for (const auto game_object : m_game_objects)
+		game_object->draw();
 }
