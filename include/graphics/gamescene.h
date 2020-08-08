@@ -14,5 +14,5 @@ class GameScene
 		GameScene();
 		~GameScene();
 		void addGameObject(Model * object);
-		const std::forward_list<std::shared_ptr<Model>> & getGameScene() const;
+		void renderScene() const;
 };

@@ -27,7 +27,7 @@ class GlobalEngine final
 	private:
 		void initGLFW() const;
 		void initGLEW() const;
-		void render(const Model& model) const;
+		void render() const;
 
 	public:
 		explicit GlobalEngine(EngineAPI api,
