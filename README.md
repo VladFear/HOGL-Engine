@@ -5,5 +5,6 @@ Make sure that you already pre installed packages:
 - libglfw3
 - libglfw3-dev
 - libglew-dev
+- libsoil-dev
 
 and others...
