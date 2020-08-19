@@ -6,20 +6,33 @@
 #include <sstream>
 #include <fstream>
 #include <exception>
+#include <memory>
 
 class Shader
 {
-	private:
-		void virtual validate() const = 0;
+	public:
+		Shader();
+		virtual ~Shader();
+		unsigned int value() const;
 
 	public:
-		virtual ~Shader() = 0;
-		void virtual compile() = 0;
-		unsigned int virtual value() const = 0;
+		class ShaderBuilder
+		{
+			public:
+				ShaderBuilder();
+				~ShaderBuilder() = default;
+				ShaderBuilder & setSource(const std::string & src);
+				ShaderBuilder & setSource(std::fstream & file);
+				std::shared_ptr<Shader> create(GLenum shader_type);
+
+			private:
+				void validate() const;
+
+			private:
+				std::shared_ptr<Shader> m_shader_ptr;
+		};
 
 	protected:
 		std::string m_source;
 		unsigned int m_shader;
 };
-
-Shader::~Shader() = default;

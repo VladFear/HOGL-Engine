@@ -4,19 +4,20 @@
 
 #include <graphics/shader.h>
 
-class ShaderProgram : public Shader
+class ShaderProgram
 {
 	private:
 		void createShaderProgram();
-		void validate() const override;
+		void validate() const;
 
 	public:
 		ShaderProgram();
 		~ShaderProgram();
 		void attachShader(const Shader & shader);
-		void compile() override;
-		unsigned int value() const override;
+		void compile();
+		unsigned int value() const;
 
 	private:
 		std::forward_list<unsigned int> m_shaders;
+		unsigned int m_shader;
 };
