@@ -1,18 +1,9 @@
 #pragma once
 
-#include "ishader.h"
+#include "shader.h"
 
-class FragmentShader : public IShader
+class FragmentShader : public Shader
 {
-	private:
-		std::string source;
-		unsigned int shader;
-
-	private:
-		void parseFile(std::fstream & file);
-		void createShader();
-		void validate() const override;
-
 	public:
 		FragmentShader() = delete;
 		FragmentShader(const std::string & src);
@@ -20,4 +11,9 @@ class FragmentShader : public IShader
 		~FragmentShader();
 		void compile() override;
 		unsigned int value() const override;
+
+	private:
+		void parseFile(std::fstream & file);
+		void createShader();
+		void validate() const override;
 };

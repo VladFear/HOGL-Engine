@@ -7,16 +7,16 @@ ShaderProgram::ShaderProgram()
 
 ShaderProgram::~ShaderProgram()
 {
-	for (unsigned int shader : shaders)
-		glDetachShader(shader_program, shader);
+	for (unsigned int shader : m_shaders)
+		glDetachShader(m_shader, shader);
 
-	glDeleteProgram(shader_program);
+	glDeleteProgram(m_shader);
 }
 
 void ShaderProgram::compile()
 {
 	/* Link shaders in shader program */
-	glLinkProgram(shader_program);
+	glLinkProgram(m_shader);
 	validate();
 }
 
@@ -24,12 +24,12 @@ void ShaderProgram::validate() const
 {
 	int success = 0;
 
-	glGetProgramiv(shader_program, GL_LINK_STATUS, &success);
+	glGetProgramiv(m_shader, GL_LINK_STATUS, &success);
 	if (!success)
 	{
 		/* Pull the error message */
 		char info_log[1024];
-		glGetProgramInfoLog(shader_program, sizeof(info_log), nullptr, info_log);
+		glGetProgramInfoLog(m_shader, sizeof(info_log), nullptr, info_log);
 
 		throw std::runtime_error(std::string(info_log));
 	}
@@ -37,17 +37,17 @@ void ShaderProgram::validate() const
 
 unsigned int ShaderProgram::value() const
 {
-	return shader_program;
+	return m_shader;
 }
 
 void ShaderProgram::createShaderProgram()
 {
-	shader_program = glCreateProgram();
+	m_shader = glCreateProgram();
 }
 
-void ShaderProgram::attachShader(const IShader & shader)
+void ShaderProgram::attachShader(const Shader & shader)
 {
 	unsigned int shader_value = shader.value();
-	glAttachShader(shader_program, shader_value);
-	shaders.push_front(shader_value);
+	glAttachShader(m_shader, shader_value);
+	m_shaders.push_front(shader_value);
 }

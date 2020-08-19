@@ -2,22 +2,21 @@
 
 #include <forward_list>
 
-#include <graphics/ishader.h>
+#include <graphics/shader.h>
 
-class ShaderProgram : IShader
+class ShaderProgram : public Shader
 {
-	private:
-		unsigned int shader_program;
-		std::forward_list<unsigned int> shaders;
-
 	private:
 		void createShaderProgram();
 		void validate() const override;
 
 	public:
 		ShaderProgram();
-		virtual ~ShaderProgram();
-		void attachShader(const IShader & shader);
+		~ShaderProgram();
+		void attachShader(const Shader & shader);
 		void compile() override;
 		unsigned int value() const override;
+
+	private:
+		std::forward_list<unsigned int> m_shaders;
 };
