@@ -1,18 +1,9 @@
 #pragma once
 
-#include "ishader.h"
+#include "shader.h"
 
-class VertexShader : public IShader
+class VertexShader : public Shader
 {
-	private:
-		std::string source;
-		unsigned int shader;
-
-	private:
-		void parseFile(std::fstream & file);
-		void createShader();
-		void validate() const override;
-
 	public:
 		VertexShader() = delete;
 		VertexShader(const std::string & src);
@@ -20,4 +11,9 @@ class VertexShader : public IShader
 		~VertexShader();
 		void compile() override;
 		unsigned int value() const override;
+
+	private:
+		void parseFile(std::fstream & file);
+		void createShader();
+		void validate() const override;
 };
