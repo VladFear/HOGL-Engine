@@ -36,3 +36,8 @@ void OpenGLWindow::swapBuffers() const
 {
 	glfwSwapBuffers(m_window.get());
 }
+
+int OpenGLWindow::windowShouldClose() const
+{
+	return glfwWindowShouldClose(m_window.get());
+}

@@ -44,7 +44,7 @@ void GlobalEngine::pollEvents() const
 
 void GlobalEngine::gameLoop() const
 {
-	while (true)
+	while (!m_window->windowShouldClose())
 	{
 		/* Poll for and process events */
 		pollEvents();

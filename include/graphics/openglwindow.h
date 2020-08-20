@@ -27,6 +27,7 @@ class OpenGLWindow final : public IWindow
 		GLFWwindow * getGLFWwindow() const { return m_window.get(); }
 		void swapBuffers() const;
 		void clear() const;
+		int windowShouldClose() const override;
 
 	protected:
 		void createWindow() override;

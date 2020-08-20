@@ -17,6 +17,7 @@ class IWindow
 
 		virtual void clear() const = 0;
 		virtual void swapBuffers() const = 0;
+		virtual int windowShouldClose() const = 0;
 		unsigned int getWidth()  const { return m_windimens.width;  };
 		unsigned int getHeight() const { return m_windimens.height; };
 
