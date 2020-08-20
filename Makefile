@@ -7,20 +7,24 @@ all: $(TARGET_LIB)
 tests: $(TEST_EXECS)
 
 $(TARGET_LIB): $(OBJS)
-	mkdir -p $(BUILD_DIR)
-	ar rcs $@ $^
+	@mkdir -p $(BUILD_DIR)
+	@ar rcs $@ $^
 
-$(OBJS): $(OBJ_DIR)/%.o : $(SRC_DIR)/%.cpp | objdirs
-	$(CXX) -c $(CXXFLAGS) $< -o $@
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
+	$(CXX) -c $(DEPFLAGS) $(CXXFLAGS) $< -o $@
 
-$(TEST_EXECS): $(OBJ_DIR)/%.out : %.cpp | testdirs
-	$(CXX) $< $(CXXFLAGS) -lgtest -pthread -o $@
+$(OBJ_DIR)/%.out: %.cpp | $(TEST_OUT_DIR)
+	$(CXX) $< $(CXXFLAGS) $(LDFLAGS) -lgtest -pthread -o $@
 
-testdirs:
-	mkdir -p $(TEST_DIRS)
+$(TEST_OUT_DIR):
+	@mkdir -p $(TEST_DIRS)
 
-objdirs:
-	mkdir -p $(OBJECT_DIRS)
+$(OBJ_DIR):
+	@mkdir -p $(OBJECT_DIRS)
 
 clean:
 	$(RM) -r $(OBJ_DIR) $(BUILD_DIR)
+
+.PHONY: all tests clean
+
+-include $(DEPS)
