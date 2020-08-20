@@ -6,5 +6,6 @@ Make sure that you already pre installed packages:
 - libglfw3-dev
 - libglew-dev
 - libsoil-dev
+- libgtest-dev
 
 and others...
