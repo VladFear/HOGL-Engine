@@ -7,3 +7,4 @@ sudo apt install \
   libglew-dev \
   libsoil-dev \
   libgtest-dev \
+  libglm-dev \

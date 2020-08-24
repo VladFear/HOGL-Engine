@@ -7,5 +7,4 @@ Make sure that you already pre installed packages:
 - libglew-dev
 - libsoil-dev
 - libgtest-dev
-
-and others...
+- libglm-dev
