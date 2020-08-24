@@ -2,9 +2,9 @@
 
 #include <GL/glew.h>
 
-#include <graphics/igameobject.h>
+#include <graphics/gameobject.h>
 
-class Model : public IGameObject
+class Model : public GameObject
 {
 	private:
 		unsigned int vao_id;
@@ -22,7 +22,7 @@ class Model : public IGameObject
 		Model();
 		Model(float positions[], unsigned int _vertex_count,
 			unsigned int indexes[], unsigned int size);
-		virtual ~Model();
+		~Model();
 		void addVertexBuffer(float positions[], unsigned int _vertex_count);
 		void addIndexBuffer(unsigned int indexes[], unsigned int _indexes_count);
 		void draw() const override;
