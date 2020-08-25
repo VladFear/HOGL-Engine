@@ -25,7 +25,7 @@ TEST(GLEW, GLEWInit)
 
 	ASSERT_EQ(glewInit(), GLEW_OK);
 
-	delete window;
+	glfwDestroyWindow(window);
 }
 int main(int argc, char ** argv)
 {
