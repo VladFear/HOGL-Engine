@@ -24,7 +24,6 @@ LDFLAGS  := $(LD_DIRS) $(LD_LIBS)
 OBJECT_DIRS := $(subst $(SRC_DIR),$(OBJ_DIR),$(shell find $(SRC_DIR) -type d))
 TEST_DIRS   := $(addprefix $(OBJ_DIR)/,$(shell find $(TEST_DIR) -type d))
 
-INCS  := $(shell find $(INC_DIR) -name "*.h")
 SRCS  := $(shell find $(SRC_DIR) -name "*.cpp")
 TESTS := $(shell find $(TEST_DIR) -name "*.cpp")
 OBJS  := $(SRCS:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
