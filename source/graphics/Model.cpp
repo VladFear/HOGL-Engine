@@ -2,75 +2,76 @@
 
 Model::Model()
 {
-	createVAO();
-	createVBO();
+
 }
 
-Model::Model(float positions[], unsigned int _vertex_count,
-		unsigned int indexes[], unsigned int _indexes_count)
+Model::ModelBuilder::ModelBuilder()
 {
-	createVAO();
-	createVBO();
-	vertex_count = _vertex_count;
-	indexes_count = _indexes_count;
-
-	glBindVertexArray(vao_id);
-	dataToInd(indexes);
-	dataToVBO(positions);
-	glBindVertexArray(0);
+	m_model = new Model();
 }
 
 Model::~Model()
 {
-	glDeleteVertexArrays(1, &vao_id);
-	glDeleteBuffers(2, vbos);
+	glDeleteVertexArrays(1, &m_vao_id);
+	glDeleteBuffers(2, m_vbos);
 }
 
-void Model::createVAO()
+void Model::ModelBuilder::createVAO()
 {
-	glGenVertexArrays(1, &vao_id);
+	glGenVertexArrays(1, &m_model->m_vao_id);
 }
 
-void Model::createVBO()
+void Model::ModelBuilder::createVBO()
 {
-	glGenBuffers(2, vbos);
+	glGenBuffers(2, m_model->m_vbos);
 }
 
-void Model::dataToVBO(float data[])
+void Model::ModelBuilder::dataToVBO(const float data[])
 {
-	glBindBuffer(GL_ARRAY_BUFFER, vbos[0]);
-	glBufferData(GL_ARRAY_BUFFER, vertex_count * sizeof(float), data, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, m_model->m_vbos[0]);
+	glBufferData(GL_ARRAY_BUFFER, m_model->m_vertex_count * sizeof(float), data, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (const void*)0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void Model::addVertexBuffer(float positions[], unsigned int _vertex_count)
+Model::ModelBuilder & Model::ModelBuilder::addVertexBuffer(const float positions[],
+                                                           const unsigned int vertex_count)
 {
-	vertex_count = _vertex_count;
-	glBindVertexArray(vao_id);
+	m_model->m_vertex_count = vertex_count;
+	glBindVertexArray(m_model->m_vao_id);
 	dataToVBO(positions);
 	glBindVertexArray(0);
+
+	return *this;
 }
 
-void Model::addIndexBuffer(unsigned int indexes[], unsigned int _indexes_count)
+Model::ModelBuilder & Model::ModelBuilder::addIndexBuffer(const unsigned int indexes[],
+                                                          const unsigned int indexes_count)
 {
-	indexes_count = _indexes_count;
-	glBindVertexArray(vao_id);
+	m_model->m_indexes_count = indexes_count;
+	glBindVertexArray(m_model->m_vao_id);
 	dataToInd(indexes);
 	glBindVertexArray(0);
+
+	return *this;
 }
 
-void Model::dataToInd(unsigned int data[])
+void Model::ModelBuilder::dataToInd(const unsigned int data[])
 {
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbos[1]);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexes_count * sizeof(unsigned int), data, GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_model->m_vbos[1]);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_model->m_indexes_count * sizeof(unsigned int), data, GL_STATIC_DRAW);
 }
 
 void Model::draw() const
 {
-	glBindVertexArray(vao_id);
+	glBindVertexArray(m_vao_id);
 	glEnableVertexAttribArray(0);
-	glDrawElements(GL_TRIANGLES, indexes_count, GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, m_indexes_count, GL_UNSIGNED_INT, 0);
 	glDisableVertexAttribArray(0);
 	glBindVertexArray(0);
+}
+
+Model * Model::ModelBuilder::create()
+{
+	return m_model;
 }
