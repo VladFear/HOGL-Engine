@@ -8,12 +8,12 @@ struct WindowDimensions
 	unsigned int height;
 };
 
-class IWindow
+class Window
 {
 	public:
-		IWindow(std::string title, unsigned int width, unsigned int height) :
+		Window(std::string title, unsigned int width, unsigned int height) :
 			m_windimens{width, height}, m_title(title) {}
-		virtual ~IWindow() {};
+		virtual ~Window() {};
 
 		virtual void clear() const = 0;
 		virtual void swapBuffers() const = 0;

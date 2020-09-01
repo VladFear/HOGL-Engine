@@ -21,7 +21,7 @@ enum class EngineAPI: int8_t
 class GlobalEngine final
 {
 	private:
-		std::unique_ptr<IWindow> m_window;
+		std::unique_ptr<Window> m_window;
 		std::shared_ptr<GameScene> m_game_scene;
 
 	private:

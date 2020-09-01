@@ -3,16 +3,16 @@
 OpenGLWindow::OpenGLWindow(std::string title,
                            unsigned int width,
                            unsigned int height) :
-	IWindow(title, width, height)
+	Window(title, width, height)
 {
 	createWindow();
 }
 
 void OpenGLWindow::createWindow()
 {
-	m_window.reset(glfwCreateWindow(IWindow::m_windimens.width,
-	                                IWindow::m_windimens.height,
-	                                IWindow::m_title.c_str(),
+	m_window.reset(glfwCreateWindow(Window::m_windimens.width,
+	                                Window::m_windimens.height,
+	                                Window::m_title.c_str(),
 	                                nullptr,
 	                                nullptr));
 

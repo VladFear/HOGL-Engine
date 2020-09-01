@@ -1,9 +1,11 @@
 #pragma once
 
+#include <memory>
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <graphics/iwindow.h>
-#include <memory>
+
+#include <graphics/window.h>
 
 struct DestroyGLFWwindow
 {
@@ -13,11 +15,8 @@ struct DestroyGLFWwindow
 	}
 };
 
-class OpenGLWindow final : public IWindow
+class OpenGLWindow final : public Window
 {
-	private:
-		std::unique_ptr<GLFWwindow, DestroyGLFWwindow> m_window;
-
 	public:
 		explicit OpenGLWindow(std::string title,
 		                      unsigned int width,
@@ -25,10 +24,13 @@ class OpenGLWindow final : public IWindow
 
 		OpenGLWindow(const OpenGLWindow &) = delete;
 		GLFWwindow * getGLFWwindow() const { return m_window.get(); }
-		void swapBuffers() const;
-		void clear() const;
+		void swapBuffers() const override;
+		void clear() const override;
 		int windowShouldClose() const override;
 
 	protected:
 		void createWindow() override;
+
+	private:
+		std::unique_ptr<GLFWwindow, DestroyGLFWwindow> m_window;
 };
