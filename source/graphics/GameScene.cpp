@@ -1,4 +1,4 @@
-#include <graphics/gamescene.h>
+#include <graphics/GameScene.h>
 
 GameScene::GameScene()
 {

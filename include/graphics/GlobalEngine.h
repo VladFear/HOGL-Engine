@@ -8,9 +8,9 @@
 #include <memory>
 #include <iostream>
 
-#include <graphics/model.h>
-#include <graphics/openglwindow.h>
-#include <graphics/gamescene.h>
+#include <graphics/Model.h>
+#include <graphics/OpenGLWindow.h>
+#include <graphics/GameScene.h>
 
 enum class EngineAPI: int8_t
 {

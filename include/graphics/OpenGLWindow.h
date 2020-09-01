@@ -5,7 +5,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include <graphics/window.h>
+#include <graphics/Window.h>
 
 struct DestroyGLFWwindow
 {

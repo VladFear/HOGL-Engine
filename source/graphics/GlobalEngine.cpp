@@ -1,4 +1,4 @@
-#include <graphics/globalengine.h>
+#include <graphics/GlobalEngine.h>
 
 GlobalEngine::GlobalEngine(EngineAPI api,
                            std::string title,

@@ -2,7 +2,7 @@
 
 #include <GL/glew.h>
 
-#include <graphics/gameobject.h>
+#include <graphics/GameObject.h>
 
 class Model : public GameObject
 {

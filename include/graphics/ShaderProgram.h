@@ -2,7 +2,9 @@
 
 #include <forward_list>
 
-#include <graphics/shader.h>
+#include <glm/glm.hpp>
+
+#include <graphics/Shader.h>
 
 class ShaderProgram
 {

@@ -1,4 +1,4 @@
-#include <graphics/model.h>
+#include <graphics/Model.h>
 
 Model::Model()
 {

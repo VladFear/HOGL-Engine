@@ -3,7 +3,7 @@
 #include <forward_list>
 #include <memory>
 
-#include <graphics/model.h>
+#include <graphics/Model.h>
 
 class GameScene
 {
