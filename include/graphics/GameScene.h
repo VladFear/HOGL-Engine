@@ -7,12 +7,15 @@
 
 class GameScene
 {
-	private:
-		std::forward_list<std::shared_ptr<Model>> m_game_objects;
-
 	public:
 		GameScene();
-		~GameScene();
-		void addGameObject(Model * object);
+		virtual ~GameScene();
+		void addModel(Model * object);
 		void renderScene() const;
+
+	private:
+		void renderObject(const std::unique_ptr<Model> & model) const;
+
+	private:
+		std::forward_list<std::unique_ptr<Model>> m_models_list;
 };

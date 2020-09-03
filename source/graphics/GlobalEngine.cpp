@@ -69,5 +69,5 @@ void GlobalEngine::setGameScene(GameScene * gameScene)
 
 void GlobalEngine::addGameObject(Model * gameObject)
 {
-	m_game_scene->addGameObject(gameObject);
+	m_game_scene->addModel(gameObject);
 }

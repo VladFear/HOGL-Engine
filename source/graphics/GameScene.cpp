@@ -10,13 +10,21 @@ GameScene::~GameScene()
 
 }
 
-void GameScene::addGameObject(Model * object)
+void GameScene::addModel(Model * model)
 {
-	m_game_objects.push_front(std::shared_ptr<Model>(object));
+	m_models_list.push_front(std::unique_ptr<Model>(model));
 }
 
 void GameScene::renderScene() const
 {
-	for (const auto game_object : m_game_objects)
-		game_object->draw();
+	for (const auto& model : m_models_list)
+		renderObject(model);
+}
+
+void GameScene::renderObject(const std::unique_ptr<Model> & model) const
+{
+	// TODO: Currently class Model doesn't have method getShaderProgramId.
+	// glUseProgram(model->getShaderProgramId());
+	model->draw();
+	// glUseProgram(0);
 }
