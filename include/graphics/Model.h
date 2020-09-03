@@ -25,15 +25,16 @@ class Model : public GameObject
 				ModelBuilder & addIndexBuffer(const unsigned int indexes[],
 				                              const unsigned int indexes_count);
 
-			private:
-				void createVAO();
-				void createVBO();
 				void dataToVBO(const float data[]);
 				void dataToInd(const unsigned int data[]);
 
 			private:
 				Model * m_model;
 		};
+
+	private:
+		void createVAO();
+		void createVBO();
 
 	private:
 		unsigned int m_vao_id;

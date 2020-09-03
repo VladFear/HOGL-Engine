@@ -2,7 +2,8 @@
 
 Model::Model()
 {
-
+	createVAO();
+	createVBO();
 }
 
 Model::ModelBuilder::ModelBuilder()
@@ -16,14 +17,14 @@ Model::~Model()
 	glDeleteBuffers(2, m_vbos);
 }
 
-void Model::ModelBuilder::createVAO()
+void Model::createVAO()
 {
-	glGenVertexArrays(1, &m_model->m_vao_id);
+	glGenVertexArrays(1, &m_vao_id);
 }
 
-void Model::ModelBuilder::createVBO()
+void Model::createVBO()
 {
-	glGenBuffers(2, m_model->m_vbos);
+	glGenBuffers(2, m_vbos);
 }
 
 void Model::ModelBuilder::dataToVBO(const float data[])
