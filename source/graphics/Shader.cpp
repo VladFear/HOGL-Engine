@@ -1,15 +1,5 @@
 #include <graphics/Shader.h>
 
-Shader::Shader()
-{
-
-}
-
-Shader::~Shader()
-{
-
-}
-
 unsigned int Shader::value() const
 {
 	return m_shader;
@@ -17,7 +7,7 @@ unsigned int Shader::value() const
 
 Shader::ShaderBuilder::ShaderBuilder()
 {
-	m_shader_ptr.reset(new Shader());
+	m_shader_ptr = std::make_shared<Shader>();
 }
 
 Shader::ShaderBuilder & Shader::ShaderBuilder::setSource(std::string && src)

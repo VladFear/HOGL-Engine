@@ -11,8 +11,8 @@
 class Shader
 {
 	public:
-		Shader();
-		virtual ~Shader();
+		Shader() = default;
+		virtual ~Shader() = default;
 		unsigned int value() const;
 
 	public:
