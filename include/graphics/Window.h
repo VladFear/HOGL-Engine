@@ -11,9 +11,13 @@ struct WindowDimensions
 class Window
 {
 	public:
-		Window(std::string title, unsigned int width, unsigned int height) :
-			m_windimens{width, height}, m_title(title) {}
-		virtual ~Window() {};
+		Window(std::string title,
+		       unsigned int width,
+		       unsigned int height) :
+			m_windimens{width, height},
+			m_title(std::move(title)) {}
+
+		virtual ~Window() = default;
 
 		virtual void clear() const = 0;
 		virtual void swapBuffers() const = 0;
