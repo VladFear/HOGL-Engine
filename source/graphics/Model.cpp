@@ -1,12 +1,14 @@
 #include <graphics/Model.h>
 
+using Builder = Model::ModelBuilder;
+
 Model::Model()
 {
 	createVAO();
 	createVBO();
 }
 
-Model::ModelBuilder::ModelBuilder()
+Builder::ModelBuilder()
 {
 	m_model = std::make_shared<Model>();
 }
@@ -27,7 +29,7 @@ void Model::createVBO()
 	glGenBuffers(2, m_vbos);
 }
 
-void Model::ModelBuilder::dataToVBO(const float data[])
+void Builder::dataToVBO(const float data[])
 {
 	glBindBuffer(GL_ARRAY_BUFFER, m_model->m_vbos[0]);
 	glBufferData(GL_ARRAY_BUFFER, m_model->m_vertex_count * sizeof(float), data, GL_STATIC_DRAW);
@@ -35,8 +37,8 @@ void Model::ModelBuilder::dataToVBO(const float data[])
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-Model::ModelBuilder & Model::ModelBuilder::addVertexBuffer(const float positions[],
-                                                           const unsigned int vertex_count)
+Builder & Builder::addVertexBuffer(const float positions[],
+                                   const unsigned int vertex_count)
 {
 	m_model->m_vertex_count = vertex_count;
 	glBindVertexArray(m_model->m_vao_id);
@@ -46,8 +48,8 @@ Model::ModelBuilder & Model::ModelBuilder::addVertexBuffer(const float positions
 	return *this;
 }
 
-Model::ModelBuilder & Model::ModelBuilder::addIndexBuffer(const unsigned int indexes[],
-                                                          const unsigned int indexes_count)
+Builder & Builder::addIndexBuffer(const unsigned int indexes[],
+                                  const unsigned int indexes_count)
 {
 	m_model->m_indexes_count = indexes_count;
 	glBindVertexArray(m_model->m_vao_id);
@@ -57,7 +59,7 @@ Model::ModelBuilder & Model::ModelBuilder::addIndexBuffer(const unsigned int ind
 	return *this;
 }
 
-void Model::ModelBuilder::dataToInd(const unsigned int data[])
+void Builder::dataToInd(const unsigned int data[])
 {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_model->m_vbos[1]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_model->m_indexes_count * sizeof(unsigned int), data, GL_STATIC_DRAW);
@@ -72,7 +74,7 @@ void Model::draw() const
 	glBindVertexArray(0);
 }
 
-std::shared_ptr<Model> Model::ModelBuilder::create()
+std::shared_ptr<Model> Builder::create()
 {
 	return m_model;
 }

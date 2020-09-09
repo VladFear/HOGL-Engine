@@ -1,30 +1,32 @@
 #include <graphics/Shader.h>
 
+using Builder = Shader::ShaderBuilder;
+
 unsigned int Shader::value() const
 {
 	return m_shader;
 }
 
-Shader::ShaderBuilder::ShaderBuilder()
+Builder::ShaderBuilder()
 {
 	m_shader_ptr = std::make_shared<Shader>();
 }
 
-Shader::ShaderBuilder & Shader::ShaderBuilder::setSource(std::string && src)
+Builder & Builder::setSource(std::string && src)
 {
 	createSourceStringFromFile(std::fstream(std::forward<std::string>(src)));
 
 	return *this;
 }
 
-Shader::ShaderBuilder & Shader::ShaderBuilder::setSource(std::fstream && file)
+Builder & Builder::setSource(std::fstream && file)
 {
 	createSourceStringFromFile(std::forward<std::fstream>(file));
 
 	return *this;
 }
 
-std::shared_ptr<Shader> Shader::ShaderBuilder::create(GLenum shader_type)
+std::shared_ptr<Shader> Builder::create(GLenum shader_type)
 {
 	m_shader_ptr->m_shader = glCreateShader(shader_type);
 
@@ -37,7 +39,7 @@ std::shared_ptr<Shader> Shader::ShaderBuilder::create(GLenum shader_type)
 	return m_shader_ptr;
 }
 
-void Shader::ShaderBuilder::validate() const
+void Builder::validate() const
 {
 	int success = 0;
 
@@ -52,7 +54,7 @@ void Shader::ShaderBuilder::validate() const
 	}
 }
 
-void Shader::ShaderBuilder::createSourceStringFromFile(std::fstream file)
+void Builder::createSourceStringFromFile(std::fstream file)
 {
 	/* Ensures ifstream objects can throw exceptions */
 	file.exceptions(std::ifstream::badbit | std::ifstream::failbit);
