@@ -21,12 +21,13 @@ class Shader
 			public:
 				ShaderBuilder();
 				~ShaderBuilder() = default;
-				ShaderBuilder & setSource(const std::string & src);
-				ShaderBuilder & setSource(std::fstream & file);
+				ShaderBuilder & setSource(std::string && src);
+				ShaderBuilder & setSource(std::fstream && file);
 				std::shared_ptr<Shader> create(GLenum shader_type);
 
 			private:
 				void validate() const;
+				void createSourceStringFromFile(std::fstream file);
 
 			private:
 				std::shared_ptr<Shader> m_shader_ptr;
