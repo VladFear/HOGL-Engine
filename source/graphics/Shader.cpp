@@ -10,6 +10,7 @@ unsigned int Shader::value() const
 Builder::ShaderBuilder()
 {
 	m_shader_ptr = std::make_shared<Shader>();
+	m_validation_strategy = std::make_shared<ValidationDefaultStrategy>();
 }
 
 Builder & Builder::setSource(std::string && src)
@@ -41,17 +42,7 @@ std::shared_ptr<Shader> Builder::create(GLenum shader_type)
 
 void Builder::validate() const
 {
-	int success = 0;
-
-	glGetShaderiv(m_shader_ptr->m_shader, GL_COMPILE_STATUS, &success);
-	if (!success)
-	{
-		/* Pull the error message */
-		char info_log[1024];
-		glGetShaderInfoLog(m_shader_ptr->m_shader, sizeof(info_log), nullptr, info_log);
-
-		throw std::runtime_error(std::string(info_log));
-	}
+	m_validation_strategy->validate(m_shader_ptr->m_shader, ValidationPoint::COMPILATION);
 }
 
 void Builder::createSourceStringFromFile(std::fstream file)
@@ -66,4 +57,11 @@ void Builder::createSourceStringFromFile(std::fstream file)
 
 	m_shader_ptr->m_source = stream.str();
 	file.close();
+}
+
+Builder & Builder::setValidationStrategy(std::shared_ptr<IValidationStrategy> validation_strategy)
+{
+	m_validation_strategy = validation_strategy;
+
+	return *this;
 }

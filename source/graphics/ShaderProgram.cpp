@@ -22,17 +22,7 @@ void ShaderProgram::compile()
 
 void ShaderProgram::validate() const
 {
-	int success = 0;
-
-	glGetProgramiv(m_shader, GL_LINK_STATUS, &success);
-	if (!success)
-	{
-		/* Pull the error message */
-		char info_log[1024];
-		glGetProgramInfoLog(m_shader, sizeof(info_log), nullptr, info_log);
-
-		throw std::runtime_error(std::string(info_log));
-	}
+	m_validation_strategy->validate(m_shader, ValidationPoint::LINKING);
 }
 
 unsigned int ShaderProgram::value() const
@@ -50,4 +40,9 @@ void ShaderProgram::attachShader(const Shader & shader)
 	unsigned int shader_value = shader.value();
 	glAttachShader(m_shader, shader_value);
 	m_shaders.push_front(shader_value);
+}
+
+void ShaderProgram::setValidationStrategy(std::shared_ptr<IValidationStrategy> validation_strategy)
+{
+	m_validation_strategy = validation_strategy;
 }
