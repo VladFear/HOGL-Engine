@@ -19,7 +19,7 @@ class Model : public GameObject
 			public:
 				ModelBuilder();
 				~ModelBuilder() = default;
-				Model * create();
+				std::shared_ptr<Model> create();
 				ModelBuilder & addVertexBuffer(const float positions[],
 				                               const unsigned int vertex_count);
 				ModelBuilder & addIndexBuffer(const unsigned int indexes[],
@@ -29,7 +29,7 @@ class Model : public GameObject
 				void dataToInd(const unsigned int data[]);
 
 			private:
-				Model * m_model;
+				std::shared_ptr<Model> m_model;
 		};
 
 	private:

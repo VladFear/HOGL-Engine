@@ -8,7 +8,7 @@ Model::Model()
 
 Model::ModelBuilder::ModelBuilder()
 {
-	m_model = new Model();
+	m_model = std::make_shared<Model>();
 }
 
 Model::~Model()
@@ -72,7 +72,7 @@ void Model::draw() const
 	glBindVertexArray(0);
 }
 
-Model * Model::ModelBuilder::create()
+std::shared_ptr<Model> Model::ModelBuilder::create()
 {
 	return m_model;
 }
