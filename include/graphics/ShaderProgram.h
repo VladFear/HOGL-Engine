@@ -22,7 +22,6 @@ class ShaderProgram
 		unsigned int value() const;
 
 	private:
-		void createShaderProgram();
 		void validate() const;
 
 	private:

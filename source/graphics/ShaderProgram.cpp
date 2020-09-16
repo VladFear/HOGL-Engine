@@ -2,7 +2,7 @@
 
 ShaderProgram::ShaderProgram()
 {
-	createShaderProgram();
+	m_shader = glCreateProgram();
 }
 
 ShaderProgram::ShaderProgram(const ShaderProgram & other)
@@ -66,11 +66,6 @@ void ShaderProgram::validate() const
 unsigned int ShaderProgram::value() const
 {
 	return m_shader;
-}
-
-void ShaderProgram::createShaderProgram()
-{
-	m_shader = glCreateProgram();
 }
 
 void ShaderProgram::attachShader(const Shader & shader)
