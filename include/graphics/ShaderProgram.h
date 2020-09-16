@@ -17,6 +17,8 @@ class ShaderProgram
 		ShaderProgram & operator=(const ShaderProgram & other);
 		ShaderProgram & operator=(ShaderProgram && other) noexcept;
 		void attachShader(const Shader & shader);
+		void attachShader(std::shared_ptr<Shader> shader);
+		void attachShader(Shader * shader) = delete;
 		void setValidationStrategy(std::shared_ptr<IValidationStrategy> validation_strategy);
 		void compile();
 		unsigned int value() const;

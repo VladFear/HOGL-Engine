@@ -75,6 +75,13 @@ void ShaderProgram::attachShader(const Shader & shader)
 	m_shaders.push_front(shader_value);
 }
 
+void ShaderProgram::attachShader(std::shared_ptr<Shader> shader)
+{
+	unsigned int shader_value = shader->value();
+	glAttachShader(m_shader, shader_value);
+	m_shaders.push_front(shader_value);
+}
+
 void ShaderProgram::setValidationStrategy(std::shared_ptr<IValidationStrategy> validation_strategy)
 {
 	m_validation_strategy = validation_strategy;
