@@ -8,8 +8,8 @@
 class GameScene
 {
 	public:
-		GameScene();
-		virtual ~GameScene();
+		GameScene() = default;
+		virtual ~GameScene() = default;
 		void addModel(Model * object);
 		void renderScene() const;
 
