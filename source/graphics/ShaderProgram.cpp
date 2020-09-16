@@ -60,6 +60,9 @@ void ShaderProgram::compile()
 	/* Link shaders in shader program */
 	glLinkProgram(m_shader);
 	validate();
+
+	// TODO: Added just for triangle DEMO
+	m_transform_matrix_location = getUniformLocation("transform_matrix");
 }
 
 void ShaderProgram::validate() const
