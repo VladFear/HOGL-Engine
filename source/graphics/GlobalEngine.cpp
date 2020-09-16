@@ -11,6 +11,7 @@ GlobalEngine::GlobalEngine(EngineAPI api,
 			initGLFW();
 			m_window.reset(new OpenGLWindow(title, width, height));
 			initGLEW();
+			m_game_scene = std::make_unique<GameScene>();
 			break;
 		case EngineAPI::Vulkan_API:
 			break;
@@ -60,11 +61,6 @@ void GlobalEngine::gameLoop() const
 void GlobalEngine::render() const
 {
 	m_game_scene->renderScene();
-}
-
-void GlobalEngine::setGameScene(GameScene * gameScene)
-{
-	m_game_scene.reset(gameScene);
 }
 
 void GlobalEngine::addGameObject(Model * gameObject)

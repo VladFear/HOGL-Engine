@@ -22,7 +22,7 @@ class GlobalEngine final
 {
 	private:
 		std::unique_ptr<Window> m_window;
-		std::shared_ptr<GameScene> m_game_scene;
+		std::unique_ptr<GameScene> m_game_scene;
 
 	private:
 		void initGLFW() const;
@@ -37,6 +37,5 @@ class GlobalEngine final
 		~GlobalEngine();
 		void pollEvents() const;
 		void gameLoop() const;
-		void setGameScene(GameScene * gameScene);
 		void addGameObject(Model * gameObject);
 };
