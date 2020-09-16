@@ -22,6 +22,7 @@ class ShaderProgram
 		void setValidationStrategy(std::shared_ptr<IValidationStrategy> validation_strategy);
 		void compile();
 		unsigned int value() const;
+		int getUniformLocation(const std::string & uniform_name) const;
 
 	private:
 		void validate() const;

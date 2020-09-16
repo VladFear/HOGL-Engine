@@ -86,3 +86,15 @@ void ShaderProgram::setValidationStrategy(std::shared_ptr<IValidationStrategy> v
 {
 	m_validation_strategy = validation_strategy;
 }
+
+int ShaderProgram::getUniformLocation(const std::string & uniform_name) const
+{
+	int location = glGetUniformLocation(m_shader, uniform_name.c_str());
+
+	if (location == GL_INVALID_VALUE or
+	    location == GL_INVALID_OPERATION or
+	    location == -1)
+		throw std::invalid_argument("Unable to get uniform variable with name \"" + uniform_name + "\"\n");
+
+	return location;
+}
