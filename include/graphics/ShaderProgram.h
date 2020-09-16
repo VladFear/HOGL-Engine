@@ -12,6 +12,10 @@ class ShaderProgram
 	public:
 		ShaderProgram();
 		virtual ~ShaderProgram();
+		ShaderProgram(const ShaderProgram & other);
+		ShaderProgram(ShaderProgram && other) noexcept;
+		ShaderProgram & operator=(const ShaderProgram & other);
+		ShaderProgram & operator=(ShaderProgram && other) noexcept;
 		void attachShader(const Shader & shader);
 		void setValidationStrategy(std::shared_ptr<IValidationStrategy> validation_strategy);
 		void compile();

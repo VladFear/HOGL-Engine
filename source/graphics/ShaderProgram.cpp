@@ -5,6 +5,44 @@ ShaderProgram::ShaderProgram()
 	createShaderProgram();
 }
 
+ShaderProgram::ShaderProgram(const ShaderProgram & other)
+{
+	m_shader = other.m_shader;
+	m_shaders = other.m_shaders;
+	m_validation_strategy = other.m_validation_strategy;
+}
+
+ShaderProgram::ShaderProgram(ShaderProgram && other) noexcept
+{
+	m_shader = std::exchange(other.m_shader, 0);
+	m_shaders = std::move(other.m_shaders);
+	m_validation_strategy = std::move(other.m_validation_strategy);
+}
+
+ShaderProgram & ShaderProgram::operator=(const ShaderProgram & other)
+{
+	if (&other != this)
+	{
+		m_shader = other.m_shader;
+		m_shaders = other.m_shaders;
+		m_validation_strategy = other.m_validation_strategy;
+	}
+
+	return *this;
+}
+
+ShaderProgram & ShaderProgram::operator=(ShaderProgram && other) noexcept
+{
+	if (&other != this)
+	{
+		m_shader = std::exchange(other.m_shader, 0);
+		m_shaders = std::move(other.m_shaders);
+		m_validation_strategy = std::move(other.m_validation_strategy);
+	}
+
+	return *this;
+}
+
 ShaderProgram::~ShaderProgram()
 {
 	for (unsigned int shader : m_shaders)
