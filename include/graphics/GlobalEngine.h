@@ -20,15 +20,6 @@ enum class EngineAPI: int8_t
 
 class GlobalEngine final
 {
-	private:
-		std::unique_ptr<Window> m_window;
-		std::unique_ptr<GameScene> m_game_scene;
-
-	private:
-		void initGLFW() const;
-		void initGLEW() const;
-		void render() const;
-
 	public:
 		explicit GlobalEngine(EngineAPI api,
 		                      std::string title,
@@ -38,4 +29,13 @@ class GlobalEngine final
 		void pollEvents() const;
 		void gameLoop() const;
 		void addGameObject(Model * gameObject);
+
+	private:
+		void initGLFW() const;
+		void initGLEW() const;
+		void render() const;
+
+	private:
+		std::unique_ptr<Window> m_window;
+		std::unique_ptr<GameScene> m_game_scene;
 };
