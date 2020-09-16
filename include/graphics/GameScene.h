@@ -10,7 +10,7 @@ class GameScene
 	public:
 		GameScene() = default;
 		virtual ~GameScene() = default;
-		void addModel(Model * object);
+		void addModel(std::unique_ptr<Model> object);
 		void renderScene() const;
 
 	private:

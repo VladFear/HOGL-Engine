@@ -1,8 +1,8 @@
 #include <graphics/GameScene.h>
 
-void GameScene::addModel(Model * model)
+void GameScene::addModel(std::unique_ptr<Model> model)
 {
-	m_models_list.push_front(std::unique_ptr<Model>(model));
+	m_models_list.push_front(std::move(model));
 }
 
 void GameScene::renderScene() const

@@ -28,7 +28,7 @@ class GlobalEngine final
 		~GlobalEngine();
 		void pollEvents() const;
 		void gameLoop() const;
-		void addGameObject(Model * gameObject);
+		void addGameObject(std::unique_ptr<Model> gameObject);
 
 	private:
 		void initGLFW() const;
