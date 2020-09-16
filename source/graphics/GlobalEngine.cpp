@@ -9,7 +9,7 @@ GlobalEngine::GlobalEngine(EngineAPI api,
 	{
 		case EngineAPI::OpenGL_API:
 			initGLFW();
-			m_window.reset(new OpenGLWindow(title, width, height));
+			m_window = std::make_unique<OpenGLWindow>(title, width, height);
 			initGLEW();
 			m_game_scene = std::make_unique<GameScene>();
 			break;
