@@ -63,7 +63,7 @@ void GlobalEngine::render() const
 	m_game_scene->renderScene();
 }
 
-void GlobalEngine::addGameObject(std::unique_ptr<Model> gameObject)
+void GlobalEngine::addGameObject(std::unique_ptr<GameObject> game_object)
 {
-	m_game_scene->addModel(std::move(gameObject));
+	m_game_scene->addGameObject(std::move(game_object));
 }

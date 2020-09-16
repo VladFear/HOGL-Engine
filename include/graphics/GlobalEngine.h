@@ -8,7 +8,7 @@
 #include <memory>
 #include <iostream>
 
-#include <graphics/Model.h>
+#include <graphics/GameObject.h>
 #include <graphics/OpenGLWindow.h>
 #include <graphics/GameScene.h>
 
@@ -28,7 +28,7 @@ class GlobalEngine final
 		~GlobalEngine();
 		void pollEvents() const;
 		void gameLoop() const;
-		void addGameObject(std::unique_ptr<Model> gameObject);
+		void addGameObject(std::unique_ptr<GameObject> game_object);
 
 	private:
 		void initGLFW() const;
