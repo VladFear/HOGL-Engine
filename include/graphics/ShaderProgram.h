@@ -4,6 +4,7 @@
 #include <memory>
 
 #include <glm/glm.hpp>
+#include <glm/ext.hpp>
 
 #include <graphics/Shader.h>
 
@@ -23,6 +24,10 @@ class ShaderProgram
 		void compile();
 		unsigned int value() const;
 		int getUniformLocation(const std::string & uniform_name) const;
+		void setFloatToUniform(const int location, const float value);
+		void setBoolToUniform(const int location, const bool value);
+		void setVector3fToUniform(const int location, const glm::vec3 & vector);
+		void setMatrixToUniform(const int location, const glm::mat4 & matrix);
 
 	private:
 		void validate() const;

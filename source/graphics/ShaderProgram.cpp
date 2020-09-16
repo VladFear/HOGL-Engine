@@ -98,3 +98,23 @@ int ShaderProgram::getUniformLocation(const std::string & uniform_name) const
 
 	return location;
 }
+
+void ShaderProgram::setFloatToUniform(const int location, const float value)
+{
+	glUniform1f(location, value);
+}
+
+void ShaderProgram::setBoolToUniform(const int location, const bool value)
+{
+	glUniform1f(location, value ? 1.0 : 0.0);
+}
+
+void ShaderProgram::setVector3fToUniform(const int location, const glm::vec3 & vector)
+{
+	glUniform3f(location, vector.x, vector.y, vector.z);
+}
+
+void ShaderProgram::setMatrixToUniform(const int location, const glm::mat4 & matrix)
+{
+	glUniformMatrix4fv(location, 1, false, glm::value_ptr(matrix));
+}
