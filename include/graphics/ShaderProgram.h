@@ -28,6 +28,7 @@ class ShaderProgram
 		void setBoolToUniform(const int location, const bool value);
 		void setVector3fToUniform(const int location, const glm::vec3 & vector);
 		void setMatrixToUniform(const int location, const glm::mat4 & matrix);
+		void setTransformMatrix(const glm::mat4 & transform_matrix);
 
 	private:
 		void validate() const;
@@ -36,4 +37,5 @@ class ShaderProgram
 		std::forward_list<unsigned int> m_shaders;
 		std::shared_ptr<IValidationStrategy> m_validation_strategy;
 		unsigned int m_shader;
+		int m_transform_matrix_location;
 };

@@ -10,11 +10,13 @@ ShaderProgram::ShaderProgram(const ShaderProgram & other)
 	m_shader = other.m_shader;
 	m_shaders = other.m_shaders;
 	m_validation_strategy = other.m_validation_strategy;
+	m_transform_matrix_location = other.m_transform_matrix_location;
 }
 
 ShaderProgram::ShaderProgram(ShaderProgram && other) noexcept
 {
 	m_shader = std::exchange(other.m_shader, 0);
+	m_transform_matrix_location = std::exchange(other.m_transform_matrix_location, 0);
 	m_shaders = std::move(other.m_shaders);
 	m_validation_strategy = std::move(other.m_validation_strategy);
 }
@@ -26,6 +28,7 @@ ShaderProgram & ShaderProgram::operator=(const ShaderProgram & other)
 		m_shader = other.m_shader;
 		m_shaders = other.m_shaders;
 		m_validation_strategy = other.m_validation_strategy;
+		m_transform_matrix_location = other.m_transform_matrix_location;
 	}
 
 	return *this;
@@ -36,6 +39,7 @@ ShaderProgram & ShaderProgram::operator=(ShaderProgram && other) noexcept
 	if (&other != this)
 	{
 		m_shader = std::exchange(other.m_shader, 0);
+		m_transform_matrix_location = std::exchange(other.m_transform_matrix_location, 0);
 		m_shaders = std::move(other.m_shaders);
 		m_validation_strategy = std::move(other.m_validation_strategy);
 	}
@@ -117,4 +121,9 @@ void ShaderProgram::setVector3fToUniform(const int location, const glm::vec3 & v
 void ShaderProgram::setMatrixToUniform(const int location, const glm::mat4 & matrix)
 {
 	glUniformMatrix4fv(location, 1, false, glm::value_ptr(matrix));
+}
+
+void ShaderProgram::setTransformMatrix(const glm::mat4 & transform_matrix)
+{
+	glUniformMatrix4fv(m_transform_matrix_location, 1, false, glm::value_ptr(transform_matrix));
 }
