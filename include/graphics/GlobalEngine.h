@@ -21,10 +21,10 @@ enum class EngineAPI: int8_t
 class GlobalEngine final
 {
 	public:
-		explicit GlobalEngine(EngineAPI api,
-		                      std::string title,
-		                      unsigned int width,
-		                      unsigned int height);
+		GlobalEngine(EngineAPI api,
+		             std::string title,
+		             unsigned int width,
+		             unsigned int height);
 		~GlobalEngine();
 		void pollEvents() const;
 		void gameLoop() const;

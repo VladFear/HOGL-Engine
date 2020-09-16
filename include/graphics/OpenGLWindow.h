@@ -18,9 +18,9 @@ struct DestroyGLFWwindow
 class OpenGLWindow final : public Window
 {
 	public:
-		explicit OpenGLWindow(std::string title,
-		                      unsigned int width,
-		                      unsigned int height);
+		OpenGLWindow(std::string title,
+		             unsigned int width,
+		             unsigned int height);
 
 		OpenGLWindow(const OpenGLWindow &) = delete;
 		GLFWwindow * getGLFWwindow() const { return m_window.get(); }
