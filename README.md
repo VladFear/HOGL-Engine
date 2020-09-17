@@ -8,3 +8,4 @@ Make sure that you already pre installed packages:
 - libsoil-dev
 - libgtest-dev
 - libglm-dev
+- Boost

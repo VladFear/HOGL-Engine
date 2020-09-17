@@ -8,3 +8,4 @@ sudo apt install \
   libsoil-dev \
   libgtest-dev \
   libglm-dev \
+  libboost-all-dev \
