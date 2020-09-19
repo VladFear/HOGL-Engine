@@ -124,15 +124,6 @@ std::shared_ptr<ShaderProgram> Entity::getShaderProgram() const
 {
 	return m_shader_program;
 }
-
-void Entity::rotate(const glm::vec3 & rotation) noexcept
-{
-	// TODO Test this or even change to better solution
-	m_rotation.x += rotation.x;
-	m_rotation.y += rotation.y;
-	m_rotation.z += rotation.z;
-}
-
 void Entity::draw() const
 {
 	glUseProgram(m_shader_program->value());
@@ -146,4 +137,49 @@ void Entity::draw() const
 	//
 	m_model->draw();
 	glUseProgram(0);
+}
+
+void Entity::rotate(const glm::vec3 & rotation) noexcept
+{
+	m_rotation += rotation;
+}
+
+void Entity::scale(const glm::vec3 & scale) noexcept
+{
+	m_scaling += scale;
+}
+
+void Entity::move(const glm::vec3 & move) noexcept
+{
+	m_position += move;
+}
+
+const glm::vec3 & Entity::getPosition() const noexcept
+{
+	return m_position;
+}
+
+const glm::vec3 & Entity::getRotation() const noexcept
+{
+	return m_rotation;
+}
+
+const glm::vec3 & Entity::getScalingFactor() const noexcept
+{
+	return m_scaling;
+}
+
+void Entity::setPosition(const glm::vec3 & position) noexcept
+{
+	m_position = position;
+}
+
+void Entity::getRotation(const glm::vec3 & rotation) noexcept
+{
+	m_rotation = rotation;
+}
+
+void Entity::getScalingFactor(const glm::vec3 & scaling_factor) noexcept
+{
+	m_scaling = scaling_factor;
 }

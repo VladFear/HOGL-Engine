@@ -28,12 +28,25 @@ class Entity : public GameObject
 		Entity & operator=(const Entity & other);
 		Entity & operator=(Entity && other) noexcept;
 
+		// Actions
+		void rotate(const glm::vec3 & rotation) noexcept;
+		void scale(const glm::vec3 & scale) noexcept;
+		void move(const glm::vec3 & move) noexcept;
+		void draw() const override;
+
+		// Setters
 		void setShaderProgram(std::shared_ptr<ShaderProgram> shader_program);
+		void setPosition(const glm::vec3 & position) noexcept;
+		void getRotation(const glm::vec3 & rotation) noexcept;
+		void getScalingFactor(const glm::vec3 & scaling_factor) noexcept;
+
+		// Getters
 		unsigned int getShaderProgramId() const;
 		std::shared_ptr<Model> getModel() const;
 		std::shared_ptr<ShaderProgram> getShaderProgram() const;
-		void rotate(const glm::vec3 & rotation) noexcept;
-		void draw() const override;
+		const glm::vec3 & getPosition() const noexcept;
+		const glm::vec3 & getRotation() const noexcept;
+		const glm::vec3 & getScalingFactor() const noexcept;
 
 	private:
 		std::shared_ptr<Model> m_model;
