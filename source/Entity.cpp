@@ -128,13 +128,11 @@ void Entity::draw() const
 {
 	glUseProgram(m_shader_program->value());
 
-	// TODO: Code for TRIANGE DEMO. Should be removed...
-	static float a = 0.f;
+	glm::mat4 transformation_matrix = createTransformationMatrix(m_position,
+	                                                             m_rotation,
+	                                                             m_scaling);
+	m_shader_program->setTransformMatrix(transformation_matrix);
 
-	glm::mat4 trans_matrix = glm::mat4(1.0f);
-	trans_matrix = glm::rotate(trans_matrix, glm::radians(a++), glm::vec3(0, 1, 0));
-	m_shader_program->setTransformMatrix(trans_matrix);
-	//
 	m_model->draw();
 	glUseProgram(0);
 }
