@@ -172,12 +172,12 @@ void Entity::setPosition(const glm::vec3 & position) noexcept
 	m_position = position;
 }
 
-void Entity::getRotation(const glm::vec3 & rotation) noexcept
+void Entity::setRotation(const glm::vec3 & rotation) noexcept
 {
 	m_rotation = rotation;
 }
 
-void Entity::getScalingFactor(const glm::vec3 & scaling_factor) noexcept
+void Entity::setScalingFactor(const glm::vec3 & scaling_factor) noexcept
 {
 	m_scaling = scaling_factor;
 }

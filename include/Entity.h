@@ -37,8 +37,8 @@ class Entity : public GameObject
 		// Setters
 		void setShaderProgram(std::shared_ptr<ShaderProgram> shader_program);
 		void setPosition(const glm::vec3 & position) noexcept;
-		void getRotation(const glm::vec3 & rotation) noexcept;
-		void getScalingFactor(const glm::vec3 & scaling_factor) noexcept;
+		void setRotation(const glm::vec3 & rotation) noexcept;
+		void setScalingFactor(const glm::vec3 & scaling_factor) noexcept;
 
 		// Getters
 		unsigned int getShaderProgramId() const;
