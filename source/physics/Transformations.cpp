@@ -20,7 +20,6 @@ std::ostream& operator<<(std::ostream& os, const glm::mat4& matrix)
 	return os;
 }
 
-// TODO: Test this CAREFULLY
 glm::mat4 createTransformationMatrix(const glm::vec3 & translation,
                                      const glm::vec3 & rotation,
                                      const glm::vec3 & scaling)
