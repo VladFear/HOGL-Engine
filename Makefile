@@ -25,6 +25,9 @@ $(OBJ_DIR):
 clean:
 	$(RM) -r $(OBJ_DIR) $(BUILD_DIR)
 
+clean-tests:
+	$(RM) -r $(TEST_OUT_DIR)
+
 .PHONY: all tests clean
 
 -include $(DEPS)
