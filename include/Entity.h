@@ -49,12 +49,12 @@ class Entity : public GameObject
 		const glm::vec3 & getScalingFactor() const noexcept;
 
 	private:
-		std::shared_ptr<Model> m_model;
-		std::shared_ptr<ShaderProgram> m_shader_program;
+		std::shared_ptr<Model> m_model = nullptr;
+		std::shared_ptr<ShaderProgram> m_shader_program = nullptr;
 
-		glm::vec3 m_position;
-		glm::vec3 m_rotation;
-		glm::vec3 m_scaling;
+		glm::vec3 m_position{0.f};
+		glm::vec3 m_rotation{0.f};
+		glm::vec3 m_scaling{1.f};
 
-		unsigned int m_shader_program_id;
+		unsigned int m_shader_program_id = 0;
 };
