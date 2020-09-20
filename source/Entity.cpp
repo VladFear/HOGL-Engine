@@ -144,7 +144,7 @@ void Entity::rotate(const glm::vec3 & rotation) noexcept
 
 void Entity::scale(const glm::vec3 & scale) noexcept
 {
-	m_scaling += scale;
+	m_scaling *= scale;
 }
 
 void Entity::move(const glm::vec3 & move) noexcept
