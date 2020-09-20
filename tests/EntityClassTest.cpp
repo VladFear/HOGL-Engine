@@ -356,7 +356,7 @@ namespace GEngine
 		ASSERT_FLOAT_EQ(position.y, 12.f);
 		ASSERT_FLOAT_EQ(position.z, 14.f);
 	}
-}; // GEngine
+} // GEngine
 
 int main(int argc, char ** argv)
 {
