@@ -14,7 +14,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJECT_DIRS)
 	$(CXX) -c $(DEPFLAGS) $(CXXFLAGS) $< -o $@
 
 $(OBJ_DIR)/%.out: %.cpp | $(TEST_OUT_DIR)
-	$(CXX) $< $(OBJS) $(CXXFLAGS) $(LDFLAGS) -lgtest -pthread -o $@
+	$(CXX) $< $(CXXFLAGS) $(LDFLAGS) -lgtest -pthread -o $@
 
 $(TEST_OUT_DIR):
 	@mkdir -p $(TEST_DIRS)
