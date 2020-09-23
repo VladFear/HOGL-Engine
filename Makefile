@@ -10,7 +10,7 @@ $(TARGET_LIB): $(OBJS)
 	@mkdir -p $(BUILD_DIR)
 	@ar rcs $@ $^
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJECT_DIRS)
 	$(CXX) -c $(DEPFLAGS) $(CXXFLAGS) $< -o $@
 
 $(OBJ_DIR)/%.out: %.cpp | $(TEST_OUT_DIR)
@@ -19,8 +19,8 @@ $(OBJ_DIR)/%.out: %.cpp | $(TEST_OUT_DIR)
 $(TEST_OUT_DIR):
 	@mkdir -p $(TEST_DIRS)
 
-$(OBJ_DIR):
-	@mkdir -p $(OBJECT_DIRS)
+$(OBJECT_DIRS):
+	@mkdir -p $@
 
 clean:
 	$(RM) -r $(OBJ_DIR) $(BUILD_DIR)
