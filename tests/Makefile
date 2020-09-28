@@ -11,7 +11,7 @@ include $(BUILD_TEST)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE_NAME          := gl_init_test
+LOCAL_MODULE_NAME          := OpenGLInitTest
 LOCAL_MODULE_OUT_PATH      := $(TEST_OUT_DIR)/graphics
 LOCAL_MODULE_SRC_PATH      := $(TEST_DIR)/graphics
 LOCAL_MODULE_SRC           := $(LOCAL_MODULE_SRC_PATH)/$(LOCAL_MODULE_NAME).cpp
@@ -22,9 +22,9 @@ include $(BUILD_TEST)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE_NAME          := helloworld_test
-LOCAL_MODULE_OUT_PATH      := $(TEST_OUT_DIR)/graphics
-LOCAL_MODULE_SRC_PATH      := $(TEST_DIR)/graphics
+LOCAL_MODULE_NAME          := HelloWorldTest
+LOCAL_MODULE_OUT_PATH      := $(TEST_OUT_DIR)
+LOCAL_MODULE_SRC_PATH      := $(TEST_DIR)
 LOCAL_MODULE_SRC           := $(LOCAL_MODULE_SRC_PATH)/$(LOCAL_MODULE_NAME).cpp
 LOCAL_MODULE_DEPS          := $(OUT_DIR)/libglobalengine.a
 LOCAL_MODULE_INCLUDES      := $(INCLUDE_DIR)
@@ -33,7 +33,7 @@ include $(BUILD_TEST)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE_NAME          := transformations_test
+LOCAL_MODULE_NAME          := TransformationsTest
 LOCAL_MODULE_OUT_PATH      := $(TEST_OUT_DIR)/physics
 LOCAL_MODULE_SRC_PATH      := $(TEST_DIR)/physics
 LOCAL_MODULE_SRC           := $(LOCAL_MODULE_SRC_PATH)/$(LOCAL_MODULE_NAME).cpp
