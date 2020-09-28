@@ -1,0 +1,10 @@
+include $(CLEAR_VARS)
+
+LOCAL_MODULE_NAME          := globalengine
+LOCAL_MODULE_OUT_PATH      := $(OUT_DIR)
+LOCAL_MODULE_SRC_PATH      := $(SOURCE_DIR)
+LOCAL_MODULE_OUT_OBJ_DIR   := $(OBJECT_OUT_DIR)
+LOCAL_MODULE_SRC           := $(call recursive-find-cpp-files,$(LOCAL_MODULE_SRC_PATH))
+LOCAL_MODULE_INCLUDES      := $(INCLUDE_DIR)
+
+include $(BUILD_STATIC_LIBRARY)
