@@ -6,6 +6,7 @@
 #include <fstream>
 #include <exception>
 #include <memory>
+#include <filesystem>
 
 #include <GL/glew.h>
 
@@ -24,14 +25,13 @@ class Shader
 			public:
 				ShaderBuilder();
 				~ShaderBuilder() = default;
-				ShaderBuilder & setSource(std::string && src);
-				ShaderBuilder & setSource(std::fstream && file);
+				ShaderBuilder & setSource(const std::filesystem::path & shaderPath);
 				ShaderBuilder & setValidationStrategy(std::shared_ptr<IValidationStrategy> validation_strategy);
 				std::shared_ptr<Shader> create(GLenum shader_type);
 
 			private:
 				void validate() const;
-				void createSourceStringFromFile(std::fstream file);
+				void createSourceStringFromFile(std::ifstream & file);
 
 			private:
 				std::shared_ptr<Shader> m_shader_ptr;

@@ -13,16 +13,13 @@ Builder::ShaderBuilder()
 	m_validation_strategy = std::make_shared<ValidationDefaultStrategy>();
 }
 
-Builder & Builder::setSource(std::string && src)
+Builder & Builder::setSource(const std::filesystem::path & shaderPath)
 {
-	createSourceStringFromFile(std::fstream(std::forward<std::string>(src)));
+	if (!std::filesystem::exists(shaderPath))
+		throw std::runtime_error("Shader path " + shaderPath.native() + " does not exist.\n");
 
-	return *this;
-}
-
-Builder & Builder::setSource(std::fstream && file)
-{
-	createSourceStringFromFile(std::forward<std::fstream>(file));
+	std::ifstream file(shaderPath.native());
+	createSourceStringFromFile(file);
 
 	return *this;
 }
@@ -45,7 +42,7 @@ void Builder::validate() const
 	m_validation_strategy->validate(m_shader_ptr->m_shader, ValidationPoint::COMPILATION);
 }
 
-void Builder::createSourceStringFromFile(std::fstream file)
+void Builder::createSourceStringFromFile(std::ifstream & file)
 {
 	/* Ensures ifstream objects can throw exceptions */
 	file.exceptions(std::ifstream::badbit | std::ifstream::failbit);
@@ -56,7 +53,6 @@ void Builder::createSourceStringFromFile(std::fstream file)
 	stream << file.rdbuf();
 
 	m_shader_ptr->m_source = stream.str();
-	file.close();
 }
 
 Builder & Builder::setValidationStrategy(std::shared_ptr<IValidationStrategy> validation_strategy)

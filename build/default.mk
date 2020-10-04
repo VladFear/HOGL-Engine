@@ -6,6 +6,7 @@ CXXFLAGS := \
     -Wno-parentheses  \
     -Wpedantic        \
     -Warray-bounds    \
+    -std=c++2a        \
     -g
 
 DEPFLAGS := \
