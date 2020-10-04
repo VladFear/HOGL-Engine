@@ -3,7 +3,7 @@
 
 #include <gtest/gtest.h>
 
-#include <graphics/GlobalEngine.h>
+#include <GlobalEngine.h>
 #include <Entity.h>
 
 namespace GEngine
@@ -18,10 +18,7 @@ namespace GEngine
 					// TODO: Make window invisible(not working yet)
 					glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 
-					engine = std::make_unique<GlobalEngine>(EngineAPI::OpenGL_API,
-					                                        "GlobalEngine",
-					                                        720,
-					                                        480);
+					engine = std::make_unique<GlobalEngine>(EngineAPI::OpenGL);
 					ASSERT_NE(engine, nullptr);
 				}
 				catch (const std::exception & e)

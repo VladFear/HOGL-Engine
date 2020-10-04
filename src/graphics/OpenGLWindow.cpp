@@ -1,26 +1,28 @@
 #include <graphics/OpenGLWindow.h>
 
-OpenGLWindow::OpenGLWindow(std::string title,
+OpenGLWindow::OpenGLWindow() : Window()
+{
+	createWindow();
+}
+
+OpenGLWindow::OpenGLWindow(const std::string & title,
                            unsigned int width,
                            unsigned int height) :
-	Window(title, width, height)
+    Window(title, width, height)
 {
 	createWindow();
 }
 
 void OpenGLWindow::createWindow()
 {
-	m_window.reset(glfwCreateWindow(Window::m_windimens.width,
-	                                Window::m_windimens.height,
+	m_window.reset(glfwCreateWindow(Window::m_dimensions.width,
+	                                Window::m_dimensions.height,
 	                                Window::m_title.c_str(),
 	                                nullptr,
 	                                nullptr));
 
 	if (!m_window)
-	{
-		glfwTerminate();
 		throw std::runtime_error(std::string("Failed to create window context.\n"));
-	}
 
 	/* Make the window's context current */
 	glfwMakeContextCurrent(m_window.get());

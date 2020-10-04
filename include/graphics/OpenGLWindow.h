@@ -18,11 +18,15 @@ struct DestroyGLFWwindow
 class OpenGLWindow final : public Window
 {
 	public:
-		OpenGLWindow(std::string title,
+		OpenGLWindow();
+		OpenGLWindow(const std::string & title,
 		             unsigned int width,
 		             unsigned int height);
 
 		OpenGLWindow(const OpenGLWindow &) = delete;
+		OpenGLWindow(OpenGLWindow &&) = delete;
+		OpenGLWindow & operator=(const OpenGLWindow &) = delete;
+		OpenGLWindow & operator=(OpenGLWindow &&) = delete;
 		GLFWwindow * getGLFWwindow() const { return m_window.get(); }
 		void swapBuffers() const override;
 		void clear() const override;
