@@ -6,6 +6,7 @@ Entity::Entity(std::shared_ptr<Model> model,
 	m_shader_program(shader_program)
 {
 	m_shader_program_id = m_shader_program->value();
+	m_projection_matrix = createProjectionMatrix();
 }
 
 Entity::Entity(std::shared_ptr<Model> model,
@@ -20,6 +21,7 @@ Entity::Entity(std::shared_ptr<Model> model,
 	m_scaling(scaling)
 {
 	m_shader_program_id = m_shader_program->value();
+	m_projection_matrix = createProjectionMatrix();
 }
 
 Entity::Entity(const Entity & other)
@@ -132,6 +134,8 @@ void Entity::draw() const
 	                                                             m_rotation,
 	                                                             m_scaling);
 	m_shader_program->setTransformMatrix(transformation_matrix);
+	// TODO: Shouldn't be loaded on every iteration
+	m_shader_program->setProjectionMatrix(m_projection_matrix);
 
 	m_model->draw();
 	glUseProgram(0);

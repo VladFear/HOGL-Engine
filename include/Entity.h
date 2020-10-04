@@ -52,6 +52,8 @@ class Entity : public GameObject
 		std::shared_ptr<Model> m_model = nullptr;
 		std::shared_ptr<ShaderProgram> m_shader_program = nullptr;
 
+		glm::mat4 m_projection_matrix{1.0f};
+
 		glm::vec3 m_position{0.f};
 		glm::vec3 m_rotation{0.f};
 		glm::vec3 m_scaling{1.f};

@@ -36,3 +36,21 @@ glm::mat4 createTransformationMatrix(const glm::vec3 & translation,
 
 	return trans_matrix;
 }
+
+glm::mat4 createProjectionMatrix()
+{
+	// TODO: Remove hardcode of following variables.
+	float FIELD_OF_VIEW = 70.f;
+	float NEAR_PLANE = 0.1f;
+	float FAR_PLANE = 1000.f;
+
+	int width = 1366;
+	int height = 768;
+
+	glm::mat4 projection_matrix = glm::perspective(glm::radians(FIELD_OF_VIEW),
+	                                               static_cast<float>(width) / static_cast<float>(height),
+	                                               NEAR_PLANE,
+	                                               FAR_PLANE);
+
+	return projection_matrix;
+}

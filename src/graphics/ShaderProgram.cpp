@@ -61,8 +61,7 @@ void ShaderProgram::compile()
 	glLinkProgram(m_shader);
 	validate();
 
-	// TODO: Added just for triangle DEMO
-	m_transform_matrix_location = getUniformLocation("transform_matrix");
+	getAllUniformLocations();
 }
 
 void ShaderProgram::validate() const
@@ -129,4 +128,15 @@ void ShaderProgram::setMatrixToUniform(const int location, const glm::mat4 & mat
 void ShaderProgram::setTransformMatrix(const glm::mat4 & transform_matrix)
 {
 	glUniformMatrix4fv(m_transform_matrix_location, 1, false, glm::value_ptr(transform_matrix));
+}
+
+void ShaderProgram::setProjectionMatrix(const glm::mat4 & projection_matrix)
+{
+	glUniformMatrix4fv(m_projection_matrix_location, 1, false, glm::value_ptr(projection_matrix));
+}
+
+void ShaderProgram::getAllUniformLocations()
+{
+	m_transform_matrix_location = getUniformLocation("transform_matrix");
+	m_projection_matrix_location = getUniformLocation("projection_matrix");
 }
