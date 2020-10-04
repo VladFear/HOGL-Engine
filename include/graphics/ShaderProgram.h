@@ -23,6 +23,8 @@ class ShaderProgram
 		void setValidationStrategy(std::shared_ptr<IValidationStrategy> validation_strategy);
 		void compile();
 		unsigned int value() const;
+		void apply() const;
+		void unapply() const;
 		int getUniformLocation(const std::string & uniform_name) const;
 		void setFloatToUniform(const int location, const float value);
 		void setBoolToUniform(const int location, const bool value);
@@ -38,7 +40,9 @@ class ShaderProgram
 	private:
 		std::forward_list<unsigned int> m_shaders;
 		std::shared_ptr<IValidationStrategy> m_validation_strategy;
+
 		unsigned int m_shader;
+
 		int m_transform_matrix_location;
 		int m_projection_matrix_location;
 };

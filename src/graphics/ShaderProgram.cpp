@@ -74,6 +74,16 @@ unsigned int ShaderProgram::value() const
 	return m_shader;
 }
 
+void ShaderProgram::apply() const
+{
+	glUseProgram(m_shader);
+}
+
+void ShaderProgram::unapply() const
+{
+	glUseProgram(0);
+}
+
 void ShaderProgram::attachShader(const Shader & shader)
 {
 	unsigned int shader_value = shader.value();

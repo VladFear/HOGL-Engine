@@ -128,7 +128,7 @@ std::shared_ptr<ShaderProgram> Entity::getShaderProgram() const
 }
 void Entity::draw() const
 {
-	glUseProgram(m_shader_program->value());
+	m_shader_program->apply();
 
 	glm::mat4 transformation_matrix = createTransformationMatrix(m_position,
 	                                                             m_rotation,
@@ -138,7 +138,8 @@ void Entity::draw() const
 	m_shader_program->setProjectionMatrix(m_projection_matrix);
 
 	m_model->draw();
-	glUseProgram(0);
+
+	m_shader_program->unapply();
 }
 
 void Entity::rotate(const glm::vec3 & rotation) noexcept
