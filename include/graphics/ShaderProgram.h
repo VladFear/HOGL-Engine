@@ -13,10 +13,10 @@ class ShaderProgram
 	public:
 		ShaderProgram();
 		virtual ~ShaderProgram();
-		ShaderProgram(const ShaderProgram & other);
-		ShaderProgram(ShaderProgram && other) noexcept;
-		ShaderProgram & operator=(const ShaderProgram & other);
-		ShaderProgram & operator=(ShaderProgram && other) noexcept;
+		ShaderProgram(const ShaderProgram & other) = delete;
+		ShaderProgram(ShaderProgram && other) = delete;
+		ShaderProgram & operator=(const ShaderProgram & other) = delete;
+		ShaderProgram & operator=(ShaderProgram && other) = delete;
 		void attachShader(const Shader & shader);
 		void attachShader(std::shared_ptr<Shader> shader);
 		void attachShader(Shader * shader) = delete;
