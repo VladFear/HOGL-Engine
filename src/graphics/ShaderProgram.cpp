@@ -7,6 +7,8 @@ ShaderProgram::ShaderProgram()
 
 ShaderProgram::~ShaderProgram()
 {
+	unapply();
+
 	for (unsigned int shader : m_shaders)
 		glDetachShader(m_shader, shader);
 
