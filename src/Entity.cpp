@@ -137,6 +137,10 @@ void Entity::draw() const
 	// TODO: Shouldn't be loaded on every iteration
 	m_shader_program->setProjectionMatrix(m_projection_matrix);
 
+	m_shader_program->setViewMatrix(createViewMatrix(glm::vec3(0.0f, 0.0f, 0.0f),
+	                                                 glm::vec3(0.0f, 0.0f, 0.0f),
+	                                                 glm::vec3(0.0f, 1.0f, 0.0f)));
+
 	m_model->draw();
 
 	m_shader_program->unapply();

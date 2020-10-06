@@ -19,3 +19,7 @@ glm::mat4 createTransformationMatrix(const glm::vec3 & translation,
                                      const glm::vec3 & scaling);
 
 glm::mat4 createProjectionMatrix();
+
+glm::mat4 createViewMatrix(const glm::vec3 & position,
+                           const glm::vec3 & direction,
+                           const glm::vec3 & up);

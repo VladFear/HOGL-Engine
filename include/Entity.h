@@ -7,6 +7,7 @@
 #include <graphics/Model.h>
 #include <graphics/ShaderProgram.h>
 #include <physics/Transformations.h>
+#include <graphics/Camera.h>
 
 class Entity : public GameObject
 {

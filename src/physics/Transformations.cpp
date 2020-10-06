@@ -54,3 +54,10 @@ glm::mat4 createProjectionMatrix()
 
 	return projection_matrix;
 }
+
+glm::mat4 createViewMatrix(const glm::vec3 & position,
+                           const glm::vec3 & direction,
+                           const glm::vec3 & up)
+{
+	return glm::lookAt(position, direction, up);
+}

@@ -105,8 +105,14 @@ void ShaderProgram::setProjectionMatrix(const glm::mat4 & projection_matrix)
 	glUniformMatrix4fv(m_projection_matrix_location, 1, false, glm::value_ptr(projection_matrix));
 }
 
+void ShaderProgram::setViewMatrix(const glm::mat4 & viewMatrix)
+{
+	glUniformMatrix4fv(m_viewMatrixLocation, 1, false, glm::value_ptr(viewMatrix));
+}
+
 void ShaderProgram::getAllUniformLocations()
 {
 	m_transform_matrix_location = getUniformLocation("transform_matrix");
 	m_projection_matrix_location = getUniformLocation("projection_matrix");
+	m_viewMatrixLocation = getUniformLocation("viewMatrix");
 }
