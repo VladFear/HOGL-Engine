@@ -53,6 +53,9 @@ int RenderEngine::windowShouldClose() const
 void RenderEngine::initOpenGL()
 {
 	initGLFW();
+
+	glfwWindowHint(GLFW_SAMPLES, 4);
+
 	m_window = std::make_unique<OpenGLWindow>();
 	initGLEW();
 }
