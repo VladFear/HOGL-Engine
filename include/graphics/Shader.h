@@ -12,33 +12,46 @@
 
 #include <graphics/ValidationDefaultStrategy.h>
 
-class Shader
+namespace GE
 {
-	public:
-		Shader() = default;
-		virtual ~Shader() = default;
-		unsigned int value() const;
 
-	public:
-		class ShaderBuilder
-		{
-			public:
-				ShaderBuilder();
-				~ShaderBuilder() = default;
-				ShaderBuilder & setSource(const std::filesystem::path & shaderPath);
-				ShaderBuilder & setValidationStrategy(std::shared_ptr<IValidationStrategy> validation_strategy);
-				std::shared_ptr<Shader> create(GLenum shader_type);
+	template <typename S>
+	using sPtr = std::shared_ptr<S>;
 
-			private:
-				void validate() const;
-				void createSourceStringFromFile(std::ifstream & file);
+	namespace fs = std::filesystem;
+	using path = std::filesystem::path;
 
-			private:
-				std::shared_ptr<Shader> m_shader_ptr;
-				std::shared_ptr<IValidationStrategy> m_validation_strategy;
-		};
+	class Shader
+	{
+		public:
+			Shader() = default;
+			virtual ~Shader() = default;
 
-	protected:
-		std::string m_source;
-		unsigned int m_shader;
-};
+			// Getters
+			uint getId() const;
+
+		public:
+			class ShaderBuilder
+			{
+				public:
+					ShaderBuilder();
+					~ShaderBuilder() = default;
+					ShaderBuilder & setSource(const path & shaderPath);
+					ShaderBuilder & setValidationStrategy(sPtr<IValidationStrategy> validationStrategy);
+					sPtr<Shader> create(GLenum shaderType);
+
+				private:
+					void validate() const;
+					void createSourceStringFromFile(std::ifstream & file);
+
+				private:
+					sPtr<Shader> m_shaderPtr;
+					sPtr<IValidationStrategy> m_validationStrategy;
+			};
+
+		protected:
+			std::string m_source;
+			uint m_id;
+	};
+
+} // GE

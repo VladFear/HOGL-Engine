@@ -1,63 +1,68 @@
 #include <graphics/Shader.h>
 
-using Builder = Shader::ShaderBuilder;
-
-unsigned int Shader::value() const
+namespace GE
 {
-	return m_shader;
-}
 
-Builder::ShaderBuilder()
-{
-	m_shader_ptr = std::make_shared<Shader>();
-	m_validation_strategy = std::make_shared<ValidationDefaultStrategy>();
-}
+	using Builder = Shader::ShaderBuilder;
 
-Builder & Builder::setSource(const std::filesystem::path & shaderPath)
-{
-	if (!std::filesystem::exists(shaderPath))
-		throw std::runtime_error("Shader path " + shaderPath.native() + " does not exist.\n");
+	Builder::ShaderBuilder()
+	{
+		m_shaderPtr = std::make_shared<Shader>();
+		m_validationStrategy = std::make_shared<ValidationDefaultStrategy>();
+	}
 
-	std::ifstream file(shaderPath.native());
-	createSourceStringFromFile(file);
+	Builder & Builder::setSource(const path & shaderPath)
+	{
+		if (!fs::exists(shaderPath))
+			throw std::runtime_error("Shader path " + shaderPath.native() + " does not exist.\n");
 
-	return *this;
-}
+		std::ifstream file(shaderPath.native());
+		createSourceStringFromFile(file);
 
-std::shared_ptr<Shader> Builder::create(GLenum shader_type)
-{
-	m_shader_ptr->m_shader = glCreateShader(shader_type);
+		return *this;
+	}
 
-	const char* csource = m_shader_ptr->m_source.c_str();
+	sPtr<Shader> Builder::create(GLenum shaderType)
+	{
+		m_shaderPtr->m_id = glCreateShader(shaderType);
 
-	/* Shader compilation */
-	glShaderSource(m_shader_ptr->m_shader, 1, &csource, nullptr);
-	glCompileShader(m_shader_ptr->m_shader);
+		const char* csource = m_shaderPtr->m_source.c_str();
 
-	return m_shader_ptr;
-}
+		/* Shader compilation */
+		glShaderSource(m_shaderPtr->m_id, 1, &csource, nullptr);
+		glCompileShader(m_shaderPtr->m_id);
 
-void Builder::validate() const
-{
-	m_validation_strategy->validate(m_shader_ptr->m_shader, ValidationPoint::COMPILATION);
-}
+		return m_shaderPtr;
+	}
 
-void Builder::createSourceStringFromFile(std::ifstream & file)
-{
-	/* Ensures ifstream objects can throw exceptions */
-	file.exceptions(std::ifstream::badbit | std::ifstream::failbit);
-	assert(file.is_open());
+	void Builder::validate() const
+	{
+		m_validationStrategy->validate(m_shaderPtr->m_id, ValidationPoint::Compilation);
+	}
 
-	/* Read shader source from file */
-	std::stringstream stream;
-	stream << file.rdbuf();
+	void Builder::createSourceStringFromFile(std::ifstream & file)
+	{
+		/* Ensures ifstream objects can throw exceptions */
+		file.exceptions(std::ifstream::badbit | std::ifstream::failbit);
+		assert(file.is_open());
 
-	m_shader_ptr->m_source = stream.str();
-}
+		/* Read shader source from file */
+		std::stringstream stream;
+		stream << file.rdbuf();
 
-Builder & Builder::setValidationStrategy(std::shared_ptr<IValidationStrategy> validation_strategy)
-{
-	m_validation_strategy = validation_strategy;
+		m_shaderPtr->m_source = stream.str();
+	}
 
-	return *this;
-}
+	Builder & Builder::setValidationStrategy(sPtr<IValidationStrategy> validationStrategy)
+	{
+		m_validationStrategy = validationStrategy;
+
+		return *this;
+	}
+
+	uint Shader::getId() const
+	{
+		return m_id;
+	}
+
+} // GE

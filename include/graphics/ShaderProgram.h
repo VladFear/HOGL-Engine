@@ -8,43 +8,60 @@
 
 #include <graphics/Shader.h>
 
-class ShaderProgram
+namespace GE
 {
-	public:
-		ShaderProgram();
-		virtual ~ShaderProgram();
-		ShaderProgram(const ShaderProgram & other) = delete;
-		ShaderProgram(ShaderProgram && other) = delete;
-		ShaderProgram & operator=(const ShaderProgram & other) = delete;
-		ShaderProgram & operator=(ShaderProgram && other) = delete;
-		void attachShader(const Shader & shader);
-		void attachShader(std::shared_ptr<Shader> shader);
-		void attachShader(Shader * shader) = delete;
-		void setValidationStrategy(std::shared_ptr<IValidationStrategy> validation_strategy);
-		void compile();
-		unsigned int value() const;
-		void apply() const;
-		void unapply() const;
-		int getUniformLocation(const std::string & uniform_name) const;
-		void setFloatToUniform(const int location, const float value);
-		void setBoolToUniform(const int location, const bool value);
-		void setVector3fToUniform(const int location, const glm::vec3 & vector);
-		void setMatrixToUniform(const int location, const glm::mat4 & matrix);
-		void setTransformMatrix(const glm::mat4 & transform_matrix);
-		void setProjectionMatrix(const glm::mat4 & projection_matrix);
-		void setViewMatrix(const glm::mat4 & viewMatrix);
-		void getAllUniformLocations();
 
-	private:
-		void validate() const;
+	template <typename S>
+	using sPtr = std::shared_ptr<S>;
 
-	private:
-		std::forward_list<unsigned int> m_shaders;
-		std::shared_ptr<IValidationStrategy> m_validation_strategy;
+	using vec3 = glm::vec3;
+	using mat4 = glm::mat4;
 
-		unsigned int m_shader;
+	class ShaderProgram
+	{
+		public:
+			ShaderProgram();
+			virtual ~ShaderProgram();
+			ShaderProgram(const ShaderProgram & other) = delete;
+			ShaderProgram(ShaderProgram && other) = delete;
+			ShaderProgram & operator=(const ShaderProgram & other) = delete;
+			ShaderProgram & operator=(ShaderProgram && other) = delete;
 
-		int m_transform_matrix_location;
-		int m_projection_matrix_location;
-		int m_viewMatrixLocation;
-};
+			// Actions
+			void attachShader(const Shader & shader);
+			void attachShader(sPtr<Shader> shader);
+			void attachShader(Shader * shader) = delete;
+			void compile();
+			void apply() const;
+			void unapply() const;
+			int getUniformLocation(const std::string & uniform_name) const;
+			void getAllUniformLocations();
+
+			// Getters
+			uint getId() const;
+
+			// Setters
+			void setValidationStrategy(sPtr<IValidationStrategy> validationStrategy);
+			void setFloatToUniform(const int location, const float value);
+			void setBoolToUniform(const int location, const bool value);
+			void setVector3fToUniform(const int location, const vec3 & vector);
+			void setMatrixToUniform(const int location, const mat4 & matrix);
+			void setTransformMatrix(const mat4 & transformMatrix);
+			void setProjectionMatrix(const mat4 & projectionMatrix);
+			void setViewMatrix(const mat4 & viewMatrix);
+
+		private:
+			void validate() const;
+
+		private:
+			std::forward_list<uint> m_shadersIds;
+			sPtr<IValidationStrategy> m_validationStrategy;
+
+			uint m_id = 0;
+
+			int m_transformMatrixLocation  = 0;
+			int m_projectionMatrixLocation = 0;
+			int m_viewMatrixLocation       = 0;
+	};
+
+} // GE

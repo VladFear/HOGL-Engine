@@ -1,192 +1,162 @@
 #include <Entity.h>
 
-Entity::Entity(std::shared_ptr<Model> model,
-               std::shared_ptr<ShaderProgram> shader_program) :
-	m_model(model),
-	m_shader_program(shader_program)
+namespace GE
 {
-	m_shader_program_id = m_shader_program->value();
-	m_projection_matrix = createProjectionMatrix();
-}
 
-Entity::Entity(std::shared_ptr<Model> model,
-               std::shared_ptr<ShaderProgram> shader_program,
-               const glm::vec3 & position,
-               const glm::vec3 & rotation,
-               const glm::vec3 & scaling) :
-	m_model(model),
-	m_shader_program(shader_program),
-	m_position(position),
-	m_rotation(rotation),
-	m_scaling(scaling)
-{
-	m_shader_program_id = m_shader_program->value();
-	m_projection_matrix = createProjectionMatrix();
-}
-
-Entity::Entity(const Entity & other)
-{
-		// Free resources
-	m_model.reset();
-	m_shader_program.reset();
-
-	m_model = other.m_model;
-	m_shader_program = other.m_shader_program;
-
-	m_position = other.m_position;
-	m_rotation = other.m_rotation;
-	m_scaling = other.m_scaling;
-
-	m_shader_program_id = other.m_shader_program_id;
-}
-
-Entity::Entity(Entity && other) noexcept
-{
-	// Free resources
-	m_model.reset();
-	m_shader_program.reset();
-
-	m_model = other.m_model;
-	m_shader_program = other.m_shader_program;
-
-	// Free resources
-	other.m_model.reset();
-	other.m_shader_program.reset();
-
-	m_position = std::move(other.m_position);
-	m_rotation = std::move(other.m_rotation);
-	m_scaling = std::move(other.m_scaling);
-
-	m_shader_program_id = std::exchange(other.m_shader_program_id, 0);
-}
-
-Entity & Entity::operator=(const Entity & other)
-{
-	if (&other != this)
+	Entity::Entity(sPtr<Model> model,
+	               sPtr<ShaderProgram> shaderProgram) :
+		m_model { model },
+		m_shaderProgram { shaderProgram }
 	{
-		// Free resources
-		m_model.reset();
-		m_shader_program.reset();
-
-		m_model = other.m_model;
-		m_shader_program = other.m_shader_program;
-
-		m_position = other.m_position;
-		m_rotation = other.m_rotation;
-		m_scaling = other.m_scaling;
-
-		m_shader_program_id = other.m_shader_program_id;
+		m_shaderProgramId = m_shaderProgram->getId();
+		m_projectionMatrix = createProjectionMatrix();
 	}
 
-	return *this;
-}
+	Entity::Entity(sPtr<Model> model,
+	               sPtr<ShaderProgram> shaderProgram,
+	               const vec3 & position,
+	               const vec3 & rotation,
+	               const vec3 & scaling) :
+		m_model         { model },
+		m_shaderProgram { shaderProgram },
+		m_position      { position },
+		m_rotation      { rotation },
+		m_scaling       { scaling }
+	{
+		m_shaderProgramId = m_shaderProgram->getId();
+		m_projectionMatrix = createProjectionMatrix();
+	}
 
-Entity & Entity::operator=(Entity && other) noexcept
-{
-	if (&other != this)
+	Entity::Entity(Entity && other) noexcept
 	{
 		// Free resources
 		m_model.reset();
-		m_shader_program.reset();
+		m_shaderProgram.reset();
 
 		m_model = other.m_model;
-		m_shader_program = other.m_shader_program;
+		m_shaderProgram = other.m_shaderProgram;
 
 		// Free resources
 		other.m_model.reset();
-		other.m_shader_program.reset();
+		other.m_shaderProgram.reset();
 
 		m_position = std::move(other.m_position);
 		m_rotation = std::move(other.m_rotation);
-		m_scaling = std::move(other.m_scaling);
+		m_scaling  = std::move(other.m_scaling);
 
-		m_shader_program_id = std::exchange(other.m_shader_program_id, 0);
+		m_shaderProgramId = std::exchange(other.m_shaderProgramId, 0);
 	}
 
-	return *this;
-}
+	Entity & Entity::operator=(Entity && other) noexcept
+	{
+		if (&other != this)
+		{
+			// Free resources
+			m_model.reset();
+			m_shaderProgram.reset();
 
-void Entity::setShaderProgram(std::shared_ptr<ShaderProgram> shader_program)
-{
-	m_shader_program = shader_program;
-	m_shader_program_id = m_shader_program->value();
-}
+			m_model = other.m_model;
+			m_shaderProgram = other.m_shaderProgram;
 
-unsigned int Entity::getShaderProgramId() const
-{
-	return m_shader_program_id;
-}
+			// Free resources
+			other.m_model.reset();
+			other.m_shaderProgram.reset();
 
-std::shared_ptr<Model> Entity::getModel() const
-{
-	return m_model;
-}
+			m_position = std::move(other.m_position);
+			m_rotation = std::move(other.m_rotation);
+			m_scaling  = std::move(other.m_scaling);
 
-std::shared_ptr<ShaderProgram> Entity::getShaderProgram() const
-{
-	return m_shader_program;
-}
-void Entity::draw() const
-{
-	m_shader_program->apply();
+			m_shaderProgramId = std::exchange(other.m_shaderProgramId, 0);
+		}
 
-	glm::mat4 transformation_matrix = createTransformationMatrix(m_position,
-	                                                             m_rotation,
-	                                                             m_scaling);
-	m_shader_program->setTransformMatrix(transformation_matrix);
-	// TODO: Shouldn't be loaded on every iteration
-	m_shader_program->setProjectionMatrix(m_projection_matrix);
+		return *this;
+	}
 
-	m_shader_program->setViewMatrix(createViewMatrix(glm::vec3(0.0f, 0.0f, 0.0f),
-	                                                 glm::vec3(0.0f, 0.0f, 0.0f),
-	                                                 glm::vec3(0.0f, 1.0f, 0.0f)));
+	void Entity::setShaderProgram(sPtr<ShaderProgram> shaderProgram)
+	{
+		m_shaderProgram = shaderProgram;
+		m_shaderProgramId = m_shaderProgram->getId();
+	}
 
-	m_model->draw();
+	unsigned int Entity::getShaderProgramId() const
+	{
+		return m_shaderProgramId;
+	}
 
-	m_shader_program->unapply();
-}
+	sPtr<Model> Entity::getModel() const
+	{
+		return m_model;
+	}
 
-void Entity::rotate(const glm::vec3 & rotation) noexcept
-{
-	m_rotation += rotation;
-}
+	sPtr<ShaderProgram> Entity::getShaderProgram() const
+	{
+		return m_shaderProgram;
+	}
 
-void Entity::scale(const glm::vec3 & scale) noexcept
-{
-	m_scaling *= scale;
-}
+	void Entity::draw() const
+	{
+		m_shaderProgram->apply();
 
-void Entity::move(const glm::vec3 & move) noexcept
-{
-	m_position += move;
-}
+		mat4 transformMatrix = createTransformationMatrix(m_position,
+		                                                  m_rotation,
+		                                                  m_scaling);
 
-const glm::vec3 & Entity::getPosition() const noexcept
-{
-	return m_position;
-}
+		m_shaderProgram->setTransformMatrix(transformMatrix);
+		// TODO: Shouldn't be loaded on every iteration
+		m_shaderProgram->setProjectionMatrix(m_projectionMatrix);
 
-const glm::vec3 & Entity::getRotation() const noexcept
-{
-	return m_rotation;
-}
+		m_shaderProgram->setViewMatrix(createViewMatrix(vec3(0.0f),
+		                                                vec3(0.0f),
+		                                                vec3(0.0f, 1.0f, 0.0f)));
 
-const glm::vec3 & Entity::getScalingFactor() const noexcept
-{
-	return m_scaling;
-}
+		m_model->draw();
 
-void Entity::setPosition(const glm::vec3 & position) noexcept
-{
-	m_position = position;
-}
+		m_shaderProgram->unapply();
+	}
 
-void Entity::setRotation(const glm::vec3 & rotation) noexcept
-{
-	m_rotation = rotation;
-}
+	void Entity::rotate(const vec3 & rotation) noexcept
+	{
+		m_rotation += rotation;
+	}
 
-void Entity::setScalingFactor(const glm::vec3 & scaling_factor) noexcept
-{
-	m_scaling = scaling_factor;
-}
+	void Entity::scale(const vec3 & scale) noexcept
+	{
+		m_scaling *= scale;
+	}
+
+	void Entity::move(const vec3 & move) noexcept
+	{
+		m_position += move;
+	}
+
+	const vec3 & Entity::getPosition() const noexcept
+	{
+		return m_position;
+	}
+
+	const vec3 & Entity::getRotation() const noexcept
+	{
+		return m_rotation;
+	}
+
+	const vec3 & Entity::getScalingFactor() const noexcept
+	{
+		return m_scaling;
+	}
+
+	void Entity::setPosition(const vec3 & position) noexcept
+	{
+		m_position = position;
+	}
+
+	void Entity::setRotation(const vec3 & rotation) noexcept
+	{
+		m_rotation = rotation;
+	}
+
+	void Entity::setScalingFactor(const vec3 & scalingFactor) noexcept
+	{
+		m_scaling = scalingFactor;
+	}
+
+} // GE

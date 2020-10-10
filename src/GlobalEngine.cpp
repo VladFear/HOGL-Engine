@@ -1,33 +1,50 @@
 #include <GlobalEngine.h>
 
-GlobalEngine::GlobalEngine(EngineAPI api)
+namespace GE
 {
-	m_render_engine = std::make_unique<RenderEngine>(api);
-	m_game_scene = std::make_unique<GameScene>();
-}
 
-void GlobalEngine::startGameLoop() const
-{
-	while (!m_render_engine->windowShouldClose())
+	GlobalEngine::GlobalEngine(EngineAPI api)
 	{
-		/* Poll for and process events */
-		m_render_engine->pollEvents();
-		m_render_engine->clear();
+		switch (api)
+		{
+			case EngineAPI::OpenGL:
+				m_renderSystem = std::make_unique<GLRenderSystem>();
+				break;
+			default:
+				std::cerr << "Unsupported Engine API!\n";
+				std::terminate();
+		}
 
-		/* Render here */
-		m_render_engine->render();
-		render();
-		/* Swap front and back buffers */
-		m_render_engine->swapBuffers();
+		m_api = api;
+		m_gameScene = std::make_unique<GameScene>();
 	}
-}
 
-void GlobalEngine::render() const
-{
-	m_game_scene->renderScene();
-}
+	void GlobalEngine::startGameLoop() const
+	{
+		while (!m_renderSystem->windowShouldClose())
+		{
+			/* Poll for and process events */
+			m_renderSystem->pollEvents();
+			m_renderSystem->clear();
 
-void GlobalEngine::addGameObject(std::unique_ptr<GameObject> game_object)
-{
-	m_game_scene->addGameObject(std::move(game_object));
-}
+			/* Render here */
+			m_renderSystem->render();
+
+			// TODO: Remove render func
+			render();
+			/* Swap front and back buffers */
+			m_renderSystem->swapBuffers();
+		}
+	}
+
+	void GlobalEngine::render() const
+	{
+		m_gameScene->renderScene();
+	}
+
+	void GlobalEngine::addGameObject(uPtr<GameObject> gameObject)
+	{
+		m_gameScene->addGameObject(std::move(gameObject));
+	}
+
+} // GE

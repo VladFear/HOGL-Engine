@@ -6,39 +6,47 @@
 
 #include <graphics/GameObject.h>
 
-class Model : public GameObject
+namespace GE
 {
-	public:
-		Model();
-		~Model();
-		void draw() const override;
 
-	public:
-		class ModelBuilder
-		{
-			public:
-				ModelBuilder();
-				~ModelBuilder() = default;
-				std::shared_ptr<Model> create();
-				ModelBuilder & addVertexBuffer(const float positions[],
-				                               const unsigned int vertex_count);
-				ModelBuilder & addIndexBuffer(const unsigned int indexes[],
-				                              const unsigned int indexes_count);
+	template <typename S>
+	using sPtr = std::shared_ptr<S>;
 
-				void dataToVBO(const float data[]);
-				void dataToInd(const unsigned int data[]);
+	class Model : public GameObject
+	{
+		public:
+			Model();
+			~Model();
+			void draw() const override;
 
-			private:
-				std::shared_ptr<Model> m_model;
-		};
+		public:
+			class ModelBuilder
+			{
+				public:
+					ModelBuilder();
+					~ModelBuilder() = default;
+					sPtr<Model> create();
+					ModelBuilder & addVertexBuffer(const float positions[],
+					                               const uint vertexCount);
+					ModelBuilder & addIndexBuffer(const uint indexes[],
+					                              const uint indexesCount);
 
-	private:
-		void createVAO();
-		void createVBO();
+					void dataToVBO(const float data[]);
+					void dataToInd(const uint data[]);
 
-	private:
-		unsigned int m_vao_id;
-		unsigned int m_vbos[2];
-		unsigned int m_vertex_count;
-		unsigned int m_indexes_count;
-};
+				private:
+					sPtr<Model> m_model;
+			};
+
+		private:
+			void createVAO();
+			void createVBO();
+
+		private:
+			uint m_vaoId;
+			uint m_vbos[2];
+			uint m_vertexCount;
+			uint m_indexesCount;
+	};
+
+} // GE

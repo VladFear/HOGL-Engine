@@ -1,21 +1,44 @@
 #pragma once
 
-#include <graphics/RenderEngine.h>
+#include <iostream>
+
 #include <graphics/GameScene.h>
+#include <graphics/OpenGL/GLRenderSystem.h>
 
-class GlobalEngine final
+namespace GE
 {
-	public:
-		GlobalEngine(EngineAPI api);
-		~GlobalEngine() = default;
-		void startGameLoop() const;
-		void addGameObject(std::unique_ptr<GameObject> game_object);
 
-	private:
-		void pollEvents() const;
-		void render() const;
+	template <typename U>
+	using uPtr = std::unique_ptr<U>;
 
-	private:
-		std::unique_ptr<RenderEngine> m_render_engine = nullptr;
-		std::unique_ptr<GameScene> m_game_scene = nullptr;
-};
+	template <typename S>
+	using sPtr = std::shared_ptr<S>;
+
+	using vec3 = glm::vec3;
+	using mat4 = glm::mat4;
+
+	enum class EngineAPI: int8_t
+	{
+		Undefined = -1,
+		OpenGL = 0,
+	};
+
+	class GlobalEngine final
+	{
+		public:
+			GlobalEngine(const EngineAPI api);
+			~GlobalEngine() = default;
+			void startGameLoop() const;
+			void addGameObject(uPtr<GameObject> gameObject);
+
+		private:
+			void pollEvents() const;
+			void render() const;
+
+		private:
+			uPtr<RenderSystem> m_renderSystem = nullptr;
+			uPtr<GameScene>    m_gameScene = nullptr;
+			EngineAPI m_api { EngineAPI::Undefined };
+	};
+
+} // GE

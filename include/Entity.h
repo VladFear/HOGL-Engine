@@ -6,58 +6,68 @@
 
 #include <graphics/Model.h>
 #include <graphics/ShaderProgram.h>
-#include <physics/Transformations.h>
+#include <maths/Transformations.h>
 #include <graphics/Camera.h>
 
-class Entity : public GameObject
+namespace GE
 {
-	public:
-		Entity() = default;
-		~Entity() = default;
 
-		Entity(std::shared_ptr<Model> model,
-		       std::shared_ptr<ShaderProgram> shader_program);
+	template <typename S>
+	using sPtr = std::shared_ptr<S>;
 
-		Entity(std::shared_ptr<Model> model,
-		       std::shared_ptr<ShaderProgram> shader_program,
-		       const glm::vec3 & position,
-		       const glm::vec3 & rotation,
-		       const glm::vec3 & scaling);
+	using vec3 = glm::vec3;
+	using mat4 = glm::mat4;
 
-		Entity(const Entity & other);
-		Entity(Entity && other) noexcept;
-		Entity & operator=(const Entity & other);
-		Entity & operator=(Entity && other) noexcept;
+	class Entity : public GameObject
+	{
+		public:
+			Entity() = default;
+			~Entity() = default;
 
-		// Actions
-		void rotate(const glm::vec3 & rotation) noexcept;
-		void scale(const glm::vec3 & scale) noexcept;
-		void move(const glm::vec3 & move) noexcept;
-		void draw() const override;
+			Entity(sPtr<Model> model,
+			       sPtr<ShaderProgram> shaderProgram);
 
-		// Setters
-		void setShaderProgram(std::shared_ptr<ShaderProgram> shader_program);
-		void setPosition(const glm::vec3 & position) noexcept;
-		void setRotation(const glm::vec3 & rotation) noexcept;
-		void setScalingFactor(const glm::vec3 & scaling_factor) noexcept;
+			Entity(sPtr<Model> model,
+			       sPtr<ShaderProgram> shaderProgram,
+			       const vec3 & position,
+			       const vec3 & rotation,
+			       const vec3 & scaling);
 
-		// Getters
-		unsigned int getShaderProgramId() const;
-		std::shared_ptr<Model> getModel() const;
-		std::shared_ptr<ShaderProgram> getShaderProgram() const;
-		const glm::vec3 & getPosition() const noexcept;
-		const glm::vec3 & getRotation() const noexcept;
-		const glm::vec3 & getScalingFactor() const noexcept;
+			Entity(const Entity & other) = delete;
+			Entity(Entity && other) noexcept;
+			Entity & operator=(const Entity & other) = delete;
+			Entity & operator=(Entity && other) noexcept;
 
-	private:
-		std::shared_ptr<Model> m_model = nullptr;
-		std::shared_ptr<ShaderProgram> m_shader_program = nullptr;
+			// Actions
+			void rotate(const vec3 & rotation) noexcept;
+			void scale(const vec3 & scale) noexcept;
+			void move(const vec3 & move) noexcept;
+			void draw() const override;
 
-		glm::mat4 m_projection_matrix{1.0f};
+			// Setters
+			void setShaderProgram(sPtr<ShaderProgram> shaderProgram);
+			void setPosition(const vec3 & position) noexcept;
+			void setRotation(const vec3 & rotation) noexcept;
+			void setScalingFactor(const vec3 & scalingFactor) noexcept;
 
-		glm::vec3 m_position{0.f};
-		glm::vec3 m_rotation{0.f};
-		glm::vec3 m_scaling{1.f};
+			// Getters
+			unsigned int getShaderProgramId() const;
+			sPtr<Model> getModel() const;
+			sPtr<ShaderProgram> getShaderProgram() const;
+			const vec3 & getPosition() const noexcept;
+			const vec3 & getRotation() const noexcept;
+			const vec3 & getScalingFactor() const noexcept;
 
-		unsigned int m_shader_program_id = 0;
-};
+		private:
+			sPtr<Model> m_model = nullptr;
+			sPtr<ShaderProgram> m_shaderProgram = nullptr;
+
+			mat4 m_projectionMatrix { 1.0f };
+			vec3 m_position { 0.f };
+			vec3 m_rotation { 0.f };
+			vec3 m_scaling  { 1.f };
+
+			unsigned int m_shaderProgramId { 0 };
+	};
+
+} // GE

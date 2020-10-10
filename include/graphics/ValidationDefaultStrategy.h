@@ -2,22 +2,28 @@
 
 #include <graphics/IValidationStrategy.h>
 
-class ValidationDefaultStrategy : public IValidationStrategy
+namespace GE
 {
-	public:
-		void validate(const unsigned int shader_id,
-		              const ValidationPoint validation_point) const override
-		{
-			int success = 0;
 
-			glGetProgramiv(shader_id, static_cast<GLenum>(validation_point), &success);
-			if (!success)
+	class ValidationDefaultStrategy : public IValidationStrategy
+	{
+		public:
+			void validate(const uint id,
+			              const ValidationPoint validationPoint) const override
 			{
-				/* Pull the error message */
-				char info_log[1024];
-				glGetProgramInfoLog(shader_id, sizeof(info_log), nullptr, info_log);
+				int success = 0;
 
-				throw std::runtime_error(std::string(info_log) + '\n');
+				glGetProgramiv(id, static_cast<GLenum>(validationPoint), &success);
+
+				if (!success)
+				{
+					/* Pull the error message */
+					char infoLog[1024];
+					glGetProgramInfoLog(id, sizeof(infoLog), nullptr, infoLog);
+
+					throw std::runtime_error(std::string(infoLog) + '\n');
+				}
 			}
-		}
-};
+	};
+
+} // GE

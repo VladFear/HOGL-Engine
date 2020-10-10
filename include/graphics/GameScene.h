@@ -4,18 +4,33 @@
 #include <memory>
 
 #include <graphics/GameObject.h>
+#include <graphics/Camera.h>
 
-class GameScene
+namespace GE
 {
-	public:
-		GameScene() = default;
-		virtual ~GameScene() = default;
-		void addGameObject(std::unique_ptr<GameObject> object);
-		void renderScene() const;
 
-	private:
-		void renderObject(const std::unique_ptr<GameObject> & object) const;
+	template <typename U>
+	using uPtr = std::unique_ptr<U>;
 
-	private:
-		std::forward_list<std::unique_ptr<GameObject>> m_objects_list;
-};
+	class GameScene
+	{
+		public:
+			GameScene() = default;
+			virtual ~GameScene() = default;
+
+			// Actions
+			void addGameObject(uPtr<GameObject> object);
+			void renderScene() const;
+
+			// Setters
+			void setCamera(uPtr<Camera> camera);
+
+		private:
+			void renderObject(const uPtr<GameObject> & object) const;
+
+		private:
+			std::forward_list<uPtr<GameObject>> m_objectsList;
+			uPtr<Camera> m_camera = nullptr;
+	};
+
+} // GE
