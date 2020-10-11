@@ -42,16 +42,16 @@ namespace GE
 
 	mat4 createProjectionMatrix()
 	{
-		// TODO: Remove hardcode of following variables.
-		float FIELD_OF_VIEW = 70.f;
-		float NEAR_PLANE = 0.1f;
-		float FAR_PLANE = 1000.f;
+		float NEAR_PLANE = std::get<float>(RenderProperties::getProperty("NEAR_PLANE"));
+		float FAR_PLANE  = std::get<float>(RenderProperties::getProperty("FAR_PLANE"));
+		float FOV        = std::get<float>(RenderProperties::getProperty("FIELD_OF_VIEW"));
 
+		// TODO: Remove hardcode of following variables.
 		int width = 1366;
 		int height = 768;
 
 		mat4 projectionMatrix = glm::perspective(
-			glm::radians(FIELD_OF_VIEW),
+			glm::radians(FOV),
 			static_cast<float>(width) / static_cast<float>(height),
 			NEAR_PLANE,
 			FAR_PLANE);
