@@ -25,7 +25,7 @@ namespace GE
 
 	void GLRenderSystem::swapBuffers() const
 	{
-		m_window->swapBuffers();
+		glfwSwapBuffers(m_GLFWwindow);
 	}
 
 	void GLRenderSystem::clear() const
@@ -36,7 +36,7 @@ namespace GE
 
 	int GLRenderSystem::windowShouldClose() const
 	{
-		return m_window->windowShouldClose();
+		return glfwWindowShouldClose(m_GLFWwindow);
 	}
 
 	void GLRenderSystem::initOpenGL()
@@ -46,6 +46,8 @@ namespace GE
 		glfwWindowHint(GLFW_SAMPLES, 4);
 
 		m_window = std::make_unique<GLWindow>();
+		m_GLFWwindow = m_window->getGLFWwindow();
+
 		initGLEW();
 	}
 

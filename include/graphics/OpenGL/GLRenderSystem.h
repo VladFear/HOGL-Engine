@@ -33,6 +33,11 @@ namespace GE
 			void initOpenGL();
 			void initGLFW() const;
 			void initGLEW() const;
+
+		private:
+			uPtr<GLWindow> m_window   = nullptr;
+			// Observable pointer (not owning)
+			GLFWwindow * m_GLFWwindow = nullptr;
 	};
 
 } // GE

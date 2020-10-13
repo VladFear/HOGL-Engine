@@ -23,10 +23,6 @@ namespace GE
 			{  }
 			virtual ~Window() = default;
 
-			// Actions
-			virtual void swapBuffers() const = 0;
-			virtual int windowShouldClose() const = 0;
-
 			// Setters
 			void setVisibility(bool visible)
 			{

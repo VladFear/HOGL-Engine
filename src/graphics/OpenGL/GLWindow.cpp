@@ -32,16 +32,6 @@ namespace GE
 		glfwMakeContextCurrent(m_window.get());
 	}
 
-	void GLWindow::swapBuffers() const
-	{
-		glfwSwapBuffers(m_window.get());
-	}
-
-	GLint GLWindow::windowShouldClose() const
-	{
-		return glfwWindowShouldClose(m_window.get());
-	}
-
 	GLFWwindow * GLWindow::getGLFWwindow() const
 	{
 		return m_window.get();

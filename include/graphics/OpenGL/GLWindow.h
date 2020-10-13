@@ -31,10 +31,6 @@ namespace GE
 			GLWindow & operator=(const GLWindow &) = delete;
 			GLWindow & operator=(GLWindow &&) = delete;
 
-			// Actions
-			void swapBuffers() const override;
-			GLint windowShouldClose() const override;
-
 			// Getters
 			GLFWwindow * getGLFWwindow() const;
 
