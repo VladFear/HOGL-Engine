@@ -6,6 +6,7 @@
 
 #include <graphics/GameObject.h>
 #include <graphics/OpenGL/GLVertexArrayObject.h>
+#include <graphics/OpenGL/GLBufferObject.h>
 
 namespace GE
 {
@@ -13,11 +14,14 @@ namespace GE
 	template <typename S>
 	using sPtr = std::shared_ptr<S>;
 
+	template <typename U>
+	using uPtr = std::unique_ptr<U>;
+
 	class Model : public GameObject
 	{
 		public:
-			Model();
-			~Model();
+			Model() = default;
+			~Model() = default;
 			void draw() const override;
 
 		public:
@@ -27,26 +31,19 @@ namespace GE
 					ModelBuilder();
 					~ModelBuilder() = default;
 					sPtr<Model> create();
-					ModelBuilder & addVertexBuffer(const float positions[],
-					                               const uint vertexCount);
-					ModelBuilder & addIndexBuffer(const uint indexes[],
-					                              const uint indexesCount);
-
-					void dataToVBO(const float data[]);
-					void dataToInd(const uint data[]);
+					ModelBuilder & addVertexBuffer(const GLfloat positions[],
+					                               const GLuint vertexCount);
+					ModelBuilder & addIndexBuffer(const GLuint indexes[],
+					                              const GLuint indexesCount);
 
 				private:
 					sPtr<Model> m_model;
 			};
 
 		private:
-			void createVBO();
-
-		private:
 			GLVertexArrayObject m_vao;
-			uint m_vbos[2];
-			uint m_vertexCount;
-			uint m_indexesCount;
+			uPtr<GLBufferObject<GLfloat>> m_vertexBuffer = nullptr;
+			uPtr<GLBufferObject<GLuint>>  m_indexBuffer  = nullptr;
 	};
 
 } // GE
