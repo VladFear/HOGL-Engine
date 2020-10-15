@@ -2,22 +2,22 @@
 
 #include <memory>
 
-#include "graphics/Window.h"
+#include "graphics/IWindow.h"
 
 namespace GE
 {
 
-	class RenderSystem
+	class IRenderSystem
 	{
 		public:
-			virtual ~RenderSystem() = default;
+			virtual ~IRenderSystem() = default;
 
 			// Actions
 			virtual void clear()             const = 0;
 			virtual void render()            const = 0;
 			virtual void pollEvents()        const = 0;
 			virtual void swapBuffers()       const = 0;
-			virtual int windowShouldClose()  const = 0;
+			virtual int  windowShouldClose() const = 0;
 	};
 
 } // GE

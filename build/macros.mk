@@ -81,7 +81,7 @@ if [ $$result -ne 0 ]; then \
 elif [ -s $@.log ]; then \
   printf "%-60b%b" "$(ESC_TARGET) $@" " $(ESC_WARNING)$(WARNING_MESSAGE)$(ESC_RESET)\n"   ; \
 else  \
-  printf "%-60b%b" "$(ESC_TARGET) $(@F)" " $(ESC_OK)$(SUCCESS_MESSAGE)$(ESC_RESET)\n"   ; \
+  printf "%-60b%b" "$(ESC_BOLD)$(COMPILATION_MESSAGE)$(ESC_TARGET) $(@F)" " $(ESC_OK)$(SUCCESS_MESSAGE)$(ESC_RESET)\n"   ; \
 fi; \
 exit $$result
 endef

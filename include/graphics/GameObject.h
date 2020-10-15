@@ -12,13 +12,13 @@ namespace GE
 			virtual void draw() const = 0;
 
 			// Setters
-			void setVisibility(bool visible)
+			void setVisibility(bool visibility)
 			{
-				m_visible = visible;
+				m_visibility = visibility;
 			}
 
 		protected:
-			bool m_visible = true;
+			bool m_visibility = true;
 	};
 
 } // GE

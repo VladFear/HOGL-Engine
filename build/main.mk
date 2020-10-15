@@ -6,14 +6,15 @@ include $(BUILD_SYSTEM)/default.mk
 .DEFAULT_GOAL := GlobalEngine ## Compile GlobalEngine library and tests
 $(.DEFAULT_GOAL): artifacts | $(OUT_DIR)
 
-all_libraries :=
-all_tests     :=
+all_libraries   :=
+all_tests       :=
+all_executables :=
 
 # Include makefiles in subdirectories
 all_subdir_makefiles := $(call all-subdir-makefiles, ./)
 $(foreach mk, $(all-subdir-makefiles), $(eval include $(mk)))
 
-artifacts: $(all_libraries) $(all_tests)
+artifacts: $(all_libraries) $(all_tests) $(all_executables)
 
 $(OUT_DIR):
 	$(QUIET) mkdir -p $@

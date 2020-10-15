@@ -16,7 +16,7 @@ namespace GE
 			       const float pith,
 			       const float roll,
 			       const float yaw);
-			~Camera() = default;
+			virtual ~Camera() = default;
 
 			// Getters
 			float getPitch() const;

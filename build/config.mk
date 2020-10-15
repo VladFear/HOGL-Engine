@@ -10,6 +10,7 @@ INCLUDE_DIR   := include
 SOURCE_DIR    := src
 OBJECT_DIR    := obj
 TEST_DIR      := tests
+EXAMPLES_DIR  := examples
 
 # Set directory for all files which will be generated or builded
 OUT_DIR          := $(ROOT)/out
@@ -24,6 +25,7 @@ QUIET := @
 CLEAR_VARS := $(BUILD_SYSTEM)/clear_variables.mk
 BUILD_TEST := $(BUILD_SYSTEM)/test.mk
 BUILD_STATIC_LIBRARY := $(BUILD_SYSTEM)/static_library.mk
+BUILD_EXECUTABLE := $(BUILD_SYSTEM)/executable.mk
 
 # Define colors escape codes for pretty format output
 ESC_BOLD     := \033[1m

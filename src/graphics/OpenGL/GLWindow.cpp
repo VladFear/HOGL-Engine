@@ -3,15 +3,10 @@
 namespace GE
 {
 
-	GLWindow::GLWindow() : Window()
-	{
-		createWindow();
-	}
-
 	GLWindow::GLWindow(const std::string & title,
 	                   const uint width,
 	                   const uint height) :
-		Window(title, width, height)
+		IWindow(title, width, height)
 	{
 		createWindow();
 	}
@@ -19,9 +14,9 @@ namespace GE
 	void GLWindow::createWindow()
 	{
 		m_window.reset(
-			glfwCreateWindow(Window::m_dimensions.width,
-			                 Window::m_dimensions.height,
-			                 Window::m_title.c_str(),
+			glfwCreateWindow(IWindow::m_width,
+			                 IWindow::m_height,
+			                 IWindow::m_title.c_str(),
 			                 nullptr,
 			                 nullptr));
 

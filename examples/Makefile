@@ -1,0 +1,10 @@
+include $(CLEAR_VARS)
+
+LOCAL_MODULE_NAME          := TestApplication
+LOCAL_MODULE_OUT_PATH      := $(OUT_DIR)/$(EXAMPLES_DIR)
+LOCAL_MODULE_SRC_PATH      := $(EXAMPLES_DIR)/$(LOCAL_MODULE_NAME)
+LOCAL_MODULE_SRC           := $(call recursive-find-cpp-files,$(LOCAL_MODULE_SRC_PATH))
+LOCAL_MODULE_DEPS          := $(OUT_DIR)/libglobalengine.a
+LOCAL_MODULE_INCLUDES      := $(INCLUDE_DIR) $(LOCAL_MODULE_SRC_PATH)
+
+include $(BUILD_EXECUTABLE)

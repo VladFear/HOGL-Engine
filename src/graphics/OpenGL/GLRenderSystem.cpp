@@ -3,9 +3,19 @@
 namespace GE
 {
 
-	GLRenderSystem::GLRenderSystem()
+	GLRenderSystem::GLRenderSystem(const std::string & windowTitle,
+	                               const uint windowWidth,
+	                               const uint windowHeight)
 	{
-		initOpenGL();
+		initGLFW();
+		glfwWindowHint(GLFW_SAMPLES, 4);
+
+		m_window = std::make_unique<GLWindow>(windowTitle,
+		                                      windowWidth,
+		                                      windowHeight);
+		m_GLFWwindow = m_window->getGLFWwindow();
+
+		initGLEW();
 	}
 
 	GLRenderSystem::~GLRenderSystem()
@@ -37,18 +47,6 @@ namespace GE
 	int GLRenderSystem::windowShouldClose() const
 	{
 		return glfwWindowShouldClose(m_GLFWwindow);
-	}
-
-	void GLRenderSystem::initOpenGL()
-	{
-		initGLFW();
-
-		glfwWindowHint(GLFW_SAMPLES, 4);
-
-		m_window = std::make_unique<GLWindow>();
-		m_GLFWwindow = m_window->getGLFWwindow();
-
-		initGLEW();
 	}
 
 	void GLRenderSystem::initGLFW() const

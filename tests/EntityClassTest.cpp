@@ -3,7 +3,9 @@
 
 #include <gtest/gtest.h>
 
-#include "GlobalEngine.h"
+#include "core/GlobalEngine.h"
+#include "core/EngineArgs.h"
+
 #include "Entity.h"
 
 template <typename U>
@@ -21,7 +23,13 @@ class GlobalEngineTestClass : public ::testing::Test
 				// TODO: Make window invisible(not working yet)
 				glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 
-				engine = std::make_unique<GE::GlobalEngine>(GE::EngineAPI::OpenGL);
+				GE::EngineArgs engineArgs =
+					GE::EngineArgsBuilder()
+					.setEngineAPI(GE::EngineAPI::OpenGL)
+					.setWindowTitle("EntityClassTest")
+					.build();
+
+				engine = std::make_unique<GE::GlobalEngine>(engineArgs);
 				ASSERT_NE(engine, nullptr);
 			}
 			catch (const std::exception & e)

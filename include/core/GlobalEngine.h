@@ -2,8 +2,11 @@
 
 #include <iostream>
 
+#include "core/EngineArgs.h"
+
 #include "graphics/GameScene.h"
 #include "graphics/OpenGL/GLRenderSystem.h"
+#include "graphics/OpenGL/GLWindow.h"
 
 namespace GE
 {
@@ -17,28 +20,26 @@ namespace GE
 	using vec3 = glm::vec3;
 	using mat4 = glm::mat4;
 
-	enum class EngineAPI: int8_t
-	{
-		Undefined = -1,
-		OpenGL = 0,
-	};
-
 	class GlobalEngine final
 	{
 		public:
-			GlobalEngine(const EngineAPI api);
-			~GlobalEngine() = default;
+			GlobalEngine() = delete;
+			explicit GlobalEngine(const EngineArgs & engineArgs);
+
+			// Actions
 			void startGameLoop() const;
-			void addGameObject(uPtr<GameObject> gameObject);
+
+			// Setters
+			void setGameScene(uPtr<GameScene> gameScene);
 
 		private:
 			void pollEvents() const;
 			void render() const;
 
 		private:
-			uPtr<RenderSystem> m_renderSystem = nullptr;
-			uPtr<GameScene>    m_gameScene = nullptr;
-			EngineAPI m_api { EngineAPI::Undefined };
+			const EngineArgs    m_engineArgs;
+			uPtr<IRenderSystem> m_renderSystem = nullptr;
+			uPtr<GameScene>     m_gameScene    = nullptr;
 	};
 
 } // GE
