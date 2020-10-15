@@ -1,6 +1,6 @@
 #pragma once
 
-#include <graphics/IValidationStrategy.h>
+#include "graphics/IValidationStrategy.h"
 
 namespace GE
 {

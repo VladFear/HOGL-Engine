@@ -3,8 +3,8 @@
 
 #include <gtest/gtest.h>
 
-#include <GlobalEngine.h>
-#include <Entity.h>
+#include "GlobalEngine.h"
+#include "Entity.h"
 
 namespace GE
 {

@@ -3,8 +3,8 @@
 #include <forward_list>
 #include <memory>
 
-#include <graphics/GameObject.h>
-#include <graphics/Camera.h>
+#include "graphics/GameObject.h"
+#include "graphics/Camera.h"
 
 namespace GE
 {

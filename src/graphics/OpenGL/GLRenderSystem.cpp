@@ -1,4 +1,4 @@
-#include <graphics/OpenGL/GLRenderSystem.h>
+#include "graphics/OpenGL/GLRenderSystem.h"
 
 namespace GE
 {

@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include <graphics/Window.h>
+#include "graphics/Window.h"
 
 namespace GE
 {

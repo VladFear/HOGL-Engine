@@ -1,4 +1,4 @@
-#include <GlobalEngine.h>
+#include "GlobalEngine.h"
 
 namespace GE
 {

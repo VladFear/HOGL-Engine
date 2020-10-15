@@ -10,7 +10,7 @@
 
 #include <GL/glew.h>
 
-#include <graphics/ValidationDefaultStrategy.h>
+#include "graphics/ValidationDefaultStrategy.h"
 
 namespace GE
 {

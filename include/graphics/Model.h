@@ -4,8 +4,8 @@
 
 #include <GL/glew.h>
 
-#include <graphics/GameObject.h>
-#include <graphics/OpenGL/GLVertexArrayObject.h>
+#include "graphics/GameObject.h"
+#include "graphics/OpenGL/GLVertexArrayObject.h"
 
 namespace GE
 {

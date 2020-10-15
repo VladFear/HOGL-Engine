@@ -1,4 +1,4 @@
-#include <graphics/GameScene.h>
+#include "graphics/GameScene.h"
 
 namespace GE
 {

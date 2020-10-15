@@ -2,8 +2,8 @@
 
 #include <iostream>
 
-#include <graphics/GameScene.h>
-#include <graphics/OpenGL/GLRenderSystem.h>
+#include "graphics/GameScene.h"
+#include "graphics/OpenGL/GLRenderSystem.h"
 
 namespace GE
 {

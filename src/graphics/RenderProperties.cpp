@@ -1,4 +1,4 @@
-#include <graphics/RenderProperties.h>
+#include "graphics/RenderProperties.h"
 
 namespace GE
 {

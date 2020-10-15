@@ -4,10 +4,10 @@
 
 #include <glm/glm.hpp>
 
-#include <graphics/Model.h>
-#include <graphics/ShaderProgram.h>
-#include <maths/Transformations.h>
-#include <graphics/Camera.h>
+#include "graphics/Model.h"
+#include "graphics/ShaderProgram.h"
+#include "maths/Transformations.h"
+#include "graphics/Camera.h"
 
 namespace GE
 {

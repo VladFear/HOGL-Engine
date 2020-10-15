@@ -1,4 +1,4 @@
-#include <graphics/OpenGL/GLVertexArrayObject.h>
+#include "graphics/OpenGL/GLVertexArrayObject.h"
 
 namespace GE
 {

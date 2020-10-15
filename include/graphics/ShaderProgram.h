@@ -6,7 +6,7 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 
-#include <graphics/Shader.h>
+#include "graphics/Shader.h"
 
 namespace GE
 {
