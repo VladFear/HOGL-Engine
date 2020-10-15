@@ -105,7 +105,7 @@ namespace GE
 		// TODO: Shouldn't be loaded on every iteration
 		m_shaderProgram->setProjectionMatrix(m_projectionMatrix);
 
-		m_shaderProgram->setViewMatrix(createViewMatrix(vec3(0.0f),
+		m_shaderProgram->setViewMatrix(createViewMatrix(vec3(0.0f, 0.0f, 0.0001f),
 		                                                vec3(0.0f),
 		                                                vec3(0.0f, 1.0f, 0.0f)));
 
