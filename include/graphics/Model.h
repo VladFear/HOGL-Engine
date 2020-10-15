@@ -5,6 +5,7 @@
 #include <GL/glew.h>
 
 #include <graphics/GameObject.h>
+#include <graphics/OpenGL/GLVertexArrayObject.h>
 
 namespace GE
 {
@@ -39,11 +40,10 @@ namespace GE
 			};
 
 		private:
-			void createVAO();
 			void createVBO();
 
 		private:
-			uint m_vaoId;
+			GLVertexArrayObject m_vao;
 			uint m_vbos[2];
 			uint m_vertexCount;
 			uint m_indexesCount;

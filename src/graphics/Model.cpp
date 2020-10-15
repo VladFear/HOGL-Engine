@@ -7,7 +7,6 @@ namespace GE
 
 	Model::Model()
 	{
-		createVAO();
 		createVBO();
 	}
 
@@ -18,13 +17,7 @@ namespace GE
 
 	Model::~Model()
 	{
-		glDeleteVertexArrays(1, &m_vaoId);
 		glDeleteBuffers(2, m_vbos);
-	}
-
-	void Model::createVAO()
-	{
-		glGenVertexArrays(1, &m_vaoId);
 	}
 
 	void Model::createVBO()
@@ -44,9 +37,9 @@ namespace GE
 	                                   uint vertexCount)
 	{
 		m_model->m_vertexCount = vertexCount;
-		glBindVertexArray(m_model->m_vaoId);
+		m_model->m_vao.bind();
 		dataToVBO(positions);
-		glBindVertexArray(0);
+		m_model->m_vao.unbind();
 
 		return *this;
 	}
@@ -55,9 +48,9 @@ namespace GE
 	                                  uint indexesCount)
 	{
 		m_model->m_indexesCount = indexesCount;
-		glBindVertexArray(m_model->m_vaoId);
+		m_model->m_vao.bind();
 		dataToInd(indexes);
-		glBindVertexArray(0);
+		m_model->m_vao.unbind();
 
 		return *this;
 	}
@@ -70,11 +63,11 @@ namespace GE
 
 	void Model::draw() const
 	{
-		glBindVertexArray(m_vaoId);
+		m_vao.bind();
 		glEnableVertexAttribArray(0);
 		glDrawElements(GL_TRIANGLES, m_indexesCount, GL_UNSIGNED_INT, 0);
 		glDisableVertexAttribArray(0);
-		glBindVertexArray(0);
+		m_vao.unbind();
 	}
 
 	sPtr<Model> Builder::create()
