@@ -13,6 +13,8 @@ TEST(GLEW, GLEWInit)
 {
 	ASSERT_EQ(glfwInit(), GLFW_TRUE);
 
+	glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+
 	GLFWwindow * window = glfwCreateWindow(400,
 	                                       400,
 	                                       "Test",
