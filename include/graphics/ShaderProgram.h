@@ -22,10 +22,10 @@ namespace GE
 		public:
 			ShaderProgram();
 			virtual ~ShaderProgram();
-			ShaderProgram(const ShaderProgram & other) = delete;
-			ShaderProgram(ShaderProgram && other) = delete;
+
+			// Forbid copy semantics
+			ShaderProgram(const ShaderProgram & other)             = delete;
 			ShaderProgram & operator=(const ShaderProgram & other) = delete;
-			ShaderProgram & operator=(ShaderProgram && other) = delete;
 
 			// Actions
 			void attachShader(const Shader & shader);
@@ -34,7 +34,7 @@ namespace GE
 			void compile();
 			void apply() const;
 			void unapply() const;
-			int getUniformLocation(const std::string & uniform_name) const;
+			[[nodiscard]] int getUniformLocation(const std::string & uniformName) const;
 			void getAllUniformLocations();
 
 			// Getters
@@ -46,7 +46,7 @@ namespace GE
 			void setBoolToUniform(const int location, const bool value);
 			void setVector3fToUniform(const int location, const vec3 & vector);
 			void setMatrixToUniform(const int location, const mat4 & matrix);
-			void setTransformMatrix(const mat4 & transformMatrix);
+			void setModelMatrix(const mat4 & modelMatrix);
 			void setProjectionMatrix(const mat4 & projectionMatrix);
 			void setViewMatrix(const mat4 & viewMatrix);
 
@@ -59,7 +59,7 @@ namespace GE
 
 			uint m_id = 0;
 
-			int m_transformMatrixLocation  = 0;
+			int m_modelMatrixLocation  = 0;
 			int m_projectionMatrixLocation = 0;
 			int m_viewMatrixLocation       = 0;
 	};

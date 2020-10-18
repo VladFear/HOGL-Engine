@@ -3,62 +3,85 @@
 namespace GE
 {
 
-	GLRenderSystem::GLRenderSystem(const std::string & windowTitle,
-	                               const uint windowWidth,
-	                               const uint windowHeight)
+	void GLRenderSystem::render(std::shared_ptr<GameScene> gameScene,
+	                            std::shared_ptr<Camera>    camera)
 	{
-		initGLFW();
-		glfwWindowHint(GLFW_SAMPLES, 4);
+		glm::mat4 viewMatrix = createViewMatrix(camera);
 
-		m_window = std::make_unique<GLWindow>(windowTitle,
-		                                      windowWidth,
-		                                      windowHeight);
-		m_GLFWwindow = m_window->getGLFWwindow();
+		auto & gameObjectsList = gameScene->getGameObjectsList();
+		for (const auto & gameObject : gameObjectsList)
+		{
+			auto entity = dynamic_cast<Entity*>(gameObject.get());
+			entity->getShaderProgram()->apply();
 
-		initGLEW();
+			entity->getShaderProgram()->setViewMatrix(viewMatrix);
+
+			auto translation = entity->getPosition();
+			auto rotation    = entity->getRotation();
+			auto scaling     = entity->getScalingFactor();
+
+			auto modelMatrix = createModelMatrix(translation,
+			                                     rotation,
+			                                     scaling);
+
+			entity->getShaderProgram()->setModelMatrix(modelMatrix);
+
+			entity->draw();
+
+			entity->getShaderProgram()->unapply();
+		}
 	}
 
-	GLRenderSystem::~GLRenderSystem()
+	glm::mat4 GLRenderSystem::createModelMatrix(const glm::vec3 & translation,
+	                                            const glm::vec3 & rotation,
+	                                            const glm::vec3 & scaling)
 	{
-		glfwTerminate();
+		glm::mat4 modelMatrix = glm::mat4(1.0f);
+
+		modelMatrix = glm::translate(modelMatrix, translation);
+
+		modelMatrix = glm::rotate(modelMatrix, glm::radians(rotation.x), vec3(1, 0, 0));
+		modelMatrix = glm::rotate(modelMatrix, glm::radians(rotation.y), vec3(0, 1, 0));
+		modelMatrix = glm::rotate(modelMatrix, glm::radians(rotation.z), vec3(0, 0, 1));
+
+		modelMatrix = glm::scale(modelMatrix, scaling);
+
+		return modelMatrix;
 	}
 
-	void GLRenderSystem::render() const
+	glm::mat4 GLRenderSystem::createProjectionMatrix()
 	{
-		// TODO:
+		// TODO: Remove hardcode of following variables.
+		int width = 1366;
+		int height = 768;
+
+		mat4 projectionMatrix = glm::perspective(
+			glm::radians(m_glRenderProperties.FIELD_OF_VIEW),
+			static_cast<float>(width) / static_cast<float>(height),
+			m_glRenderProperties.NEAR_PLANE,
+			m_glRenderProperties.FAR_PLANE);
+
+		return projectionMatrix;
 	}
 
-	void GLRenderSystem::pollEvents() const
+	glm::mat4 GLRenderSystem::createViewMatrix(const std::shared_ptr<Camera> & camera)
 	{
-		glfwPollEvents();
+		return glm::lookAt(camera->getPosition(), glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	}
 
-	void GLRenderSystem::swapBuffers() const
+	void GLRenderSystem::prepareGameScene(std::shared_ptr<GameScene> gameScene)
 	{
-		glfwSwapBuffers(m_GLFWwindow);
-	}
+		auto & gameObjectsList = gameScene->getGameObjectsList();
 
-	void GLRenderSystem::clear() const
-	{
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
-	}
+		glm::mat4 projectionMatrix = createProjectionMatrix();
 
-	int GLRenderSystem::windowShouldClose() const
-	{
-		return glfwWindowShouldClose(m_GLFWwindow);
-	}
-
-	void GLRenderSystem::initGLFW() const
-	{
-		if (!glfwInit())
-			throw std::runtime_error(std::string("Failed to initialize GLFW library.\n"));
-	}
-
-	void GLRenderSystem::initGLEW() const
-	{
-		if (glewInit() != GLEW_OK)
-			throw std::runtime_error(std::string("Failed to initialize GLEW library. glewInit() != GLEW_OK\n"));
+		for (const auto & gameObject : gameObjectsList)
+		{
+			auto entity = dynamic_cast<Entity*>(gameObject.get());
+			entity->getShaderProgram()->apply();
+			entity->getShaderProgram()->setProjectionMatrix(projectionMatrix);
+			entity->getShaderProgram()->unapply();
+		}
 	}
 
 } // GE

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "glm/glm.hpp"
+#include <glm/glm.hpp>
 
 namespace GE
 {
@@ -16,12 +16,18 @@ namespace GE
 			       const float pith,
 			       const float roll,
 			       const float yaw);
-			virtual ~Camera() = default;
+
+			// Actions
+			void moveZ(const float x_pos)
+			{
+				m_position[2] += x_pos;
+			}
 
 			// Getters
-			float getPitch() const;
-			float getRoll() const;
-			float getYaw() const;
+			[[nodiscard]] float getPitch() const;
+			[[nodiscard]] float getRoll() const;
+			[[nodiscard]] float getYaw() const;
+			[[nodiscard]] const vec3 & getPosition() const;
 
 		private:
 			vec3 m_position { 0.0f };

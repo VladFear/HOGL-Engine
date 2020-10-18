@@ -98,9 +98,9 @@ namespace GE
 		glUniformMatrix4fv(location, 1, false, glm::value_ptr(matrix));
 	}
 
-	void ShaderProgram::setTransformMatrix(const mat4 & transformMatrix)
+	void ShaderProgram::setModelMatrix(const mat4 & modelMatrix)
 	{
-		glUniformMatrix4fv(m_transformMatrixLocation, 1, false, glm::value_ptr(transformMatrix));
+		glUniformMatrix4fv(m_modelMatrixLocation, 1, false, glm::value_ptr(modelMatrix));
 	}
 
 	void ShaderProgram::setProjectionMatrix(const mat4 & projectionMatrix)
@@ -115,7 +115,7 @@ namespace GE
 
 	void ShaderProgram::getAllUniformLocations()
 	{
-		m_transformMatrixLocation  = getUniformLocation("transformMatrix");
+		m_modelMatrixLocation      = getUniformLocation("modelMatrix");
 		m_projectionMatrixLocation = getUniformLocation("projectionMatrix");
 		m_viewMatrixLocation       = getUniformLocation("viewMatrix");
 	}

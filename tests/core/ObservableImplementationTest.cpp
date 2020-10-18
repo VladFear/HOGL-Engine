@@ -33,25 +33,14 @@ class ObservingEntity : public GE::IObserver
 		// Override updateEvent from IObservable class
 		void updateEvent(const GE::IObservable * observable) override
 		{
-			try
-			{
-				auto obs = dynamic_cast<const ObservableItem*>(observable);
+			auto obs = dynamic_cast<const ObservableItem*>(observable);
 
-				// Check if the ptr is valid
-				[[likely]] if (obs)
-					m_value = obs->getValue();
-				else
-					// Test failed
-					ASSERT_TRUE(false);
-			}
-			catch (const std::bad_cast & ex)
-			{
-				std::cerr << ex.what() << std::endl;
-				std::cerr << "Unable to cast from \"const IObservable *\" to \"const ObservableItem *\"\n";
-
+			// Check if the ptr is valid
+			if (obs) [[likely]]
+				m_value = obs->getValue();
+			else
 				// Test failed
 				ASSERT_TRUE(false);
-			}
 		}
 
 		uint getValue() const

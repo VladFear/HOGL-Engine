@@ -9,67 +9,70 @@ TestApplication::TestApplication(std::unique_ptr<GE::GlobalEngine> globalEngine)
 void TestApplication::init()
 {
 	auto vshader = GE::Shader::ShaderBuilder()
-		.setSource("examples/TestApplication/vertexShader.glsl")
-		.create(GL_VERTEX_SHADER);
+		.setSource("examples/TestApplication/shaders/vertexShader.glsl")
+		.setValidationStrategy(std::make_shared<GE::ValidationDefaultStrategy>())
+		.setShaderType(GE::ShaderType::VertexShader)
+		.build();
 
 	auto fshader = GE::Shader::ShaderBuilder()
-		.setSource("examples/TestApplication/fragmentShader.glsl")
-		.create(GL_FRAGMENT_SHADER);
+		.setSource("examples/TestApplication/shaders/fragmentShader.glsl")
+		.setValidationStrategy(std::make_shared<GE::ValidationDefaultStrategy>())
+		.setShaderType(GE::ShaderType::FragmentShader)
+		.build();
 
-	auto triangle = std::make_shared<GE::ShaderProgram>();
-	triangle->attachShader(vshader);
-	triangle->attachShader(fshader);
-	triangle->setValidationStrategy(std::make_shared<GE::ValidationDefaultStrategy>());
-	triangle->compile();
+	auto shaderProgram = std::make_shared<GE::ShaderProgram>();
+	shaderProgram->attachShader(vshader);
+	shaderProgram->attachShader(fshader);
+	shaderProgram->setValidationStrategy(std::make_shared<GE::ValidationDefaultStrategy>());
+	shaderProgram->compile();
 
 	float vertices[] =
 	{
-		-0.75f, 0.0f, 0.0f, // Left
-		-0.25f, 0.0f, 0.0f, // Right
-		-0.50f, 0.5f, 0.0f  // Top
+		-0.75f, -0.75f, 0.0f, // Left Bot  0
+		-0.75f,  0.75f, 0.0f, // Left Top  1
+		 0.75f, -0.75f, 0.0f, // Right Bot 2
+		 0.75f,  0.75f, 0.0f  // Right Top 3
 	};
 
-	unsigned int indexes[] =
+	uint indexes[] =
 	{
-		2, 0, 1
+		2, 3, 0, 0, 1, 3
 	};
 
-	float vertices1[] =
+	float textCoords[] =
 	{
-		 0.25f, 0.0f, 0.0f, // Left
-		 0.75f, 0.0f, 0.0f, // Right
-		 0.50f, 0.5f, 0.0f  // Top
+		0.0f, 0.0f,
+		0.0f, 1.0f,
+		1.0f, 0.0f,
+		1.0f, 1.0f
 	};
 
-	auto model1 = GE::Model::ModelBuilder()
+	auto cubeModel = GE::Model::ModelBuilder()
 		.addVertexBuffer(vertices, std::size(vertices))
 		.addIndexBuffer(indexes, std::size(indexes))
-		.create();
+		.addTextureData(textCoords, std::size(textCoords))
+		.build();
 
-	auto model2 = GE::Model::ModelBuilder()
-		.addVertexBuffer(vertices1, std::size(vertices1))
-		.addIndexBuffer(indexes, std::size(indexes))
-		.create();
+	auto wallTexture = std::make_shared<GE::GLTexture>("examples/TestApplication/res/wall.jpg");
 
-	auto entity1 =
-		std::make_unique<GE::Entity>(model1,
-		                             triangle,
-		                             glm::vec3(-0.5f, 0.25f, -1.5f),
+	auto cubeTexturedModel =
+		std::make_shared<GE::GLTexturedModel>(cubeModel, wallTexture);
+
+	auto cubeEntity =
+		std::make_shared<GE::Entity>(cubeTexturedModel,
+		                             shaderProgram,
+		                             glm::vec3(0.0f, 0.0f, -1.5f),
 		                             glm::vec3(0.f),
 		                             glm::vec3(1.f));
 
-	auto entity2 =
-		std::make_unique<GE::Entity>(model2,
-		                             triangle,
-		                             glm::vec3(-0.25f, 0.25f, -1.5f),
-		                             glm::vec3(0.f),
-		                             glm::vec3(1.f));
+	auto gameScene = std::make_shared<GE::GameScene>();
+	gameScene->addGameObject(cubeEntity);
 
-	auto gameScene = std::make_unique<GE::GameScene>();
-	gameScene->addGameObject(std::move(entity1));
-	gameScene->addGameObject(std::move(entity2));
+	m_globalEngine->setGameScene(gameScene);
 
-	m_globalEngine->setGameScene(std::move(gameScene));
+	auto camera = std::make_shared<GE::Camera>(glm::vec3(0.0f, 0.0f, 0.001f));
+
+	m_globalEngine->setCamera(camera);
 }
 
 void TestApplication::startGameLoop()

@@ -6,7 +6,7 @@
 #include "core/GlobalEngine.h"
 #include "core/EngineArgs.h"
 
-#include "Entity.h"
+#include "graphics/Entity.h"
 
 template <typename U>
 using uPtr = std::unique_ptr<U>;
@@ -48,7 +48,7 @@ TEST_F(GlobalEngineTestClass, EntityDefaultConstructorTest)
 {
 	GE::Entity entity;
 
-	ASSERT_EQ(entity.getModel(), nullptr);
+	ASSERT_EQ(entity.getTexturedModel(), nullptr);
 	ASSERT_EQ(entity.getShaderProgram(), nullptr);
 	ASSERT_EQ(entity.getShaderProgramId(), 0);
 
@@ -89,7 +89,7 @@ TEST_F(GlobalEngineTestClass, EntityMoveConstructorTest)
 	ASSERT_NE(shaderProgramId, 0);
 
 	// Get model should be nullptr, as no model set
-	EXPECT_EQ(entity.getModel(), nullptr);
+	EXPECT_EQ(entity.getTexturedModel(), nullptr);
 
 	GE::Entity anotherEntity(std::move(entity));
 
@@ -100,12 +100,12 @@ TEST_F(GlobalEngineTestClass, EntityMoveConstructorTest)
 	ASSERT_NE(anotherEntity.getShaderProgram(), nullptr);
 	ASSERT_NE(anotherEntity.getShaderProgramId(), 0);
 	// Still should be nullptr
-	ASSERT_EQ(anotherEntity.getModel(), nullptr);
+	ASSERT_EQ(anotherEntity.getTexturedModel(), nullptr);
 
 	// Shader in entity must be nullptr after move
 	ASSERT_EQ(entity.getShaderProgram(), nullptr);
 	ASSERT_EQ(entity.getShaderProgramId(), 0);
-	ASSERT_EQ(entity.getModel(), nullptr);
+	ASSERT_EQ(entity.getTexturedModel(), nullptr);
 }
 
 TEST_F(GlobalEngineTestClass, EntityMoveAssignmentOperatorTest)
@@ -129,7 +129,7 @@ TEST_F(GlobalEngineTestClass, EntityMoveAssignmentOperatorTest)
 	ASSERT_NE(shaderProgramId, 0);
 
 	// Get model should be nullptr, as no model set
-	EXPECT_EQ(entity.getModel(), nullptr);
+	EXPECT_EQ(entity.getTexturedModel(), nullptr);
 
 	GE::Entity anotherEntity = std::move(entity);
 
@@ -140,12 +140,12 @@ TEST_F(GlobalEngineTestClass, EntityMoveAssignmentOperatorTest)
 	ASSERT_NE(anotherEntity.getShaderProgram(), nullptr);
 	ASSERT_NE(anotherEntity.getShaderProgramId(), 0);
 	// Still should be nullptr
-	ASSERT_EQ(anotherEntity.getModel(), nullptr);
+	ASSERT_EQ(anotherEntity.getTexturedModel(), nullptr);
 
 	// Shader in entity must be nullptr after move
 	ASSERT_EQ(entity.getShaderProgram(), nullptr);
 	ASSERT_EQ(entity.getShaderProgramId(), 0);
-	ASSERT_EQ(entity.getModel(), nullptr);
+	ASSERT_EQ(entity.getTexturedModel(), nullptr);
 }
 
 TEST_F(GlobalEngineTestClass, EntitySetShaderProgramTest)

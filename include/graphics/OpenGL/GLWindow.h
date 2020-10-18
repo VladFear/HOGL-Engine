@@ -24,17 +24,25 @@ namespace GE
 			GLWindow(const std::string & title,
 			         const uint width,
 			         const uint height);
-			~GLWindow() = default;
 
-			GLWindow() = delete;
-			GLWindow(const GLWindow &) = delete;
-			GLWindow & operator=(const GLWindow &) = delete;
+			// Actions
+			void clear()             const override;
+			void pollEvents()        const override;
+			void swapBuffers()       const override;
+			int  windowShouldClose() const override;
 
-			// Getters
+		private:
+			void initGLFWCallbacks();
 			GLFWwindow * getGLFWwindow() const;
 
-		protected:
-			void createWindow() override;
+		private:
+			// GLFW Callbacks
+			static void keyCallback(GLFWwindow * window,
+			                        int key,
+			                        int scancode,
+			                        int action,
+			                        int mods);
+
 
 		private:
 			std::unique_ptr<GLFWwindow, GLFWwindowDeleter> m_window;

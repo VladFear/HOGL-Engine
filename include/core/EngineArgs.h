@@ -63,7 +63,7 @@ namespace GE
 				return *this;
 			}
 
-			EngineArgs build()
+			[[nodiscard]] EngineArgs build()
 			{
 				return EngineArgs(m_engineAPI,
 				                  m_windowTitle,

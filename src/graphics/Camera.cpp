@@ -35,4 +35,9 @@ namespace GE
 		return m_yaw;
 	}
 
+	const vec3 & Camera::getPosition() const
+	{
+		return m_position;
+	}
+
 } // GE

@@ -1,9 +1,10 @@
 #include "graphics/GameScene.h"
+#include <memory>
 
 namespace GE
 {
 
-	void GameScene::addGameObject(uPtr<GameObject> object)
+	void GameScene::addGameObject(std::shared_ptr<IDrawable> object)
 	{
 		m_objectsList.push_front(std::move(object));
 	}
@@ -14,14 +15,14 @@ namespace GE
 			renderObject(object);
 	}
 
-	void GameScene::renderObject(const uPtr<GameObject> & object) const
+	void GameScene::renderObject(std::shared_ptr<IDrawable> object) const
 	{
 		object->draw();
 	}
 
-	void GameScene::setCamera(uPtr<Camera> camera)
+	std::forward_list<std::shared_ptr<IDrawable>> & GameScene::getGameObjectsList()
 	{
-		m_camera = std::move(camera);
+		return m_objectsList;
 	}
 
 } // GE

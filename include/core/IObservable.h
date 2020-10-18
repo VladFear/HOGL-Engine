@@ -17,10 +17,10 @@ namespace GE
 			bool addObserver(IObserver * observer);
 			bool removeObserver(IObserver * observer);
 			void notifyObservers() const;
-			bool hasObservers() const;
+			[[nodiscard]] bool hasObservers() const;
 
 			// Getters
-			size_t getObserversCount() const;
+			[[nodiscard]] size_t getObserversCount() const;
 
 		protected:
 			// Move constructor/destructor to protected part for preventing class instantion.

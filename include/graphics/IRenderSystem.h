@@ -2,22 +2,27 @@
 
 #include <memory>
 
-#include "graphics/IWindow.h"
+#include <glm/glm.hpp>
 
 namespace GE
 {
+
+	class GameScene;
+	class Camera;
 
 	class IRenderSystem
 	{
 		public:
 			virtual ~IRenderSystem() = default;
 
-			// Actions
-			virtual void clear()             const = 0;
-			virtual void render()            const = 0;
-			virtual void pollEvents()        const = 0;
-			virtual void swapBuffers()       const = 0;
-			virtual int  windowShouldClose() const = 0;
+			virtual void render(std::shared_ptr<GameScene> gameScene,
+			                    std::shared_ptr<Camera>    camera) = 0;
+			virtual glm::mat4 createModelMatrix(const glm::vec3 & translation,
+			                                    const glm::vec3 & rotation,
+			                                    const glm::vec3 & scaling) = 0;
+			virtual glm::mat4 createProjectionMatrix() = 0;
+			virtual glm::mat4 createViewMatrix(const std::shared_ptr<Camera> & camera) = 0;
+			virtual void prepareGameScene(std::shared_ptr<GameScene> gameScene) = 0;
 	};
 
 } // GE

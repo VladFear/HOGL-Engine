@@ -3,14 +3,10 @@
 #include <forward_list>
 #include <memory>
 
-#include "graphics/GameObject.h"
-#include "graphics/Camera.h"
+#include "graphics/IDrawable.h"
 
 namespace GE
 {
-
-	template <typename U>
-	using uPtr = std::unique_ptr<U>;
 
 	class GameScene
 	{
@@ -19,18 +15,17 @@ namespace GE
 			virtual ~GameScene() = default;
 
 			// Actions
-			void addGameObject(uPtr<GameObject> object);
+			void addGameObject(std::shared_ptr<IDrawable> object);
 			void renderScene() const;
 
-			// Setters
-			void setCamera(uPtr<Camera> camera);
+			// Getters
+			[[nodiscard]] std::forward_list<std::shared_ptr<IDrawable>> & getGameObjectsList();
 
 		private:
-			void renderObject(const uPtr<GameObject> & object) const;
+			void renderObject(std::shared_ptr<IDrawable> object) const;
 
 		private:
-			std::forward_list<uPtr<GameObject>> m_objectsList;
-			uPtr<Camera> m_camera = nullptr;
+			std::forward_list<std::shared_ptr<IDrawable>> m_objectsList;
 	};
 
 } // GE

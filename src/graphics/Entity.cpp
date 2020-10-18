@@ -1,43 +1,41 @@
-#include "Entity.h"
+#include "graphics/Entity.h"
 
 namespace GE
 {
 
-	Entity::Entity(sPtr<Model> model,
+	Entity::Entity(sPtr<GLTexturedModel> texturedModel,
 	               sPtr<ShaderProgram> shaderProgram) :
-		m_model { model },
+		m_texturedModel { texturedModel },
 		m_shaderProgram { shaderProgram }
 	{
 		m_shaderProgramId = m_shaderProgram->getId();
-		m_projectionMatrix = createProjectionMatrix();
 	}
 
-	Entity::Entity(sPtr<Model> model,
+	Entity::Entity(sPtr<GLTexturedModel> texturedModel,
 	               sPtr<ShaderProgram> shaderProgram,
 	               const vec3 & position,
 	               const vec3 & rotation,
 	               const vec3 & scaling) :
-		m_model         { model },
+		m_texturedModel { texturedModel },
 		m_shaderProgram { shaderProgram },
 		m_position      { position },
 		m_rotation      { rotation },
 		m_scaling       { scaling }
 	{
 		m_shaderProgramId = m_shaderProgram->getId();
-		m_projectionMatrix = createProjectionMatrix();
 	}
 
 	Entity::Entity(Entity && other) noexcept
 	{
 		// Free resources
-		m_model.reset();
+		m_texturedModel.reset();
 		m_shaderProgram.reset();
 
-		m_model = other.m_model;
+		m_texturedModel = other.m_texturedModel;
 		m_shaderProgram = other.m_shaderProgram;
 
 		// Free resources
-		other.m_model.reset();
+		other.m_texturedModel.reset();
 		other.m_shaderProgram.reset();
 
 		m_position = std::move(other.m_position);
@@ -52,14 +50,14 @@ namespace GE
 		if (&other != this)
 		{
 			// Free resources
-			m_model.reset();
+			m_texturedModel.reset();
 			m_shaderProgram.reset();
 
-			m_model = other.m_model;
+			m_texturedModel = other.m_texturedModel;
 			m_shaderProgram = other.m_shaderProgram;
 
 			// Free resources
-			other.m_model.reset();
+			other.m_texturedModel.reset();
 			other.m_shaderProgram.reset();
 
 			m_position = std::move(other.m_position);
@@ -83,9 +81,9 @@ namespace GE
 		return m_shaderProgramId;
 	}
 
-	sPtr<Model> Entity::getModel() const
+	sPtr<GLTexturedModel> Entity::getTexturedModel() const
 	{
-		return m_model;
+		return m_texturedModel;
 	}
 
 	sPtr<ShaderProgram> Entity::getShaderProgram() const
@@ -96,21 +94,7 @@ namespace GE
 	void Entity::draw() const
 	{
 		m_shaderProgram->apply();
-
-		mat4 transformMatrix = createTransformationMatrix(m_position,
-		                                                  m_rotation,
-		                                                  m_scaling);
-
-		m_shaderProgram->setTransformMatrix(transformMatrix);
-		// TODO: Shouldn't be loaded on every iteration
-		m_shaderProgram->setProjectionMatrix(m_projectionMatrix);
-
-		m_shaderProgram->setViewMatrix(createViewMatrix(vec3(0.0f, 0.0f, 0.0001f),
-		                                                vec3(0.0f),
-		                                                vec3(0.0f, 1.0f, 0.0f)));
-
-		m_model->draw();
-
+		m_texturedModel->draw();
 		m_shaderProgram->unapply();
 	}
 

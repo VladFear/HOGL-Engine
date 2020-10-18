@@ -1,52 +1,65 @@
 #pragma once
 
 #include <memory>
+#include <vector>
 
 #include <GL/glew.h>
 
-#include "graphics/GameObject.h"
+#include "graphics/IDrawable.h"
 #include "graphics/OpenGL/GLVertexArrayObject.h"
 
 namespace GE
 {
-
-	template <typename S>
-	using sPtr = std::shared_ptr<S>;
-
-	class Model : public GameObject
+	// Preferable way of creation is via Builder
+	class Model : public IDrawable
 	{
 		public:
-			Model();
+			class ModelBuilder;
+
+			Model() = delete;
 			~Model();
+			Model(const float * vertexPositions,
+			      const uint    vertexCount,
+			      const uint * indexesData,
+			      const uint   indexesCount,
+			      const float * textureCoordinates,
+			      const uint    textCoordsCount);
+
 			void draw() const override;
 
-		public:
-			class ModelBuilder
-			{
-				public:
-					ModelBuilder();
-					~ModelBuilder() = default;
-					sPtr<Model> create();
-					ModelBuilder & addVertexBuffer(const float positions[],
-					                               const uint vertexCount);
-					ModelBuilder & addIndexBuffer(const uint indexes[],
-					                              const uint indexesCount);
+		private:
+			void storeDataToVBO(const uint attribIndex,
+			                    const uint size,
+			                    const float * data,
+			                    const uint dataCount);
+			void storeDataToIndexBuffer(const uint * indexesData,
+			                            const uint   indexesCount);
 
-					void dataToVBO(const float data[]);
-					void dataToInd(const uint data[]);
-
-				private:
-					sPtr<Model> m_model;
-			};
 
 		private:
-			void createVBO();
-
-		private:
+			std::vector<GLuint> m_vbos;
 			GLVertexArrayObject m_vao;
-			uint m_vbos[2];
-			uint m_vertexCount;
-			uint m_indexesCount;
+			uint m_indexesCount { 0 };
+	};
+
+	class Model::ModelBuilder
+	{
+		public:
+			ModelBuilder & addVertexBuffer(float * vertexPositions,
+			                               const uint vertexCount);
+			ModelBuilder & addIndexBuffer(uint * indexesData,
+			                              const uint indexesCount);
+			ModelBuilder & addTextureData(float * textureCoordinates,
+			                              const uint textCoordsCount);
+			[[nodiscard]] std::shared_ptr<Model> build();
+
+		private:
+			float * m_vertexPositions    = nullptr;
+			float * m_textureCoordinates = nullptr;
+			uint  * m_indexesData        = nullptr;
+			uint m_vertexCount     { 0 };
+			uint m_indexesCount    { 0 };
+			uint m_textCoordsCount { 0 };
 	};
 
 } // GE

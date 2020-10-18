@@ -1,43 +1,36 @@
 #pragma once
 
 #include <exception>
-#include <string>
 #include <memory>
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-
 #include "graphics/IRenderSystem.h"
-#include "graphics/OpenGL/GLWindow.h"
+#include "graphics/Entity.h"
+#include "graphics/GameScene.h"
 
 namespace GE
 {
 
-	template <typename U>
-	using uPtr = std::unique_ptr<U>;
+	struct GLRenderProperties
+	{
+		float FIELD_OF_VIEW = 70.0f;
+		float NEAR_PLANE    = 0.1f;
+		float FAR_PLANE     = 1000.f;
+	};
 
 	class GLRenderSystem final : public IRenderSystem
 	{
 		public:
-			GLRenderSystem(const std::string & windowTitle,
-			               const uint windowWidth,
-			               const uint windowHeight);
-			~GLRenderSystem();
-
-			// Actions
-			void clear()             const override;
-			void render()            const override;
-			void pollEvents()        const override;
-			void swapBuffers()       const override;
-			int  windowShouldClose() const override;
+			void render(std::shared_ptr<GameScene> gameScene,
+			            std::shared_ptr<Camera>    camera) override;
+			glm::mat4 createModelMatrix(const glm::vec3 & translation,
+			                            const glm::vec3 & rotation,
+			                            const glm::vec3 & scaling) override;
+			glm::mat4 createProjectionMatrix() override;
+			glm::mat4 createViewMatrix(const std::shared_ptr<Camera> & camera) override;
+			void prepareGameScene(std::shared_ptr<GameScene> gameScene) override;
 
 		private:
-			void initGLFW() const;
-			void initGLEW() const;
-
-		private:
-			uPtr<GLWindow> m_window   = nullptr;
-			GLFWwindow * m_GLFWwindow = nullptr;
+			GLRenderProperties m_glRenderProperties;
 	};
 
 } // GE

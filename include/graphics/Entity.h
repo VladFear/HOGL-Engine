@@ -4,9 +4,8 @@
 
 #include <glm/glm.hpp>
 
-#include "maths/Transformations.h"
-
-#include "graphics/Model.h"
+#include "graphics/IDrawable.h"
+#include "graphics/OpenGL/GLTexturedModel.h"
 #include "graphics/ShaderProgram.h"
 #include "graphics/Camera.h"
 
@@ -19,16 +18,16 @@ namespace GE
 	using vec3 = glm::vec3;
 	using mat4 = glm::mat4;
 
-	class Entity : public GameObject
+	class Entity : public IDrawable
 	{
 		public:
 			Entity() = default;
 			~Entity() = default;
 
-			Entity(sPtr<Model> model,
+			Entity(sPtr<GLTexturedModel> texturedModel,
 			       sPtr<ShaderProgram> shaderProgram);
 
-			Entity(sPtr<Model> model,
+			Entity(sPtr<GLTexturedModel> texturedModel,
 			       sPtr<ShaderProgram> shaderProgram,
 			       const vec3 & position,
 			       const vec3 & rotation,
@@ -52,23 +51,22 @@ namespace GE
 			void setScalingFactor(const vec3 & scalingFactor) noexcept;
 
 			// Getters
-			unsigned int getShaderProgramId() const;
-			sPtr<Model> getModel() const;
-			sPtr<ShaderProgram> getShaderProgram() const;
-			const vec3 & getPosition() const noexcept;
-			const vec3 & getRotation() const noexcept;
-			const vec3 & getScalingFactor() const noexcept;
+			[[nodiscard]] uint getShaderProgramId() const;
+			[[nodiscard]] sPtr<GLTexturedModel> getTexturedModel() const;
+			[[nodiscard]] sPtr<ShaderProgram>   getShaderProgram() const;
+			[[nodiscard]] const vec3 & getPosition()      const noexcept;
+			[[nodiscard]] const vec3 & getRotation()      const noexcept;
+			[[nodiscard]] const vec3 & getScalingFactor() const noexcept;
 
 		private:
-			sPtr<Model> m_model = nullptr;
-			sPtr<ShaderProgram> m_shaderProgram = nullptr;
+			sPtr<GLTexturedModel> m_texturedModel = nullptr;
+			sPtr<ShaderProgram>   m_shaderProgram = nullptr;
 
-			mat4 m_projectionMatrix { 1.0f };
 			vec3 m_position { 0.f };
 			vec3 m_rotation { 0.f };
 			vec3 m_scaling  { 1.f };
 
-			unsigned int m_shaderProgramId { 0 };
+			uint m_shaderProgramId { 0 };
 	};
 
 } // GE

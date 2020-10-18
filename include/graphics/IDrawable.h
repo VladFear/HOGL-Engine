@@ -3,18 +3,21 @@
 namespace GE
 {
 
-	class GameObject
+	class IDrawable
 	{
 		public:
-			virtual ~GameObject() = default;
+			virtual ~IDrawable() = default;
 
-			// Actions
 			virtual void draw() const = 0;
 
-			// Setters
 			void setVisibility(bool visibility)
 			{
 				m_visibility = visibility;
+			}
+
+			bool isVisible() const
+			{
+				return m_visibility;
 			}
 
 		protected:

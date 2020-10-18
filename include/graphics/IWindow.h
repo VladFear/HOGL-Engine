@@ -8,15 +8,16 @@ namespace GE
 	class IWindow
 	{
 		public:
-			IWindow(const std::string & title,
-			        const uint width,
-			        const uint height) :
-				m_title  { title },
-				m_width  { width },
-				m_height { height }
-			{ }
-
 			virtual ~IWindow() = default;
+
+			IWindow(const IWindow &)             = delete;
+			IWindow & operator=(const IWindow &) = delete;
+
+			// Actions
+			virtual void clear()                          const = 0;
+			virtual void pollEvents()                     const = 0;
+			virtual void swapBuffers()                    const = 0;
+			[[nodiscard]] virtual int windowShouldClose() const = 0;
 
 			// Setters
 			void setVisibility(const bool visibility)
@@ -25,23 +26,29 @@ namespace GE
 			}
 
 			// Getters
-			uint getWidth()  const
+			[[nodiscard]] uint getWidth()  const
 			{
 				return m_width;
 			}
 
-			uint getHeight() const
+			[[nodiscard]] uint getHeight() const
 			{
 				return m_height;
 			}
 
-			bool isVisible() const
+			[[nodiscard]] bool isVisible() const
 			{
 				return m_visibility;
 			}
 
 		protected:
-			virtual void createWindow() = 0;
+			IWindow(const std::string & title,
+			        const uint width,
+			        const uint height) :
+				m_title  { title },
+				m_width  { width },
+				m_height { height }
+			{ }
 
 		protected:
 			std::string m_title;

@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-#include "maths/Transformations.h"
+#include "graphics/OpenGL/GLRenderSystem.h"
 
 // Useful sites to check creation of transform matrix:
 //   1) http://angrytools.com/css-generator/transform/
@@ -15,58 +15,58 @@ using vec3 = glm::vec3;
 using vec4 = glm::vec4;
 using mat4 = glm::mat4;
 
-TEST(createTransformationMatrix, Translation)
+TEST(createModelMatrix, Translation)
 {
+	GE::GLRenderSystem renderSystem;
+
 	mat4 validationMatrix;
 	validationMatrix[0] = vec4(1.0f, 0.0f, 0.0f, 0.0f);
 	validationMatrix[1] = vec4(0.0f, 1.0f, 0.0f, 0.0f);
 	validationMatrix[2] = vec4(0.0f, 0.0f, 1.0f, 0.0f);
 	validationMatrix[3] = vec4(3.0f, 5.0f, 6.0f, 1.0f);
 
-
-	mat4 transformMatrix =
-		GE::createTransformationMatrix(vec3(3.0f, 5.0f, 6.0f),
+	mat4 modelMatrix =
+		renderSystem.createModelMatrix(vec3(3.0f, 5.0f, 6.0f),
 		                               vec3(0.0f),
 		                               vec3(1.0f));
 
-
-	ASSERT_EQ(transformMatrix, validationMatrix);
+	ASSERT_EQ(modelMatrix, validationMatrix);
 }
 
-TEST(createTransformationMatrix, Scaling)
+TEST(createModelMatrix, Scaling)
 {
+	GE::GLRenderSystem renderSystem;
+
 	mat4 validationMatrix;
 	validationMatrix[0] = vec4(2.0f, 0.0f, 0.0f, 0.0f);
 	validationMatrix[1] = vec4(0.0f, 3.0f, 0.0f, 0.0f);
 	validationMatrix[2] = vec4(0.0f, 0.0f, 4.0f, 0.0f);
 	validationMatrix[3] = vec4(0.0f, 0.0f, 0.0f, 1.0f);
 
-
-	mat4 transformMatrix =
-		GE::createTransformationMatrix(vec3(0.0f),
+	mat4 modelMatrix =
+		renderSystem.createModelMatrix(vec3(0.0f),
 		                               vec3(0.0f),
 		                               vec3(2.0f, 3.0f, 4.0f));
 
-
-	ASSERT_EQ(transformMatrix, validationMatrix);
+	ASSERT_EQ(modelMatrix, validationMatrix);
 }
 
-TEST(createTransformationMatrix, TraslationAndScaling)
+TEST(createModelMatrix, TraslationAndScaling)
 {
+	GE::GLRenderSystem renderSystem;
+
 	mat4 validationMatrix;
 	validationMatrix[0] = vec4(2.0f, 0.0f, 0.0f, 0.0f);
 	validationMatrix[1] = vec4(0.0f, 3.0f, 0.0f, 0.0f);
 	validationMatrix[2] = vec4(0.0f, 0.0f, 4.0f, 0.0f);
 	validationMatrix[3] = vec4(1.0f, 2.0f, 3.0f, 1.0f);
 
-
-	mat4 transformMatrix =
-		GE::createTransformationMatrix(vec3(1.0f, 2.0f, 3.0f),
+	mat4 modelMatrix =
+		renderSystem.createModelMatrix(vec3(1.0f, 2.0f, 3.0f),
 		                               vec3(0.0f),
 		                               vec3(2.0f, 3.0f, 4.0f));
 
-
-	ASSERT_EQ(transformMatrix, validationMatrix);
+	ASSERT_EQ(modelMatrix, validationMatrix);
 }
 
 // TODO: To add rotation testcase

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <assert.h>
+#include <cassert>
 #include <string>
 #include <sstream>
 #include <fstream>
@@ -21,37 +21,56 @@ namespace GE
 	namespace fs = std::filesystem;
 	using path = std::filesystem::path;
 
+	enum class ShaderType : GLenum
+	{
+		Undefined      = 0,
+		VertexShader   = GL_VERTEX_SHADER,
+		FragmentShader = GL_FRAGMENT_SHADER
+	};
+
 	class Shader
 	{
 		public:
-			Shader() = default;
+			class ShaderBuilder;
+
+			Shader() = delete;
+			Shader(const path & shaderPath,
+			       sPtr<IValidationStrategy> validationStrategy,
+			       const ShaderType & shaderType);
 			virtual ~Shader() = default;
 
+			// Forbid copy semantics
+			Shader(const Shader &)             = delete;
+			Shader & operator=(const Shader &) = delete;
+
 			// Getters
-			uint getId() const;
+			[[nodiscard]] uint getId() const;
+			[[nodiscard]] ShaderType getShaderType() const;
 
-		public:
-			class ShaderBuilder
-			{
-				public:
-					ShaderBuilder();
-					~ShaderBuilder() = default;
-					ShaderBuilder & setSource(const path & shaderPath);
-					ShaderBuilder & setValidationStrategy(sPtr<IValidationStrategy> validationStrategy);
-					sPtr<Shader> create(GLenum shaderType);
+		private:
+			void validate() const;
+			void compile()  const;
+			void createSourceStringFromFile(std::ifstream & file);
 
-				private:
-					void validate() const;
-					void createSourceStringFromFile(std::ifstream & file);
-
-				private:
-					sPtr<Shader> m_shaderPtr;
-					sPtr<IValidationStrategy> m_validationStrategy;
-			};
-
-		protected:
+		private:
 			std::string m_source;
-			uint m_id;
+			ShaderType m_shaderType;
+			sPtr<IValidationStrategy> m_validationStrategy;
+			uint m_id { 0 };
+	};
+
+	class Shader::ShaderBuilder
+	{
+		public:
+			ShaderBuilder & setSource(const path & shaderPath);
+			ShaderBuilder & setValidationStrategy(sPtr<IValidationStrategy> validationStrategy);
+			ShaderBuilder & setShaderType(const ShaderType & shaderType);
+			[[nodiscard]] sPtr<Shader> build();
+
+		private:
+			path m_shaderPath;
+			sPtr<IValidationStrategy> m_validationStrategy = nullptr;
+			ShaderType m_shaderType { ShaderType::Undefined };
 	};
 
 } // GE

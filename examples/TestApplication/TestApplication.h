@@ -9,10 +9,13 @@
 #include "core/EngineArgs.h"
 #include "core/GlobalEngine.h"
 
-#include "Entity.h"
+#include "graphics/Entity.h"
+#include "graphics/Camera.h"
 #include "graphics/ShaderProgram.h"
 #include "graphics/GameScene.h"
 #include "graphics/ValidationDefaultStrategy.h"
+#include "graphics/OpenGL/GLTexture.h"
+#include "graphics/OpenGL/GLTexturedModel.h"
 
 class TestApplication : public GE::GameApplication
 {
