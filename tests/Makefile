@@ -41,3 +41,13 @@ LOCAL_MODULE_DEPS          := $(OUT_DIR)/libglobalengine.a
 LOCAL_MODULE_INCLUDES      := $(INCLUDE_DIR)
 
 include $(BUILD_TEST)
+
+include $(CLEAR_VARS)
+
+LOCAL_MODULE_NAME          := ObservableImplementationTest
+LOCAL_MODULE_OUT_PATH      := $(TEST_OUT_DIR)/core
+LOCAL_MODULE_SRC_PATH      := $(TEST_DIR)/core
+LOCAL_MODULE_SRC           := $(LOCAL_MODULE_SRC_PATH)/$(LOCAL_MODULE_NAME).cpp
+LOCAL_MODULE_INCLUDES      := $(INCLUDE_DIR)
+
+include $(BUILD_TEST)
