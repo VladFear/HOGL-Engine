@@ -4,20 +4,25 @@ include $(BUILD_SYSTEM)/default.mk
 
 .PHONY: GlobalEngine
 .DEFAULT_GOAL := GlobalEngine ## Compile GlobalEngine library and tests
-$(.DEFAULT_GOAL): artifacts | $(OUT_DIR)
+$(.DEFAULT_GOAL): artifacts
 
-all_libraries   :=
-all_tests       :=
-all_executables :=
+all_libraries      :=
+all_tests          :=
+all_executables    :=
+all_dirs_to_create :=
 
 # Include makefiles in subdirectories
 all_subdir_makefiles := $(call all-subdir-makefiles, ./)
 $(foreach mk, $(all-subdir-makefiles), $(eval include $(mk)))
 
-artifacts: $(all_libraries) $(all_tests) $(all_executables)
+artifacts: create-directories    \
+           $(all_libraries)      \
+           $(all_tests)          \
+           $(all_executables)    \
 
-$(OUT_DIR):
-	$(QUIET) mkdir -p $@
+.PHONY: create-directories
+create-directories:
+	$(QUIET) $(MKDIR) $(call unique-values,$(all_dirs_to_create))
 
 .PHONY: clean
 clean: ## Remove out directory

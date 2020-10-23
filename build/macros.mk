@@ -112,3 +112,16 @@ else  \
 fi; \
 exit $$result
 endef
+
+# Explanation:
+# Macro which allows to get only unique values from given list of strings.
+# Functions sort removes all duplicating values.
+#
+# Args:
+# $(1) - List of strings
+#
+# Example of usage:
+# $(call unique-values,$(LIST_OF_NOT_UNIQUE_VALUES))
+define unique-values
+$(sort $(1))
+endef

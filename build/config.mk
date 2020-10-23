@@ -11,6 +11,7 @@ SOURCE_DIR    := src
 OBJECT_DIR    := obj
 TEST_DIR      := tests
 EXAMPLES_DIR  := examples
+EXTERNAL_DIR  := external
 
 # Set directory for all files which will be generated or builded
 OUT_DIR          := $(ROOT)/out
@@ -18,9 +19,9 @@ TEST_OUT_DIR     := $(OUT_DIR)/$(TEST_DIR)
 OBJECT_OUT_DIR   := $(OUT_DIR)/$(OBJECT_DIR)
 
 ENGINE_LIB_NAME     := libglobalengine.a
-ENGINE_LIB_LOCATION := $(OUT_DIR)
 
 QUIET := @
+MKDIR := mkdir -p
 
 CLEAR_VARS := $(BUILD_SYSTEM)/clear_variables.mk
 BUILD_TEST := $(BUILD_SYSTEM)/test.mk

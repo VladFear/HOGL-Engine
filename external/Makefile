@@ -1,0 +1,10 @@
+include $(CLEAR_VARS)
+
+LOCAL_MODULE_NAME          := SOIL2
+LOCAL_MODULE_OUT_PATH      := $(OUT_DIR)/static_libs
+LOCAL_MODULE_SRC_PATH      := $(EXTERNAL_DIR)/$(LOCAL_MODULE_NAME)/src/SOIL2
+LOCAL_MODULE_OUT_OBJ_DIR   := $(OBJECT_OUT_DIR)
+LOCAL_MODULE_C_SRC         := $(call recursive-find-c-files,$(LOCAL_MODULE_SRC_PATH))
+LOCAL_MODULE_C_FLAGS       := -g
+
+include $(BUILD_STATIC_LIBRARY)

@@ -9,6 +9,14 @@ CXXFLAGS := \
     -std=c++2a        \
     -g
 
+CFLAGS := \
+    -Wall             \
+    -Wextra           \
+    -Werror           \
+    -Wpedantic        \
+    -Warray-bounds    \
+    -g
+
 DEPFLAGS := \
     -MMD    \
     -MP
