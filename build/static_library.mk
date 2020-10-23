@@ -1,10 +1,11 @@
 library        := $(LOCAL_MODULE_OUT_PATH)/lib$(LOCAL_MODULE_NAME).a
 all_libraries  += $(library)
-objs           := $(call gen-objs-outnames-from-cpp, \
-                         $(LOCAL_MODULE_SRC),        \
+
+cpp_objs       := $(call gen-objs-outnames-from-cpp, \
+                         $(LOCAL_MODULE_CPP_SRC),    \
                          $(LOCAL_MODULE_OUT_OBJ_DIR))
 
-deps := $(objs:%.o=%.d)
+dep_files := $(cpp_objs:%.o=%.d)
 
 dirs_to_create  := $(call create-out-dirs-structure,  \
                           $(LOCAL_MODULE_SRC_PATH),   \
@@ -13,7 +14,7 @@ dirs_to_create  := $(call create-out-dirs-structure,  \
 dirs_to_include := $(call dirs-to-include, $(LOCAL_MODULE_INCLUDES))
 
 # TODO: https://www.gnu.org/software/make/manual/html_node/Archive-Members.html#Archive-Members
-$(library): $(objs)
+$(library): $(cpp_objs)
 	$(QUIET) $(call pretty,      \
 	         $(LINKING_MESSAGE), \
 	         $(AR) rcs $@ $^)
@@ -27,4 +28,4 @@ $(LOCAL_MODULE_OUT_OBJ_DIR)/%.o: %.cpp | $(dirs_to_create)
 $(dirs_to_create)::
 	$(QUIET) mkdir -p $@
 
--include $(deps)
+-include $(dep_files)
