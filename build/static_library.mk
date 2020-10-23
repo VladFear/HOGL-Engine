@@ -13,6 +13,12 @@ dirs_to_create  := $(call create-out-dirs-structure,  \
 
 dirs_to_include := $(call dirs-to-include, $(LOCAL_MODULE_INCLUDES))
 
+cpp_flags := $(LOCAL_MODULE_CPP_FLAGS)
+
+ifeq ($(cpp_flags),)
+cpp_flags := $(CXXFLAGS)
+endif
+
 # TODO: https://www.gnu.org/software/make/manual/html_node/Archive-Members.html#Archive-Members
 $(library): $(cpp_objs)
 	$(QUIET) $(call pretty,      \
@@ -23,7 +29,7 @@ $(library): $(cpp_objs)
 $(LOCAL_MODULE_OUT_OBJ_DIR)/%.o: %.cpp | $(dirs_to_create)
 	$(QUIET) $(call pretty,          \
 	         $(COMPILATION_MESSAGE), \
-	         $(CXX) -c $(dirs_to_include) $(DEPFLAGS) $(CXXFLAGS) $< -o $@)
+	         $(CXX) -c $(dirs_to_include) $(DEPFLAGS) $(cpp_flags) $< -o $@)
 
 $(dirs_to_create)::
 	$(QUIET) mkdir -p $@
