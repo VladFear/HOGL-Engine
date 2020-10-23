@@ -64,24 +64,25 @@ $(addprefix $(strip $(2))/,$(1:%.cpp=%.o))
 endef
 
 # Explanation:
-# Macro which allows to print compilation process in pretty mode
+# Macro which allows to print actions process in pretty mode
 #
 # Args:
-# $(1) - Command to be executed
+# $(1) - Action message
+# $(2) - Command to be executed
 #
 # Picked from:
 # http://www.lunderberg.com/2015/08/25/cpp-makefile-pretty-output/
 #
-define compile-pretty
-printf "%b" "$(ESC_BOLD)$(COMPILATION_MESSAGE) $(ESC_TARGET)$(@F)$(ESC_RESET)\r"; \
-$(1); \
+define pretty
+printf "%b" "$(ESC_BOLD)$(1) $(ESC_TARGET)$(@F)$(ESC_RESET)\r"; \
+$(2); \
 result=$${PIPESTATUS[0]}; \
 if [ $$result -ne 0 ]; then \
   printf "%-60b%b" "$(ESC_TARGET) $@" " $(ESC_ERROR)$(ERROR_MESSAGE)$(ESC_RESET)\n"   ; \
 elif [ -s $@.log ]; then \
   printf "%-60b%b" "$(ESC_TARGET) $@" " $(ESC_WARNING)$(WARNING_MESSAGE)$(ESC_RESET)\n"   ; \
 else  \
-  printf "%-60b%b" "$(ESC_BOLD)$(COMPILATION_MESSAGE)$(ESC_TARGET) $(@F)" " $(ESC_OK)$(SUCCESS_MESSAGE)$(ESC_RESET)\n"   ; \
+  printf "%-60b%b" "$(ESC_BOLD)$(1)$(ESC_TARGET) $(@F)" " $(ESC_OK)$(SUCCESS_MESSAGE)$(ESC_RESET)\n"   ; \
 fi; \
 exit $$result
 endef

@@ -14,11 +14,14 @@ dirs_to_include := $(call dirs-to-include, $(LOCAL_MODULE_INCLUDES))
 
 # TODO: https://www.gnu.org/software/make/manual/html_node/Archive-Members.html#Archive-Members
 $(library): $(objs)
-	$(QUIET) $(AR) rcs $@ $^
+	$(QUIET) $(call pretty,      \
+	         $(LINKING_MESSAGE), \
+	         $(AR) rcs $@ $^)
 
 # Rule, which describes how to create object file from cpp source.
 $(LOCAL_MODULE_OUT_OBJ_DIR)/%.o: %.cpp | $(dirs_to_create)
-	$(QUIET) $(call compile-pretty, \
+	$(QUIET) $(call pretty,          \
+	         $(COMPILATION_MESSAGE), \
 	         $(CXX) -c $(dirs_to_include) $(DEPFLAGS) $(CXXFLAGS) $< -o $@)
 
 $(dirs_to_create)::

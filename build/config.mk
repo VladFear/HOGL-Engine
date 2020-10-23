@@ -40,6 +40,4 @@ SUCCESS_MESSAGE      := "[SUCCESS]"
 ERROR_MESSAGE        := "[ERROR]"
 WARNING_MESSAGE      := "[WARNING]"
 COMPILATION_MESSAGE  := "Compiling"
-
-# TODO: Not used yet
-#ARCHIVATION_MESSAGE  := "Archiving"
+LINKING_MESSAGE      := "Linking"

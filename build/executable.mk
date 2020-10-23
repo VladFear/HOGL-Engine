@@ -8,7 +8,8 @@ dirs_to_include := $(call dirs-to-include, $(LOCAL_MODULE_INCLUDES))
 # TODO: -Lout and -lglobalengine change with dynamic substitution
 # Rule, which describes how to create executable file from cpp source.
 $(executable): $(src) $(LOCAL_MODULE_DEPS) | $(dirs_to_create)
-	$(QUIET) $(call compile-pretty, \
+	$(QUIET) $(call pretty,          \
+	         $(COMPILATION_MESSAGE), \
 	         $(CXX) $^ $(dirs_to_include) -Lout -lglobalengine $(LD_LIBS) $(CXXFLAGS) -o $@)
 
 $(dirs_to_create)::
