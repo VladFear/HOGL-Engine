@@ -76,6 +76,20 @@ $(addprefix $(strip $(2))/,$(1:%.cpp=%.o))
 endef
 
 # Explanation:
+# Constructs correct paths for future objects from given source paths,
+# and the path of the directory, where all objects will be placed.
+#
+# Args:
+# $(1) - List of source files.
+# $(2) - Out directory path.
+#
+# Example of usage:
+# $(call gen-objs-outnames-from-c,$(SRC),$(OUT_OBJ_DIR_PATH_TO_APPEND)).
+define gen-objs-outnames-from-c
+$(addprefix $(strip $(2))/,$(1:%.c=%.o))
+endef
+
+# Explanation:
 # Macro which allows to print actions process in pretty mode
 #
 # Args:
