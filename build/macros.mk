@@ -24,6 +24,18 @@ $(shell find $(1) -name "*.cpp")
 endef
 
 # Explanation:
+# Find all .c files in the given directory and it's subdirs.
+#
+# Args:
+# $(1) - Starting point (directory) for searching files.
+#
+# Example of usage:
+# $(call recursive-find-c-files,$(PATH_WHERE_TO_SEARCH))
+define recursive-find-c-files
+$(shell find $(1) -name "*.c" -type f)
+endef
+
+# Explanation:
 # Recreates the structure of source folders in another directory.
 # Supposed to be used for creating src folders structure in out directory.
 #
