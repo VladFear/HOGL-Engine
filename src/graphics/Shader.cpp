@@ -8,7 +8,7 @@ namespace GE
 	// Shader class
 
 	Shader::Shader(const path & shaderPath,
-	               sPtr<IValidationStrategy> validationStrategy,
+	               Shared<IValidationStrategy> validationStrategy,
 	               const ShaderType & shaderType)
 	{
 		assert(shaderType != ShaderType::Undefined);
@@ -77,7 +77,7 @@ namespace GE
 		return *this;
 	}
 
-	Builder & Builder::setValidationStrategy(sPtr<IValidationStrategy> validationStrategy)
+	Builder & Builder::setValidationStrategy(Shared<IValidationStrategy> validationStrategy)
 	{
 		m_validationStrategy = std::move(validationStrategy);
 
@@ -91,9 +91,9 @@ namespace GE
 		return *this;
 	}
 
-	sPtr<Shader> Builder::build()
+	Unique<Shader> Builder::build()
 	{
-		return std::make_shared<Shader>(
+		return createUnique<Shader>(
 			std::move(m_shaderPath),
 			std::move(m_validationStrategy),
 			m_shaderType);

@@ -3,8 +3,8 @@
 namespace GE
 {
 
-	void GLRenderSystem::render(std::shared_ptr<GameScene> gameScene,
-	                            std::shared_ptr<Camera>    camera)
+	void GLRenderSystem::render(Shared<GameScene> gameScene,
+	                            Shared<Camera>    camera)
 	{
 		glm::mat4 viewMatrix = createViewMatrix(camera);
 
@@ -64,12 +64,12 @@ namespace GE
 		return projectionMatrix;
 	}
 
-	glm::mat4 GLRenderSystem::createViewMatrix(const std::shared_ptr<Camera> & camera)
+	glm::mat4 GLRenderSystem::createViewMatrix(const Shared<Camera> & camera)
 	{
 		return glm::lookAt(camera->getPosition(), glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	}
 
-	void GLRenderSystem::prepareGameScene(std::shared_ptr<GameScene> gameScene)
+	void GLRenderSystem::prepareGameScene(Shared<GameScene> gameScene)
 	{
 		auto & gameObjectsList = gameScene->getGameObjectsList();
 

@@ -1,18 +1,15 @@
 #pragma once
 
 #include <forward_list>
-#include <memory>
 
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 
+#include "core/Memory.h"
 #include "graphics/Shader.h"
 
 namespace GE
 {
-
-	template <typename S>
-	using sPtr = std::shared_ptr<S>;
 
 	using vec3 = glm::vec3;
 	using mat4 = glm::mat4;
@@ -29,7 +26,7 @@ namespace GE
 
 			// Actions
 			void attachShader(const Shader & shader);
-			void attachShader(sPtr<Shader> shader);
+			void attachShader(Shared<Shader> shader);
 			void attachShader(Shader * shader) = delete;
 			void compile();
 			void apply() const;
@@ -41,7 +38,7 @@ namespace GE
 			uint getId() const;
 
 			// Setters
-			void setValidationStrategy(sPtr<IValidationStrategy> validationStrategy);
+			void setValidationStrategy(Shared<IValidationStrategy> validationStrategy);
 			void setFloatToUniform(const int location, const float value);
 			void setBoolToUniform(const int location, const bool value);
 			void setVector3fToUniform(const int location, const vec3 & vector);
@@ -55,7 +52,7 @@ namespace GE
 
 		private:
 			std::forward_list<uint> m_shadersIds;
-			sPtr<IValidationStrategy> m_validationStrategy;
+			Shared<IValidationStrategy> m_validationStrategy;
 
 			uint m_id = 0;
 

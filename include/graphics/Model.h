@@ -1,10 +1,10 @@
 #pragma once
 
-#include <memory>
 #include <vector>
 
 #include <GL/glew.h>
 
+#include "core/Memory.h"
 #include "graphics/IDrawable.h"
 #include "graphics/OpenGL/GLVertexArrayObject.h"
 
@@ -51,7 +51,7 @@ namespace GE
 			                              const uint indexesCount);
 			ModelBuilder & addTextureData(float * textureCoordinates,
 			                              const uint textCoordsCount);
-			[[nodiscard]] std::shared_ptr<Model> build();
+			[[nodiscard]] Unique<Model> build();
 
 		private:
 			float * m_vertexPositions    = nullptr;

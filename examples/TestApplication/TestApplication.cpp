@@ -1,29 +1,29 @@
 #include "TestApplication.h"
 
-TestApplication::TestApplication(std::unique_ptr<GE::GlobalEngine> globalEngine) :
-	GE::GameApplication(std::move(globalEngine))
+TestApplication::TestApplication(Unique<GlobalEngine> globalEngine) :
+	GameApplication(std::move(globalEngine))
 {
 	 init();
 }
 
 void TestApplication::init()
 {
-	auto vshader = GE::Shader::ShaderBuilder()
+	Shared<Shader> vshader = Shader::ShaderBuilder()
 		.setSource("examples/TestApplication/shaders/vertexShader.glsl")
-		.setValidationStrategy(std::make_shared<GE::ValidationDefaultStrategy>())
-		.setShaderType(GE::ShaderType::VertexShader)
+		.setValidationStrategy(createShared<ValidationDefaultStrategy>())
+		.setShaderType(ShaderType::VertexShader)
 		.build();
 
-	auto fshader = GE::Shader::ShaderBuilder()
+	Shared<Shader> fshader = Shader::ShaderBuilder()
 		.setSource("examples/TestApplication/shaders/fragmentShader.glsl")
-		.setValidationStrategy(std::make_shared<GE::ValidationDefaultStrategy>())
-		.setShaderType(GE::ShaderType::FragmentShader)
+		.setValidationStrategy(createShared<ValidationDefaultStrategy>())
+		.setShaderType(ShaderType::FragmentShader)
 		.build();
 
-	auto shaderProgram = std::make_shared<GE::ShaderProgram>();
+	auto shaderProgram = createShared<ShaderProgram>();
 	shaderProgram->attachShader(vshader);
 	shaderProgram->attachShader(fshader);
-	shaderProgram->setValidationStrategy(std::make_shared<GE::ValidationDefaultStrategy>());
+	shaderProgram->setValidationStrategy(createShared<ValidationDefaultStrategy>());
 	shaderProgram->compile();
 
 	float vertices[] =
@@ -47,30 +47,30 @@ void TestApplication::init()
 		1.0f, 1.0f
 	};
 
-	auto cubeModel = GE::Model::ModelBuilder()
+	Shared<Model> cubeModel = Model::ModelBuilder()
 		.addVertexBuffer(vertices, std::size(vertices))
 		.addIndexBuffer(indexes, std::size(indexes))
 		.addTextureData(textCoords, std::size(textCoords))
 		.build();
 
-	auto wallTexture = std::make_shared<GE::GLTexture>("examples/TestApplication/res/wall.jpg");
+	auto wallTexture = createShared<GLTexture>("examples/TestApplication/res/wall.jpg");
 
 	auto cubeTexturedModel =
-		std::make_shared<GE::GLTexturedModel>(cubeModel, wallTexture);
+		createShared<GLTexturedModel>(cubeModel, wallTexture);
 
 	auto cubeEntity =
-		std::make_shared<GE::Entity>(cubeTexturedModel,
-		                             shaderProgram,
-		                             glm::vec3(0.0f, 0.0f, -1.5f),
-		                             glm::vec3(0.f),
-		                             glm::vec3(1.f));
+		createShared<Entity>(cubeTexturedModel,
+		                              shaderProgram,
+		                              glm::vec3(0.0f, 0.0f, -1.5f),
+		                              glm::vec3(0.f),
+		                              glm::vec3(1.f));
 
-	auto gameScene = std::make_shared<GE::GameScene>();
+	auto gameScene = createShared<GameScene>();
 	gameScene->addGameObject(cubeEntity);
 
 	m_globalEngine->setGameScene(gameScene);
 
-	auto camera = std::make_shared<GE::Camera>(glm::vec3(0.0f, 0.0f, 0.001f));
+	auto camera = createShared<Camera>(glm::vec3(0.0f, 0.0f, 0.001f));
 
 	m_globalEngine->setCamera(camera);
 }

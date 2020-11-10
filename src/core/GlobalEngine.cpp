@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "core/Memory.h"
 #include "core/GlobalEngine.h"
 #include "core/EngineArgs.h"
 
@@ -14,7 +15,7 @@ namespace GE
 	// GlobalEngine class
 
 	GlobalEngine::GlobalEngine(const EngineArgs & engineArgs) :
-		m_impl { std::make_unique<GlobalEngineImpl>(engineArgs) }
+		m_impl { createUnique<GlobalEngineImpl>(engineArgs) }
 	{ }
 
 	void GlobalEngine::startGameLoop() const
@@ -22,12 +23,12 @@ namespace GE
 		m_impl->startGameLoop();
 	}
 
-	void GlobalEngine::setGameScene(std::shared_ptr<GameScene> gameScene)
+	void GlobalEngine::setGameScene(Shared<GameScene> gameScene)
 	{
 		m_impl->setGameScene(gameScene);
 	}
 
-	void GlobalEngine::setCamera(std::shared_ptr<Camera> camera)
+	void GlobalEngine::setCamera(Shared<Camera> camera)
 	{
 		m_impl->setCamera(camera);
 	}
@@ -70,14 +71,14 @@ namespace GE
 		}
 	}
 
-	void GlobalEngine::GlobalEngineImpl::setGameScene(std::shared_ptr<GameScene> gameScene)
+	void GlobalEngine::GlobalEngineImpl::setGameScene(Shared<GameScene> gameScene)
 	{
 		m_gameScene = gameScene;
 
 		m_renderSystem->prepareGameScene(m_gameScene);
 	}
 
-	void GlobalEngine::GlobalEngineImpl::setCamera(std::shared_ptr<Camera> camera)
+	void GlobalEngine::GlobalEngineImpl::setCamera(Shared<Camera> camera)
 	{
 		m_camera = camera;
 	}
@@ -101,14 +102,14 @@ namespace GE
 	                                                      const uint windowWidth,
 	                                                      const uint windowHeight)
 	{
-		m_window = std::make_unique<GLWindow>(windowTitle,
-		                                      windowWidth,
-		                                      windowHeight);
+		m_window = createUnique<GLWindow>(windowTitle,
+		                                  windowWidth,
+		                                  windowHeight);
 	}
 
 	void GlobalEngine::GlobalEngineImpl::initGLRenderSystem()
 	{
-		m_renderSystem = std::make_unique<GLRenderSystem>();
+		m_renderSystem = createUnique<GLRenderSystem>();
 	}
 
 } // GE

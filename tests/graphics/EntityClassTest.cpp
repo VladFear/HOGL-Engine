@@ -8,9 +8,7 @@
 
 #include "graphics/Entity.h"
 
-template <typename U>
-using uPtr = std::unique_ptr<U>;
-
+using namespace GE;
 using vec3 = glm::vec3;
 
 class GlobalEngineTestClass : public ::testing::Test
@@ -23,14 +21,14 @@ class GlobalEngineTestClass : public ::testing::Test
 				// TODO: Make window invisible(not working yet)
 				glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 
-				GE::EngineArgs engineArgs =
-					GE::EngineArgsBuilder()
-					.setEngineAPI(GE::EngineAPI::OpenGL)
+				EngineArgs engineArgs =
+					EngineArgsBuilder()
+					.setEngineAPI(EngineAPI::OpenGL)
 					.setWindowTitle("EntityClassTest")
 					.build();
 
-				engine = std::make_unique<GE::GlobalEngine>(engineArgs);
-				ASSERT_NE(engine, nullptr);
+				m_engine = createUnique<GlobalEngine>(engineArgs);
+				ASSERT_NE(m_engine, nullptr);
 			}
 			catch (const std::exception & e)
 			{
@@ -39,14 +37,14 @@ class GlobalEngineTestClass : public ::testing::Test
 		}
 
 	protected:
-		static uPtr<GE::GlobalEngine> engine;
+		static Unique<GlobalEngine> m_engine;
 };
 
-uPtr<GE::GlobalEngine> GlobalEngineTestClass::engine = nullptr;
+Unique<GlobalEngine> GlobalEngineTestClass::m_engine = nullptr;
 
 TEST_F(GlobalEngineTestClass, EntityDefaultConstructorTest)
 {
-	GE::Entity entity;
+	Entity entity;
 
 	ASSERT_EQ(entity.getTexturedModel(), nullptr);
 	ASSERT_EQ(entity.getShaderProgram(), nullptr);
@@ -70,7 +68,7 @@ TEST_F(GlobalEngineTestClass, EntityDefaultConstructorTest)
 
 TEST_F(GlobalEngineTestClass, EntityMoveConstructorTest)
 {
-	GE::Entity entity;
+	Entity entity;
 
 	// Set transforms params
 	auto position = vec3(3.f, 4.f, 5.f);
@@ -82,7 +80,7 @@ TEST_F(GlobalEngineTestClass, EntityMoveConstructorTest)
 	auto scalingFactor = vec3(2.f, 4.f, 5.f);
 	entity.setScalingFactor(scalingFactor);
 
-	entity.setShaderProgram(std::make_shared<GE::ShaderProgram>());
+	entity.setShaderProgram(createShared<ShaderProgram>());
 	ASSERT_NE(entity.getShaderProgram(), nullptr);
 
 	unsigned int shaderProgramId = entity.getShaderProgramId();
@@ -91,7 +89,7 @@ TEST_F(GlobalEngineTestClass, EntityMoveConstructorTest)
 	// Get model should be nullptr, as no model set
 	EXPECT_EQ(entity.getTexturedModel(), nullptr);
 
-	GE::Entity anotherEntity(std::move(entity));
+	Entity anotherEntity(std::move(entity));
 
 	ASSERT_EQ(anotherEntity.getPosition(), position);
 	ASSERT_EQ(anotherEntity.getRotation(), rotation);
@@ -110,7 +108,7 @@ TEST_F(GlobalEngineTestClass, EntityMoveConstructorTest)
 
 TEST_F(GlobalEngineTestClass, EntityMoveAssignmentOperatorTest)
 {
-	GE::Entity entity;
+	Entity entity;
 
 	// Set transforms params
 	auto position = vec3(3.f, 4.f, 5.f);
@@ -122,7 +120,7 @@ TEST_F(GlobalEngineTestClass, EntityMoveAssignmentOperatorTest)
 	auto scalingFactor = vec3(2.f, 4.f, 5.f);
 	entity.setScalingFactor(scalingFactor);
 
-	entity.setShaderProgram(std::make_shared<GE::ShaderProgram>());
+	entity.setShaderProgram(createShared<ShaderProgram>());
 	ASSERT_NE(entity.getShaderProgram(), nullptr);
 
 	unsigned int shaderProgramId = entity.getShaderProgramId();
@@ -131,7 +129,7 @@ TEST_F(GlobalEngineTestClass, EntityMoveAssignmentOperatorTest)
 	// Get model should be nullptr, as no model set
 	EXPECT_EQ(entity.getTexturedModel(), nullptr);
 
-	GE::Entity anotherEntity = std::move(entity);
+	Entity anotherEntity = std::move(entity);
 
 	ASSERT_EQ(anotherEntity.getPosition(), position);
 	ASSERT_EQ(anotherEntity.getRotation(), rotation);
@@ -150,17 +148,17 @@ TEST_F(GlobalEngineTestClass, EntityMoveAssignmentOperatorTest)
 
 TEST_F(GlobalEngineTestClass, EntitySetShaderProgramTest)
 {
-	GE::Entity entity;
+	Entity entity;
 
 	ASSERT_EQ(entity.getShaderProgram(), nullptr);
 
-	entity.setShaderProgram(std::make_shared<GE::ShaderProgram>());
+	entity.setShaderProgram(createShared<ShaderProgram>());
 	ASSERT_NE(entity.getShaderProgram(), nullptr);
 }
 
 TEST_F(GlobalEngineTestClass, EntitySetPositionTest)
 {
-	GE::Entity entity;
+	Entity entity;
 
 	vec3 position = entity.getPosition();
 	EXPECT_FLOAT_EQ(position.x, 0.f);
@@ -183,7 +181,7 @@ TEST_F(GlobalEngineTestClass, EntitySetPositionTest)
 
 TEST_F(GlobalEngineTestClass, EntitySetRotationTest)
 {
-	GE::Entity entity;
+	Entity entity;
 
 	vec3 rotation = entity.getRotation();
 	EXPECT_FLOAT_EQ(rotation.x, 0.f);
@@ -206,7 +204,7 @@ TEST_F(GlobalEngineTestClass, EntitySetRotationTest)
 
 TEST_F(GlobalEngineTestClass, EntitySetScalingFactorTest)
 {
-	GE::Entity entity;
+	Entity entity;
 
 	vec3 scaling = entity.getScalingFactor();
 	EXPECT_FLOAT_EQ(scaling.x, 1.f);
@@ -229,7 +227,7 @@ TEST_F(GlobalEngineTestClass, EntitySetScalingFactorTest)
 
 TEST_F(GlobalEngineTestClass, EntityRotateTest)
 {
-	GE::Entity entity;
+	Entity entity;
 
 	vec3 rotation = entity.getRotation();
 	EXPECT_FLOAT_EQ(rotation.x, 0.f);
@@ -251,7 +249,7 @@ TEST_F(GlobalEngineTestClass, EntityRotateTest)
 
 TEST_F(GlobalEngineTestClass, EntityScaleTest)
 {
-	GE::Entity entity;
+	Entity entity;
 
 	vec3 scaling = entity.getScalingFactor();
 	EXPECT_FLOAT_EQ(scaling.x, 1.f);
@@ -273,7 +271,7 @@ TEST_F(GlobalEngineTestClass, EntityScaleTest)
 
 TEST_F(GlobalEngineTestClass, EntityMoveTest)
 {
-	GE::Entity entity;
+	Entity entity;
 
 	vec3 position = entity.getPosition();
 	EXPECT_FLOAT_EQ(position.x, 0.f);

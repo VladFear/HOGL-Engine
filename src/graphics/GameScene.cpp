@@ -1,10 +1,9 @@
 #include "graphics/GameScene.h"
-#include <memory>
 
 namespace GE
 {
 
-	void GameScene::addGameObject(std::shared_ptr<IDrawable> object)
+	void GameScene::addGameObject(Shared<IDrawable> object)
 	{
 		m_objectsList.push_front(std::move(object));
 	}
@@ -15,12 +14,12 @@ namespace GE
 			renderObject(object);
 	}
 
-	void GameScene::renderObject(std::shared_ptr<IDrawable> object) const
+	void GameScene::renderObject(Shared<IDrawable> object) const
 	{
 		object->draw();
 	}
 
-	std::forward_list<std::shared_ptr<IDrawable>> & GameScene::getGameObjectsList()
+	std::forward_list<Shared<IDrawable>> & GameScene::getGameObjectsList()
 	{
 		return m_objectsList;
 	}

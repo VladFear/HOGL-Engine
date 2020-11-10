@@ -3,16 +3,16 @@
 namespace GE
 {
 
-	Entity::Entity(sPtr<GLTexturedModel> texturedModel,
-	               sPtr<ShaderProgram> shaderProgram) :
+	Entity::Entity(Shared<GLTexturedModel> texturedModel,
+	               Shared<ShaderProgram> shaderProgram) :
 		m_texturedModel { texturedModel },
 		m_shaderProgram { shaderProgram }
 	{
 		m_shaderProgramId = m_shaderProgram->getId();
 	}
 
-	Entity::Entity(sPtr<GLTexturedModel> texturedModel,
-	               sPtr<ShaderProgram> shaderProgram,
+	Entity::Entity(Shared<GLTexturedModel> texturedModel,
+	               Shared<ShaderProgram> shaderProgram,
 	               const vec3 & position,
 	               const vec3 & rotation,
 	               const vec3 & scaling) :
@@ -70,7 +70,7 @@ namespace GE
 		return *this;
 	}
 
-	void Entity::setShaderProgram(sPtr<ShaderProgram> shaderProgram)
+	void Entity::setShaderProgram(Shared<ShaderProgram> shaderProgram)
 	{
 		m_shaderProgram = shaderProgram;
 		m_shaderProgramId = m_shaderProgram->getId();
@@ -81,12 +81,12 @@ namespace GE
 		return m_shaderProgramId;
 	}
 
-	sPtr<GLTexturedModel> Entity::getTexturedModel() const
+	Shared<GLTexturedModel> Entity::getTexturedModel() const
 	{
 		return m_texturedModel;
 	}
 
-	sPtr<ShaderProgram> Entity::getShaderProgram() const
+	Shared<ShaderProgram> Entity::getShaderProgram() const
 	{
 		return m_shaderProgram;
 	}

@@ -1,8 +1,8 @@
 #pragma once
 
 #include <forward_list>
-#include <memory>
 
+#include "core/Memory.h"
 #include "graphics/IDrawable.h"
 
 namespace GE
@@ -15,17 +15,17 @@ namespace GE
 			virtual ~GameScene() = default;
 
 			// Actions
-			void addGameObject(std::shared_ptr<IDrawable> object);
+			void addGameObject(Shared<IDrawable> object);
 			void renderScene() const;
 
 			// Getters
-			[[nodiscard]] std::forward_list<std::shared_ptr<IDrawable>> & getGameObjectsList();
+			[[nodiscard]] std::forward_list<Shared<IDrawable>> & getGameObjectsList();
 
 		private:
-			void renderObject(std::shared_ptr<IDrawable> object) const;
+			void renderObject(Shared<IDrawable> object) const;
 
 		private:
-			std::forward_list<std::shared_ptr<IDrawable>> m_objectsList;
+			std::forward_list<Shared<IDrawable>> m_objectsList;
 	};
 
 } // GE

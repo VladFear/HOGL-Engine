@@ -49,14 +49,14 @@ namespace GE
 		m_shadersIds.push_front(shaderId);
 	}
 
-	void ShaderProgram::attachShader(sPtr<Shader> shader)
+	void ShaderProgram::attachShader(Shared<Shader> shader)
 	{
 		uint shaderId = shader->getId();
 		glAttachShader(m_id, shaderId);
 		m_shadersIds.push_front(shaderId);
 	}
 
-	void ShaderProgram::setValidationStrategy(sPtr<IValidationStrategy> validationStrategy)
+	void ShaderProgram::setValidationStrategy(Shared<IValidationStrategy> validationStrategy)
 	{
 		m_validationStrategy = validationStrategy;
 	}

@@ -5,18 +5,15 @@
 #include <sstream>
 #include <fstream>
 #include <exception>
-#include <memory>
 #include <filesystem>
 
 #include <GL/glew.h>
 
+#include "core/Memory.h"
 #include "graphics/ValidationDefaultStrategy.h"
 
 namespace GE
 {
-
-	template <typename S>
-	using sPtr = std::shared_ptr<S>;
 
 	namespace fs = std::filesystem;
 	using path = std::filesystem::path;
@@ -35,7 +32,7 @@ namespace GE
 
 			Shader() = delete;
 			Shader(const path & shaderPath,
-			       sPtr<IValidationStrategy> validationStrategy,
+			       Shared<IValidationStrategy> validationStrategy,
 			       const ShaderType & shaderType);
 			virtual ~Shader() = default;
 
@@ -55,7 +52,7 @@ namespace GE
 		private:
 			std::string m_source;
 			ShaderType m_shaderType;
-			sPtr<IValidationStrategy> m_validationStrategy;
+			Shared<IValidationStrategy> m_validationStrategy;
 			uint m_id { 0 };
 	};
 
@@ -63,13 +60,13 @@ namespace GE
 	{
 		public:
 			ShaderBuilder & setSource(const path & shaderPath);
-			ShaderBuilder & setValidationStrategy(sPtr<IValidationStrategy> validationStrategy);
+			ShaderBuilder & setValidationStrategy(Shared<IValidationStrategy> validationStrategy);
 			ShaderBuilder & setShaderType(const ShaderType & shaderType);
-			[[nodiscard]] sPtr<Shader> build();
+			[[nodiscard]] Unique<Shader> build();
 
 		private:
 			path m_shaderPath;
-			sPtr<IValidationStrategy> m_validationStrategy = nullptr;
+			Shared<IValidationStrategy> m_validationStrategy = nullptr;
 			ShaderType m_shaderType { ShaderType::Undefined };
 	};
 

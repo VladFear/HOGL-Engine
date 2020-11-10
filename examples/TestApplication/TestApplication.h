@@ -3,8 +3,8 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <memory>
 
+#include "core/Memory.h"
 #include "core/GameApplication.h"
 #include "core/EngineArgs.h"
 #include "core/GlobalEngine.h"
@@ -17,10 +17,12 @@
 #include "graphics/OpenGL/GLTexture.h"
 #include "graphics/OpenGL/GLTexturedModel.h"
 
-class TestApplication : public GE::GameApplication
+using namespace GE;
+
+class TestApplication : public GameApplication
 {
 	public:
-		explicit TestApplication(std::unique_ptr<GE::GlobalEngine> globalEngine);
+		explicit TestApplication(Unique<GlobalEngine> globalEngine);
 
 		// Actions
 		void startGameLoop() override;

@@ -1,9 +1,8 @@
 #pragma once
 
-#include <memory>
-
 #include <glm/glm.hpp>
 
+#include "core/Memory.h"
 #include "graphics/IDrawable.h"
 #include "graphics/OpenGL/GLTexturedModel.h"
 #include "graphics/ShaderProgram.h"
@@ -11,9 +10,6 @@
 
 namespace GE
 {
-
-	template <typename S>
-	using sPtr = std::shared_ptr<S>;
 
 	using vec3 = glm::vec3;
 	using mat4 = glm::mat4;
@@ -24,11 +20,11 @@ namespace GE
 			Entity() = default;
 			~Entity() = default;
 
-			Entity(sPtr<GLTexturedModel> texturedModel,
-			       sPtr<ShaderProgram> shaderProgram);
+			Entity(Shared<GLTexturedModel> texturedModel,
+			       Shared<ShaderProgram> shaderProgram);
 
-			Entity(sPtr<GLTexturedModel> texturedModel,
-			       sPtr<ShaderProgram> shaderProgram,
+			Entity(Shared<GLTexturedModel> texturedModel,
+			       Shared<ShaderProgram> shaderProgram,
 			       const vec3 & position,
 			       const vec3 & rotation,
 			       const vec3 & scaling);
@@ -45,22 +41,22 @@ namespace GE
 			void draw() const override;
 
 			// Setters
-			void setShaderProgram(sPtr<ShaderProgram> shaderProgram);
+			void setShaderProgram(Shared<ShaderProgram> shaderProgram);
 			void setPosition(const vec3 & position) noexcept;
 			void setRotation(const vec3 & rotation) noexcept;
 			void setScalingFactor(const vec3 & scalingFactor) noexcept;
 
 			// Getters
 			[[nodiscard]] uint getShaderProgramId() const;
-			[[nodiscard]] sPtr<GLTexturedModel> getTexturedModel() const;
-			[[nodiscard]] sPtr<ShaderProgram>   getShaderProgram() const;
+			[[nodiscard]] Shared<GLTexturedModel> getTexturedModel() const;
+			[[nodiscard]] Shared<ShaderProgram>   getShaderProgram() const;
 			[[nodiscard]] const vec3 & getPosition()      const noexcept;
 			[[nodiscard]] const vec3 & getRotation()      const noexcept;
 			[[nodiscard]] const vec3 & getScalingFactor() const noexcept;
 
 		private:
-			sPtr<GLTexturedModel> m_texturedModel = nullptr;
-			sPtr<ShaderProgram>   m_shaderProgram = nullptr;
+			Shared<GLTexturedModel> m_texturedModel = nullptr;
+			Shared<ShaderProgram>   m_shaderProgram = nullptr;
 
 			vec3 m_position { 0.f };
 			vec3 m_rotation { 0.f };

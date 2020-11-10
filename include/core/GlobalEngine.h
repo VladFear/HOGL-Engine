@@ -1,7 +1,5 @@
 #pragma once
 
-#include <memory>
-
 #include "core/EngineArgs.h"
 #include "graphics/IRenderSystem.h"
 
@@ -28,12 +26,12 @@ namespace GE
 			void startGameLoop() const;
 
 			// Setters
-			void setGameScene(std::shared_ptr<GameScene> gameScene);
-			void setCamera(std::shared_ptr<Camera> camera);
+			void setGameScene(Shared<GameScene> gameScene);
+			void setCamera(Shared<Camera> camera);
 
 		private:
 			class GlobalEngineImpl;
-			std::unique_ptr<GlobalEngineImpl> m_impl = nullptr;
+			Unique<GlobalEngineImpl> m_impl = nullptr;
 	};
 
 	class GlobalEngine::GlobalEngineImpl
@@ -49,8 +47,8 @@ namespace GE
 			void startGameLoop() const;
 
 			// Setters
-			void setGameScene(std::shared_ptr<GameScene> gameScene);
-			void setCamera(std::shared_ptr<Camera> camera);
+			void setGameScene(Shared<GameScene> gameScene);
+			void setCamera(Shared<Camera> camera);
 
 		private:
 			void initGLRenderSystem();
@@ -63,10 +61,10 @@ namespace GE
 		private:
 			const EngineArgs m_engineArgs;
 
-			std::shared_ptr<IWindow>       m_window       = nullptr;
-			std::shared_ptr<Camera>        m_camera       = nullptr;
-			std::shared_ptr<GameScene>     m_gameScene    = nullptr;
-			std::unique_ptr<IRenderSystem> m_renderSystem = nullptr;
+			Shared<IWindow>       m_window       = nullptr;
+			Shared<Camera>        m_camera       = nullptr;
+			Shared<GameScene>     m_gameScene    = nullptr;
+			Unique<IRenderSystem> m_renderSystem = nullptr;
 	};
 
 } // GE

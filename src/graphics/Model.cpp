@@ -105,9 +105,9 @@ namespace GE
 		return *this;
 	}
 
-	std::shared_ptr<Model> Builder::build()
+	Unique<Model> Builder::build()
 	{
-		return std::make_shared<Model>(
+		return createUnique<Model>(
 			m_vertexPositions,
 			m_vertexCount,
 			m_indexesData,

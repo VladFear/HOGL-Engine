@@ -3,18 +3,18 @@
 namespace GE
 {
 
-	GLTexturedModel::GLTexturedModel(sPtr<Model> model,
-	                                 sPtr<GLTexture> texture) :
+	GLTexturedModel::GLTexturedModel(Shared<Model> model,
+	                                 Shared<GLTexture> texture) :
 		m_model   { model },
 		m_texture { texture }
 	{ }
 
-	const sPtr<Model> & GLTexturedModel::getModel()   const
+	const Shared<Model> & GLTexturedModel::getModel()   const
 	{
 		return m_model;
 	}
 
-	const sPtr<GLTexture> & GLTexturedModel::getTexture() const
+	const Shared<GLTexture> & GLTexturedModel::getTexture() const
 	{
 		return m_texture;
 	}
