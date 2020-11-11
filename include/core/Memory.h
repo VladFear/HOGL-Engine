@@ -2,6 +2,8 @@
 
 #include <memory>
 
+#include "core/UnownedPtr.h"
+
 namespace GE
 {
 
