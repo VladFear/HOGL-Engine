@@ -18,7 +18,7 @@ namespace GE
 			void addGameObject(Shared<IDrawable> object);
 
 			// Getters
-			[[nodiscard]] std::forward_list<Shared<IDrawable>> & getGameObjectsList();
+			[[nodiscard]] const std::forward_list<Shared<IDrawable>> & getGameObjectsList() const;
 
 		private:
 			std::forward_list<Shared<IDrawable>> m_objectsList;

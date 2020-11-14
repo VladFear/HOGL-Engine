@@ -8,7 +8,7 @@ namespace GE
 		m_objectsList.push_front(std::move(object));
 	}
 
-	std::forward_list<Shared<IDrawable>> & GameScene::getGameObjectsList()
+	const std::forward_list<Shared<IDrawable>> & GameScene::getGameObjectsList() const
 	{
 		return m_objectsList;
 	}

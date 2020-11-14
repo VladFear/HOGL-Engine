@@ -64,7 +64,7 @@ namespace GE
 			m_window->clear();
 
 			/* Render here */
-			m_renderSystem->render(m_gameScene, m_camera);
+			m_renderSystem->render(*m_gameScene, *m_camera);
 
 			/* Swap front and back buffers */
 			m_window->swapBuffers();
@@ -75,7 +75,7 @@ namespace GE
 	{
 		m_gameScene = gameScene;
 
-		m_renderSystem->prepareGameScene(m_gameScene);
+		m_renderSystem->prepareGameScene(*m_gameScene);
 	}
 
 	void GlobalEngine::GlobalEngineImpl::setCamera(Shared<Camera> camera)

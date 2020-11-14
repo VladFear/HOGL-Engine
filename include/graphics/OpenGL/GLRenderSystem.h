@@ -20,14 +20,14 @@ namespace GE
 	class GLRenderSystem final : public IRenderSystem
 	{
 		public:
-			void render(Shared<GameScene> gameScene,
-			            Shared<Camera>    camera) override;
+			void render(const GameScene & gameScene,
+			            const Camera    & camera) override;
 			glm::mat4 createModelMatrix(const glm::vec3 & translation,
 			                            const glm::vec3 & rotation,
 			                            const glm::vec3 & scaling) override;
 			glm::mat4 createProjectionMatrix() override;
-			glm::mat4 createViewMatrix(const Shared<Camera> & camera) override;
-			void prepareGameScene(Shared<GameScene> gameScene) override;
+			glm::mat4 createViewMatrix(const Camera & camera)  override;
+			void prepareGameScene(const GameScene & gameScene) override;
 
 		private:
 			GLRenderProperties m_glRenderProperties;

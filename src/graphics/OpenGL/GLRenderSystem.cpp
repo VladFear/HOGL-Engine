@@ -3,12 +3,12 @@
 namespace GE
 {
 
-	void GLRenderSystem::render(Shared<GameScene> gameScene,
-	                            Shared<Camera>    camera)
+	void GLRenderSystem::render(const GameScene & gameScene,
+	                            const Camera    & camera)
 	{
 		glm::mat4 viewMatrix = createViewMatrix(camera);
 
-		auto & gameObjectsList = gameScene->getGameObjectsList();
+		auto & gameObjectsList = gameScene.getGameObjectsList();
 		for (const auto & gameObject : gameObjectsList)
 		{
 			auto entity = dynamic_cast<Entity*>(gameObject.get());
@@ -64,14 +64,14 @@ namespace GE
 		return projectionMatrix;
 	}
 
-	glm::mat4 GLRenderSystem::createViewMatrix(const Shared<Camera> & camera)
+	glm::mat4 GLRenderSystem::createViewMatrix(const Camera & camera)
 	{
-		return glm::lookAt(camera->getPosition(), glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		return glm::lookAt(camera.getPosition(), glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	}
 
-	void GLRenderSystem::prepareGameScene(Shared<GameScene> gameScene)
+	void GLRenderSystem::prepareGameScene(const GameScene & gameScene)
 	{
-		auto & gameObjectsList = gameScene->getGameObjectsList();
+		auto & gameObjectsList = gameScene.getGameObjectsList();
 
 		glm::mat4 projectionMatrix = createProjectionMatrix();
 
