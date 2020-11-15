@@ -20,7 +20,7 @@ namespace GE
 
 		/* Make the window's context current */
 		glfwMakeContextCurrent(getGLFWwindow());
-
+		glfwSetWindowUserPointer(getGLFWwindow(), this);
 		initGLFWCallbacks();
 	}
 
@@ -31,6 +31,31 @@ namespace GE
 
 	void GLWindow::initGLFWCallbacks()
 	{
+		closeWindowSignal.connect(&glfwSetWindowShouldClose);
+
+		auto keyCallback = [](GLFWwindow* glfwWindow,
+		                      int key,
+		                      int scancode,
+		                      int action,
+		                      int mods)
+		{
+			(void)scancode;
+			(void)mods;
+			auto window = static_cast<GLWindow*>(glfwGetWindowUserPointer(glfwWindow));
+			const float value = 0.1f;
+
+			if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+				window->closeWindow();
+			else if (key == GLFW_KEY_W && action == GLFW_PRESS)
+				window->emitMoveCameraSignal(glm::vec3(0.0f, 0.0f, -value));
+			else if (key == GLFW_KEY_S && action == GLFW_PRESS)
+				window->emitMoveCameraSignal(glm::vec3(0.0f, 0.0f, value));
+			else if (key == GLFW_KEY_D && action == GLFW_PRESS)
+				window->emitMoveCameraSignal(glm::vec3(-value, 0.0f, 0.0f));
+			else if (key == GLFW_KEY_A && action == GLFW_PRESS)
+				window->emitMoveCameraSignal(glm::vec3(value, 0.0f, 0.0f));
+		};
+
 		glfwSetKeyCallback(getGLFWwindow(), keyCallback);
 	}
 
@@ -55,17 +80,19 @@ namespace GE
 		return glfwWindowShouldClose(getGLFWwindow());
 	}
 
-	void GLWindow::keyCallback(GLFWwindow * window,
-	                           int key,
-	                           int scancode,
-	                           int action,
-	                           int mods)
+	void GLWindow::closeWindow() const
 	{
-		(void)window;
-		(void)scancode;
-		(void)mods;
-		(void)key;
-		(void)action;
+		closeWindowSignal(getGLFWwindow(), GL_TRUE);
+	}
+
+	void GLWindow::setMoveCameraSignal(Shared<Camera> camera)
+	{
+		moveCameraSignal.connect(boost::bind(&Camera::move, camera, _1));
+	}
+
+	void GLWindow::emitMoveCameraSignal(const glm::vec3 & move)
+	{
+		moveCameraSignal(move);
 	}
 
 } // GE

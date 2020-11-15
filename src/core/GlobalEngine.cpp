@@ -81,6 +81,8 @@ namespace GE
 	void GlobalEngine::GlobalEngineImpl::setCamera(Shared<Camera> camera)
 	{
 		m_camera = camera;
+
+		m_window->setMoveCameraSignal(m_camera);
 	}
 
 	void GlobalEngine::GlobalEngineImpl::initGLFW()

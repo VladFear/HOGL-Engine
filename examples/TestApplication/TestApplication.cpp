@@ -60,10 +60,10 @@ void TestApplication::init()
 
 	auto cubeEntity =
 		createShared<Entity>(cubeTexturedModel,
-		                              shaderProgram,
-		                              glm::vec3(0.0f, 0.0f, -1.5f),
-		                              glm::vec3(0.f),
-		                              glm::vec3(1.f));
+		                     shaderProgram,
+		                     glm::vec3(0.0f, 0.0f, -1.5f),
+		                     glm::vec3(0.f),
+		                     glm::vec3(1.f));
 
 	auto gameScene = createShared<GameScene>();
 	gameScene->addGameObject(cubeEntity);

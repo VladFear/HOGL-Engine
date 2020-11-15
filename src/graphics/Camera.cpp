@@ -40,4 +40,14 @@ namespace GE
 		return m_position;
 	}
 
+	void Camera::move(const vec3 & position)
+	{
+		m_position += position;
+	}
+
+	void Camera::moveTo(const vec3 & position)
+	{
+		m_position = position;
+	}
+
 } // GE

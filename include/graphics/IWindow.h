@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include "graphics/Camera.h"
+
 namespace GE
 {
 
@@ -17,6 +19,8 @@ namespace GE
 			virtual void clear()                          const = 0;
 			virtual void pollEvents()                     const = 0;
 			virtual void swapBuffers()                    const = 0;
+			virtual void closeWindow()                    const = 0;
+			virtual void setMoveCameraSignal(Shared<Camera> camera) = 0;
 			[[nodiscard]] virtual int windowShouldClose() const = 0;
 
 			// Setters

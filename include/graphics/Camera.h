@@ -18,10 +18,8 @@ namespace GE
 			       const float yaw);
 
 			// Actions
-			void moveZ(const float x_pos)
-			{
-				m_position[2] += x_pos;
-			}
+			void move(const vec3 & position);
+			void moveTo(const vec3 & position);
 
 			// Getters
 			[[nodiscard]] float getPitch() const;
