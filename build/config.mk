@@ -2,6 +2,8 @@
 ROOT  := $(CURDIR)
 SHELL := /bin/bash
 
+CXX := clang++
+
 # Define build system directory
 BUILD_SYSTEM := build
 

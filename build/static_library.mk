@@ -14,8 +14,8 @@ dep_files += $(c_objs:%.o=%.d)
 
 dirs_to_create := $(LOCAL_MODULE_OUT_PATH)
 dirs_to_create += $(call create-out-dirs-structure,  \
-                          $(LOCAL_MODULE_SRC_PATH),  \
-                          $(LOCAL_MODULE_OUT_OBJ_DIR))
+                         $(LOCAL_MODULE_SRC_PATH),   \
+                         $(LOCAL_MODULE_OUT_OBJ_DIR))
 
 all_dirs_to_create += $(dirs_to_create)
 

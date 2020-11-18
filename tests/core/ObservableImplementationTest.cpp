@@ -36,7 +36,7 @@ class ObservingEntity : public GE::IObserver
 			auto obs = dynamic_cast<const ObservableItem*>(observable);
 
 			// Check if the ptr is valid
-			if (obs) [[likely]]
+			if (obs)
 				m_value = obs->getValue();
 			else
 				// Test failed

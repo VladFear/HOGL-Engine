@@ -7,7 +7,7 @@ CXXFLAGS := \
     -Wpedantic        \
     -Warray-bounds    \
     -std=c++2a        \
-    -g
+    -g                \
 
 CFLAGS := \
     -Wall             \
@@ -15,15 +15,15 @@ CFLAGS := \
     -Werror           \
     -Wpedantic        \
     -Warray-bounds    \
-    -g
+    -g                \
 
 DEPFLAGS := \
     -MMD    \
-    -MP
+    -MP     \
 
 LD_LIBS := \
     -lgtest     \
     -lpthread   \
     -lGL        \
     -lglfw      \
-    -lGLEW
+    -lGLEW      \
