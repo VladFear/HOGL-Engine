@@ -3,6 +3,7 @@ ROOT  := $(CURDIR)
 SHELL := /bin/bash
 
 CXX := clang++
+CC  := clang
 
 # Define build system directory
 BUILD_SYSTEM := build
@@ -19,8 +20,7 @@ EXTERNAL_DIR  := external
 OUT_DIR          := $(ROOT)/out
 TEST_OUT_DIR     := $(OUT_DIR)/$(TEST_DIR)
 OBJECT_OUT_DIR   := $(OUT_DIR)/$(OBJECT_DIR)
-
-ENGINE_LIB_NAME     := libglobalengine.a
+STATIC_LIBS_OUT_DIR := $(OUT_DIR)/static_libs
 
 QUIET := @
 MKDIR := mkdir -p

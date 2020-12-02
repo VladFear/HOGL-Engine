@@ -32,7 +32,7 @@ clean: ## Remove out directory
 .PHONY: clean-engine
 clean-engine: ## Remove engine objs and engine library
 	$(info Remove object directory and engine library.)
-	$(QUIET) $(RM) -r $(OBJECT_OUT_DIR) out/$(ENGINE_LIB_NAME)
+	$(QUIET) $(RM) -r $(OBJECT_OUT_DIR)
 
 .PHONY: clean-tests
 clean-tests: ## Remove directory with precompiled tests

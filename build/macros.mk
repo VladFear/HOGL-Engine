@@ -18,8 +18,8 @@ endef
 # $(1) - Starting point (directory) for searching files.
 #
 # Example of usage:
-# $(call recursive-find-cpp-files,$(PATH_WHERE_TO_SEARCH))
-define recursive-find-cpp-files
+# $(call recursive-find-cxx-files,$(PATH_WHERE_TO_SEARCH))
+define recursive-find-cxx-files
 $(shell find $(1) -name "*.cpp")
 endef
 
@@ -70,8 +70,8 @@ endef
 # $(2) - Out directory path.
 #
 # Example of usage:
-# $(call gen-objs-outnames-from-cpp,$(SRC),$(OUT_OBJ_DIR_PATH_TO_APPEND)).
-define gen-objs-outnames-from-cpp
+# $(call gen-objs-outnames-from-cxx,$(SRC),$(OUT_OBJ_DIR_PATH_TO_APPEND)).
+define gen-objs-outnames-from-cxx
 $(addprefix $(strip $(2))/,$(1:%.cpp=%.o))
 endef
 
