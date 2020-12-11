@@ -3,12 +3,14 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <tuple>
 
 #include "core/Memory.h"
 #include "core/GameApplication.h"
 #include "core/EngineArgs.h"
 #include "core/GlobalEngine.h"
 
+#include "graphics/OBJParser.h"
 #include "graphics/Entity.h"
 #include "graphics/Camera.h"
 #include "graphics/ShaderProgram.h"

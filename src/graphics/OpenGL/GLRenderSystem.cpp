@@ -6,6 +6,7 @@ namespace GE
 	void GLRenderSystem::render(const GameScene & gameScene,
 	                            const Camera    & camera)
 	{
+		static float rot;
 		glm::mat4 viewMatrix = createViewMatrix(camera);
 
 		auto & gameObjectsList = gameScene.getGameObjectsList();
@@ -21,7 +22,7 @@ namespace GE
 			auto scaling     = entity->getScalingFactor();
 
 			auto modelMatrix = createModelMatrix(translation,
-			                                     rotation,
+			                                     rotation + glm::vec3(0.0f, rot, 0.0f),
 			                                     scaling);
 
 			entity->getShaderProgram()->setModelMatrix(modelMatrix);
@@ -30,6 +31,8 @@ namespace GE
 
 			entity->getShaderProgram()->unapply();
 		}
+
+		rot += 0.01;
 	}
 
 	glm::mat4 GLRenderSystem::createModelMatrix(const glm::vec3 & translation,

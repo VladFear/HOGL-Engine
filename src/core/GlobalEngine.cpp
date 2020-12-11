@@ -98,6 +98,8 @@ namespace GE
 	{
 		if (glewInit() != GLEW_OK)
 			throw std::runtime_error(std::string("Failed to initialize GLEW library. glewInit() != GLEW_OK.\n"));
+
+		glEnable(GL_DEPTH_TEST);
 	}
 
 	void GlobalEngine::GlobalEngineImpl::createGLFWwindow(const std::string & windowTitle,

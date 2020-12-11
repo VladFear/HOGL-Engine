@@ -26,32 +26,28 @@ void TestApplication::init()
 	shaderProgram->setValidationStrategy(createShared<ValidationDefaultStrategy>());
 	shaderProgram->compile();
 
-	float vertices[] =
-	{
-		-0.75f, -0.75f, 0.0f, // Left Bot  0
-		-0.75f,  0.75f, 0.0f, // Left Top  1
-		 0.75f, -0.75f, 0.0f, // Right Bot 2
-		 0.75f,  0.75f, 0.0f  // Right Top 3
-	};
+	//float vertices[] =
+	//{
+	//	-0.75f, -0.75f, 0.0f, // Left Bot  0
+	//	-0.75f,  0.75f, 0.0f, // Left Top  1
+	//	 0.75f, -0.75f, 0.0f, // Right Bot 2
+	//	 0.75f,  0.75f, 0.0f  // Right Top 3
+	//};
 
-	uint indexes[] =
-	{
-		2, 3, 0, 0, 1, 3
-	};
+	//uint indexes[] =
+	//{
+	//	2, 3, 0, 0, 1, 3
+	//};
 
-	float textCoords[] =
-	{
-		0.0f, 0.0f,
-		0.0f, 1.0f,
-		1.0f, 0.0f,
-		1.0f, 1.0f
-	};
+	//float textCoords[] =
+	//{
+	//	0.0f, 0.0f,
+	//	0.0f, 1.0f,
+	//	1.0f, 0.0f,
+	//	1.0f, 1.0f
+	//};
 
-	Shared<Model> cubeModel = Model::ModelBuilder()
-		.addVertexBuffer(vertices, std::size(vertices))
-		.addIndexBuffer(indexes, std::size(indexes))
-		.addTextureData(textCoords, std::size(textCoords))
-		.build();
+	Shared<Model> cubeModel = OBJParser::parseObj("examples/TestApplication/res/monkey1.obj");
 
 	auto wallTexture = createShared<GLTexture>("examples/TestApplication/res/wall.jpg");
 
@@ -61,17 +57,15 @@ void TestApplication::init()
 	auto cubeEntity =
 		createShared<Entity>(cubeTexturedModel,
 		                     shaderProgram,
-		                     glm::vec3(0.0f, 0.0f, -1.5f),
+		                     glm::vec3(0.0f, 0.0f, -15.f),
 		                     glm::vec3(0.f),
 		                     glm::vec3(1.f));
 
 	auto gameScene = createShared<GameScene>();
 	gameScene->addGameObject(cubeEntity);
-
 	m_globalEngine->setGameScene(gameScene);
 
 	auto camera = createShared<Camera>(glm::vec3(0.0f, 0.0f, 0.001f));
-
 	m_globalEngine->setCamera(camera);
 }
 
