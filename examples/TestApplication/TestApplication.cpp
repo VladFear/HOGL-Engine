@@ -67,12 +67,12 @@ void TestApplication::init()
 
 	auto gameScene = createShared<GameScene>();
 	gameScene->addGameObject(cubeEntity);
-
 	m_globalEngine->setGameScene(gameScene);
 
 	auto camera = createShared<Camera>(glm::vec3(0.0f, 0.0f, 0.001f));
-
 	m_globalEngine->setCamera(camera);
+
+	OBJParser::parseObj("examples/TestApplication/res/stall.obj");
 }
 
 void TestApplication::startGameLoop()
